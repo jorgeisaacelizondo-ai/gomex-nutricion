@@ -228,13 +228,14 @@
       color: #f8fafc;
       border: 1px solid rgba(56, 189, 248, 0.4);
       border-radius: 25px;
-      padding: 8px 16px;
+      padding: 8px 14px;
       font-weight: 700;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       cursor: pointer;
+      white-space: nowrap;
       transition: all 0.2s ease;
     }
 
@@ -247,37 +248,38 @@
 
     .cart-badge {
       background: var(--celeste-gradient);
-      color: #fff;
-      font-size: 0.75rem;
+      color: #060b14;
+      font-size: 0.72rem;
       font-weight: 800;
-      min-width: 20px;
-      height: 20px;
-      border-radius: 10px;
+      min-width: 18px;
+      height: 18px;
+      border-radius: 9px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0 5px;
+      padding: 0 4px;
     }
 
     .btn-staff-login {
       background: var(--celeste-gradient);
-      color: #fff;
+      color: #060b14;
       border: none;
       border-radius: 25px;
-      padding: 8px 18px;
-      font-weight: 700;
+      padding: 8px 14px;
+      font-weight: 800;
       font-size: 0.85rem;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       cursor: pointer;
+      white-space: nowrap;
       transition: all 0.2s ease;
-      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
     }
 
     .btn-staff-login:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(56, 189, 248, 0.45);
+      box-shadow: 0 6px 18px rgba(56, 189, 248, 0.5);
     }
 
     /* ==========================================
@@ -2889,13 +2891,7 @@
        ========================================== -->
   <div id="view-ecommerce" class="view-container active-view">
 
-    <!-- Top Announcement Bar
-    <div class="top-announcement">
-      <span>🚀 <strong>ENVÍOS A TODO EL PAÍS</strong> | 3 Cuotas sin interés | Fórmulas Científicas Registradas
-        🇦🇷</span>
-    </div> -->
-
-    <!-- Header / Navbar (SOLO LA IMAGEN DEL LOGO) -->
+    <!-- Header / Navbar -->
     <header class="ecom-header">
       <div class="ecom-nav-container">
         <a href="#view-ecommerce" class="ecom-brand" title="GOMEX Nutrition">
@@ -2903,17 +2899,15 @@
         </a>
 
         <div class="ecom-nav-actions">
-          <button type="button" class="btn-ecom-cart" onclick="toggleEcommerceCart(true)"
-            title="Ver Carrito de Compras">
-            <ion-icon name="cart-outline" style="font-size: 1.2rem;"></ion-icon>
-            <span>Carrito</span>
+          <button type="button" class="btn-ecom-cart" onclick="toggleEcommerceCart(true)" title="Ver Carrito de Compras">
+            <ion-icon name="cart-outline" style="font-size: 1.15rem;"></ion-icon>
+            <span class="btn-ecom-cart-label">Carrito</span>
             <span class="cart-badge" id="cartCountBadge">0</span>
           </button>
 
-          <button type="button" class="btn-staff-login" id="btnStaffLoginHeader" onclick="openStaffLoginModal()"
-            title="Acceso al Sistema Administrativo y POS">
-            <ion-icon name="lock-closed-outline"></ion-icon>
-            <span>Acceso Staff</span>
+          <button type="button" class="btn-staff-login" id="btnStaffLoginHeader" onclick="openStaffLoginModal()" title="Acceso al Sistema POS / Staff">
+            <ion-icon name="lock-closed-outline" style="font-size: 0.95rem;"></ion-icon>
+            <span>Staff</span>
           </button>
         </div>
       </div>
