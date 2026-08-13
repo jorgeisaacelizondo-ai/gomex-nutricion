@@ -3747,28 +3747,114 @@
 
         <!-- MÓDULO: PRESUPUESTOS -->
         <section id="mod-presupuesto" class="module-section">
-          <h2 class="page-title"><ion-icon name="document-text-outline"></ion-icon> Presupuestos</h2>
-          <button class="btn btn-green" style="margin-bottom: 15px;"
-            onclick="alert('Función de Presupuestos iniciada')">+ Nuevo Presupuesto</button>
-          <p>Módulo para emitir y gestionar cotizaciones a clientes.</p>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+            <h2 class="page-title" style="margin-bottom:0; border-bottom:none;"><ion-icon name="document-text-outline"></ion-icon> Presupuestos & Cotizaciones</h2>
+            <button class="btn btn-green" onclick="openNewBudgetModal()">+ Emitir Nuevo Presupuesto</button>
+          </div>
+
+          <div class="data-table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>N° Presupuesto</th>
+                  <th>Cliente</th>
+                  <th>Fecha Emisión</th>
+                  <th>Validez</th>
+                  <th>Total</th>
+                  <th>Estado</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody id="budgetsTableBody">
+                <!-- Dynamic content -->
+              </tbody>
+            </table>
+          </div>
         </section>
 
         <!-- MÓDULO: PEDIDOS -->
         <section id="mod-pedido" class="module-section">
-          <h2 class="page-title"><ion-icon name="clipboard-outline"></ion-icon> Pedidos</h2>
-          <p>Gestión de pedidos de clientes en cola o pendientes de despacho.</p>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+            <h2 class="page-title" style="margin-bottom:0; border-bottom:none;"><ion-icon name="clipboard-outline"></ion-icon> Pedidos de Clientes</h2>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-outline" onclick="filterOrders('TODOS')">Todos</button>
+              <button class="btn btn-outline" style="border-color: #fbbf24; color: #fbbf24;" onclick="filterOrders('Pendiente')">Pendientes</button>
+              <button class="btn btn-outline" style="border-color: var(--verde-italia); color: var(--verde-italia);" onclick="filterOrders('Entregado')">Entregados</button>
+            </div>
+          </div>
+
+          <div class="data-table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>N° Pedido</th>
+                  <th>Canal</th>
+                  <th>Cliente</th>
+                  <th>Fecha</th>
+                  <th>Total</th>
+                  <th>Estado</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody id="ordersTableBody">
+                <!-- Dynamic content -->
+              </tbody>
+            </table>
+          </div>
         </section>
 
         <!-- MÓDULO: NOTAS CRÉDITO/DÉBITO -->
         <section id="mod-notas" class="module-section">
-          <h2 class="page-title"><ion-icon name="swap-horizontal-outline"></ion-icon> Notas de Crédito / Débito</h2>
-          <p>Ajustes de facturación, devoluciones y anulación de comprobantes.</p>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+            <h2 class="page-title" style="margin-bottom:0; border-bottom:none;"><ion-icon name="swap-horizontal-outline"></ion-icon> Notas de Crédito / Débito</h2>
+            <button class="btn btn-red" onclick="openNewCreditNoteModal()">+ Emitir Nota de Crédito</button>
+          </div>
+
+          <div class="data-table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>N° Comprobante</th>
+                  <th>Tipo</th>
+                  <th>Factura Asociada</th>
+                  <th>Cliente</th>
+                  <th>Fecha</th>
+                  <th>Monto</th>
+                  <th>Motivo</th>
+                </tr>
+              </thead>
+              <tbody id="creditNotesTableBody">
+                <!-- Dynamic content -->
+              </tbody>
+            </table>
+          </div>
         </section>
 
         <!-- MÓDULO: REMITOS -->
         <section id="mod-remito" class="module-section">
-          <h2 class="page-title"><ion-icon name="bus-outline"></ion-icon> Remitos</h2>
-          <p>Emisión y control de documentos de traslado de mercadería.</p>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+            <h2 class="page-title" style="margin-bottom:0; border-bottom:none;"><ion-icon name="bus-outline"></ion-icon> Remitos de Mercadería</h2>
+            <button class="btn btn-green" onclick="openNewRemitoModal()">+ Nuevo Remito de Entrega</button>
+          </div>
+
+          <div class="data-table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>N° Remito</th>
+                  <th>Destinatario</th>
+                  <th>Fecha</th>
+                  <th>Bultos</th>
+                  <th>Transporte</th>
+                  <th>Estado</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody id="remitosTableBody">
+                <!-- Dynamic content -->
+              </tbody>
+            </table>
+          </div>
         </section>
 
         <!-- MÓDULO: COMPRAS Y RECEPCIÓN DE STOCK -->
@@ -5351,6 +5437,10 @@
     let cart = [];
     let ecommerceCart = [];
     let sales = [];
+    let budgets = [];
+    let orders = [];
+    let creditNotes = [];
+    let remitos = [];
     let offers = [];
     let expenses = [];
     let purchasesHistory = [];
@@ -5383,9 +5473,12 @@
       address: 'Av. Libertador 4500, CABA',
       phone: '+54 9 11 1234-5678',
       email: 'contacto@gomexnutrition.com.ar',
+      taxCondition: 'Responsable Inscripto',
       ivaCondition: 'Responsable Inscripto',
+      ticketMsg: '¡Gracias por elegir GOMEX Nutrition! Suplementación sin fricción.',
       receiptFooter: '¡Gracias por elegir GOMEX Nutrition! Suplementación sin fricción.',
-      logo: 'logo.jpg'
+      logo: 'logo.jpg',
+      logoUrl: 'logo.jpg'
     };
 
     // ==========================================
@@ -5692,6 +5785,18 @@
 
         const storedCart = localStorage.getItem('gomex_ecom_cart');
         if (storedCart) ecommerceCart = JSON.parse(storedCart);
+
+        const storedBudgets = localStorage.getItem('gomex_budgets');
+        if (storedBudgets) budgets = JSON.parse(storedBudgets);
+
+        const storedOrders = localStorage.getItem('gomex_orders');
+        if (storedOrders) orders = JSON.parse(storedOrders);
+
+        const storedCreditNotes = localStorage.getItem('gomex_credit_notes');
+        if (storedCreditNotes) creditNotes = JSON.parse(storedCreditNotes);
+
+        const storedRemitos = localStorage.getItem('gomex_remitos');
+        if (storedRemitos) remitos = JSON.parse(storedRemitos);
       } catch (e) {
         console.error("Error al leer storage:", e);
       }
@@ -5706,6 +5811,10 @@
         localStorage.setItem('gomex_colabs', JSON.stringify(colaboradores));
         localStorage.setItem('gomex_offers', JSON.stringify(offers));
         localStorage.setItem('gomex_ecom_cart', JSON.stringify(ecommerceCart));
+        localStorage.setItem('gomex_budgets', JSON.stringify(budgets));
+        localStorage.setItem('gomex_orders', JSON.stringify(orders));
+        localStorage.setItem('gomex_credit_notes', JSON.stringify(creditNotes));
+        localStorage.setItem('gomex_remitos', JSON.stringify(remitos));
 
         if (syncToCloud && isFirebaseConnected && db) {
           if (products.length > 0) {
@@ -6414,6 +6523,10 @@
       renderDBClients();
       renderDBColaboradores();
       renderSalesTable();
+      renderBudgetsTable();
+      renderOrdersTable();
+      renderCreditNotesTable();
+      renderRemitosTable();
       renderCashMovements();
       renderCatalog();
       renderImportHistory();
@@ -7082,7 +7195,7 @@
 
       cart.forEach(item => {
         const p = products.find(prod => prod.id === item.product.id);
-        if (p) p.stock -= item.quantity;
+        if (p) p.stock = Math.max(0, p.stock - item.quantity);
       });
 
       const now = new Date();
@@ -7099,7 +7212,7 @@
         total: total
       };
 
-      sales.push(saleRecord);
+      sales.unshift(saleRecord);
 
       boxSession.movements.push({
         time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
@@ -7108,6 +7221,7 @@
         amount: total
       });
 
+      saveStorageData();
       closeCheckoutModal();
       showTicket(saleRecord);
 
@@ -7117,58 +7231,104 @@
       renderStockTable();
       renderSalesTable();
       renderCashMovements();
+      renderDashboard();
     }
 
-    function showTicket(sale) {
+    function showTicket(saleParam) {
+      let sale = saleParam;
+      if (typeof saleParam === 'string' || typeof saleParam === 'number') {
+        sale = sales.find(s => s.ticketNo === saleParam || s.id === saleParam) || sales[0];
+      }
+      if (!sale) {
+        alert('No se encontró el comprobante seleccionado.');
+        return;
+      }
+
       const ticketContent = document.getElementById('ticketContent');
+      if (!ticketContent) return;
+
       let itemsHtml = '';
-      sale.items.forEach(i => {
-        itemsHtml += `
-          <div style="display:flex; justify-content:space-between;">
-            <span>${i.quantity}x ${i.product.name}</span>
-            <span>$${(i.product.price * i.quantity).toLocaleString()}</span>
+      const itemsList = sale.items || sale.lines || [];
+      if (itemsList.length > 0) {
+        itemsList.forEach(i => {
+          const qty = i.quantity || i.qty || 1;
+          const name = (i.product && i.product.name) || i.name || 'Producto GOMEX';
+          const unitPrice = (i.product && i.product.price) || i.price || 0;
+          const lineTotal = i.subtotal || (unitPrice * qty);
+          itemsHtml += `
+            <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:4px;">
+              <span>${qty}x ${name}</span>
+              <span>$${lineTotal.toLocaleString('es-AR')}</span>
+            </div>
+          `;
+        });
+      } else {
+        itemsHtml = `
+          <div style="display:flex; justify-content:space-between; font-size:0.85rem;">
+            <span>1x Venta General</span>
+            <span>$${(sale.total || 0).toLocaleString('es-AR')}</span>
           </div>
         `;
-      });
+      }
+
+      const totalVal = Number(sale.total) || 0;
+      const subtotalVal = sale.subtotal !== undefined ? Number(sale.subtotal) : Math.round(totalVal / 1.21);
+      const taxVal = sale.tax !== undefined ? Number(sale.tax) : (totalVal - subtotalVal);
+      const invoiceNo = sale.ticketNo || sale.id || 'FC-0001-00005100';
+      const sellerName = currentUser ? currentUser.name : (sale.seller || 'David Ramírez (SuperAdmin)');
+      const clientName = sale.client || 'Consumidor Final';
+      const paymentMethod = sale.method || sale.paymentMethod || 'Efectivo';
+      const taxCondition = (storeConfig.taxCondition || storeConfig.ivaCondition || 'Responsable Inscripto').toUpperCase();
 
       ticketContent.innerHTML = `
-        <div class="ticket-center">
-          <img src="${storeConfig.logoUrl || 'logo.jpg'}" style="max-width: 170px; height: auto; margin-bottom: 6px;"><br>
-          <strong>${storeConfig.tradeName.toUpperCase()}</strong><br>
-          ${storeConfig.address}<br>
-          CUIT: ${storeConfig.cuit}<br>
-          IVA ${storeConfig.taxCondition.toUpperCase()}
+        <div class="ticket-center" style="text-align:center; margin-bottom:12px;">
+          <img src="${storeConfig.logoUrl || storeConfig.logo || 'logo.jpg'}" style="max-width: 150px; height: auto; margin-bottom: 6px; border-radius: 8px;"><br>
+          <strong style="font-size:1.1rem; color: #0f172a;">${(storeConfig.tradeName || 'GOMEX Nutrition').toUpperCase()}</strong><br>
+          <span style="font-size:0.82rem; color: #475569;">${storeConfig.businessName || 'GOMEX Nutrition Argentina S.R.L.'}</span><br>
+          <span style="font-size:0.82rem; color: #475569;">${storeConfig.address || 'Av. Libertador 4500, CABA'}</span><br>
+          <span style="font-size:0.82rem; color: #475569;">CUIT: ${storeConfig.cuit || '30-71829340-9'}</span><br>
+          <span style="font-size:0.82rem; font-weight:700; color: #0284c7;">IVA ${taxCondition}</span>
         </div>
-        <div class="ticket-divider"></div>
-        <div>Comprobante: <strong>${sale.ticketNo}</strong></div>
-        <div>Fecha: ${sale.date}</div>
-        <div>Vendedor: <strong>${currentUser ? currentUser.name : 'Eugenio Golfieri'}</strong></div>
-        <div>Cliente: ${sale.client}</div>
-        <div>Forma de Pago: ${sale.method}</div>
-        <div class="ticket-divider"></div>
-        ${itemsHtml}
-        <div class="ticket-divider"></div>
-        <div style="display:flex; justify-content:space-between;">
-          <span>Subtotal:</span>
-          <span>$${sale.subtotal.toLocaleString()}</span>
+        <div class="ticket-divider" style="border-top:1px dashed #94a3b8; margin:10px 0;"></div>
+        <div style="font-size:0.85rem; line-height:1.4;">
+          <div>Comprobante: <strong>${invoiceNo}</strong></div>
+          <div>Fecha: ${sale.date || new Date().toLocaleString()}</div>
+          <div>Vendedor: <strong>${sellerName}</strong></div>
+          <div>Cliente: <strong>${clientName}</strong></div>
+          <div>Forma de Pago: <span style="font-weight:600; color:#0369a1;">${paymentMethod}</span></div>
         </div>
-        <div style="display:flex; justify-content:space-between;">
-          <span>IVA 21%:</span>
-          <span>$${sale.tax.toLocaleString()}</span>
+        <div class="ticket-divider" style="border-top:1px dashed #94a3b8; margin:10px 0;"></div>
+        <div style="margin: 8px 0;">
+          ${itemsHtml}
         </div>
-        <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:1.1rem; margin-top:5px;">
+        <div class="ticket-divider" style="border-top:1px dashed #94a3b8; margin:10px 0;"></div>
+        <div style="display:flex; justify-content:space-between; font-size:0.85rem;">
+          <span>Subtotal Neto:</span>
+          <span>$${subtotalVal.toLocaleString('es-AR')}</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:0.85rem;">
+          <span>IVA (21%):</span>
+          <span>$${taxVal.toLocaleString('es-AR')}</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-weight:800; font-size:1.15rem; margin-top:8px; padding-top:6px; border-top:1px solid #cbd5e1; color:#0f172a;">
           <span>TOTAL:</span>
-          <span>$${sale.total.toLocaleString()}</span>
+          <span style="color:#16a34a;">$${totalVal.toLocaleString('es-AR')}</span>
         </div>
-        <div class="ticket-divider"></div>
-        <div class="ticket-center">${storeConfig.ticketMsg}</div>
+        <div class="ticket-divider" style="border-top:1px dashed #94a3b8; margin:12px 0 8px;"></div>
+        <div class="ticket-center" style="text-align:center; font-size:0.78rem; color:#64748b;">
+          ${storeConfig.ticketMsg || storeConfig.receiptFooter || '¡Gracias por su compra en GOMEX Nutrition!'}
+        </div>
       `;
 
-      document.getElementById('ticketModal').classList.add('active');
+      const modal = document.getElementById('ticketModal');
+      if (modal) {
+        modal.classList.add('active');
+      }
     }
 
     function closeTicketModal() {
-      document.getElementById('ticketModal').classList.remove('active');
+      const modal = document.getElementById('ticketModal');
+      if (modal) modal.classList.remove('active');
     }
 
     // VERIFICADOR DE PRECIOS CON MOSTRADO DE IMAGEN
@@ -7907,25 +8067,291 @@
 
     function renderSalesTable() {
       const body = document.getElementById('salesTableBody');
+      if (!body) return;
       body.innerHTML = '';
 
+      if (!sales || sales.length === 0) {
+        body.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#94a3b8; padding:25px;">No hay ventas registradas aún. Emite tu primera venta desde el Punto POS.</td></tr>';
+        document.getElementById('salesTotalToday').textContent = '$0';
+        document.getElementById('salesCountToday').textContent = '0';
+        return;
+      }
+
       let totalToday = 0;
-      sales.forEach(s => {
-        totalToday += s.total;
+      sales.forEach((s, idx) => {
+        const saleTotal = Number(s.total) || 0;
+        totalToday += saleTotal;
+        const invoiceNo = s.ticketNo || s.id || `FC-0001-${String(sales.length - idx + 5100).padStart(8, '0')}`;
+        const clientName = s.client || 'Consumidor Final';
+        const dateStr = s.date || '-';
+        const methodStr = s.method || s.paymentMethod || 'Efectivo';
+
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td><strong>${s.ticketNo}</strong></td>
-          <td>${s.client}</td>
-          <td>${s.date}</td>
-          <td>${s.method}</td>
-          <td style="color: var(--verde-italia); font-weight: bold;">$${s.total.toLocaleString()}</td>
-          <td><button class="btn btn-outline" style="padding: 4px 8px; font-size: 0.8rem;" onclick='showTicket(${JSON.stringify(s)})'>Ver Ticket</button></td>
+          <td><strong>${invoiceNo}</strong></td>
+          <td>${clientName}</td>
+          <td>${dateStr}</td>
+          <td><span class="pill" style="font-size:0.75rem; background:rgba(56,189,248,0.15); color:#38bdf8; border:1px solid rgba(56,189,248,0.3);">${methodStr}</span></td>
+          <td style="color: var(--verde-italia); font-weight: bold;">$${saleTotal.toLocaleString('es-AR')}</td>
+          <td>
+            <button class="btn btn-outline" style="padding: 4px 10px; font-size: 0.8rem; border-color: var(--celeste-brand); color: var(--celeste-brand);" onclick="openTicketByIndex(${idx})">
+              <ion-icon name="receipt-outline"></ion-icon> Ver Ticket
+            </button>
+          </td>
         `;
         body.appendChild(tr);
       });
 
-      document.getElementById('salesTotalToday').textContent = `$${totalToday.toLocaleString()}`;
+      document.getElementById('salesTotalToday').textContent = `$${totalToday.toLocaleString('es-AR')}`;
       document.getElementById('salesCountToday').textContent = sales.length;
+    }
+
+    function openTicketByIndex(idx) {
+      if (sales && sales[idx]) {
+        showTicket(sales[idx]);
+      }
+    }
+
+    // ==========================================
+    // MÓDULOS EXTENDIDOS DE FACTURACIÓN
+    // ==========================================
+
+    // 1. PRESUPUESTOS & COTIZACIONES
+    function renderBudgetsTable() {
+      const body = document.getElementById('budgetsTableBody');
+      if (!body) return;
+      body.innerHTML = '';
+
+      if (!budgets || budgets.length === 0) {
+        body.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#94a3b8; padding:25px;">No hay presupuestos emitidos. Presione "+ Emitir Nuevo Presupuesto" para generar cotizaciones a clientes.</td></tr>';
+        return;
+      }
+
+      budgets.forEach((b, idx) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${b.number}</strong></td>
+          <td>${b.client}</td>
+          <td>${b.date}</td>
+          <td>${b.validUntil || '15 días'}</td>
+          <td style="color: var(--verde-italia); font-weight: bold;">$${(b.total || 0).toLocaleString('es-AR')}</td>
+          <td><span class="pill" style="font-size:0.75rem; ${b.status === 'Convertido' ? 'background:rgba(16,185,129,0.15); color:#34d399;' : 'background:rgba(56,189,248,0.15); color:#38bdf8;'}">${b.status || 'Vigente'}</span></td>
+          <td>
+            <button class="btn btn-outline" style="padding: 4px 8px; font-size: 0.75rem;" onclick="convertBudgetToPOS(${idx})">
+              <ion-icon name="cart-outline"></ion-icon> Facturar en POS
+            </button>
+          </td>
+        `;
+        body.appendChild(tr);
+      });
+    }
+
+    function openNewBudgetModal() {
+      const clientName = prompt("Ingrese nombre del Cliente para el Presupuesto:") || "Consumidor Final";
+      const concept = prompt("Concepto / Productos cotizados:") || "Combo Rutina GOMEX";
+      const totalAmount = parseFloat(prompt("Monto total cotizado ($):") || "35000");
+
+      if (isNaN(totalAmount) || totalAmount <= 0) return;
+
+      const now = new Date();
+      const budgetNo = `PR-0001-${String(budgets.length + 1).padStart(6, '0')}`;
+      budgets.unshift({
+        id: Date.now(),
+        number: budgetNo,
+        client: clientName,
+        concept: concept,
+        date: now.toLocaleDateString(),
+        validUntil: '15 días',
+        total: totalAmount,
+        status: 'Vigente'
+      });
+
+      saveStorageData();
+      renderBudgetsTable();
+      alert(`¡Presupuesto ${budgetNo} emitido para ${clientName}!`);
+    }
+
+    function convertBudgetToPOS(idx) {
+      const b = budgets[idx];
+      if (!b) return;
+      b.status = 'Convertido';
+      saveStorageData();
+      renderBudgetsTable();
+      showModule('mod-pos');
+      alert(`Presupuesto ${b.number} listo para facturar.`);
+    }
+
+    // 2. PEDIDOS DE CLIENTES
+    function renderOrdersTable(filterStatus = 'TODOS') {
+      const body = document.getElementById('ordersTableBody');
+      if (!body) return;
+      body.innerHTML = '';
+
+      // Sincronizar pedidos con ventas e-commerce
+      let allOrders = [...orders];
+      sales.filter(s => s.paymentMethod && s.paymentMethod.includes('E-Commerce')).forEach(s => {
+        if (!allOrders.some(o => o.number === s.id)) {
+          allOrders.push({
+            id: s.id,
+            number: s.id,
+            channel: 'Tienda Web',
+            client: s.client,
+            date: s.date,
+            total: s.total,
+            status: 'Pendiente'
+          });
+        }
+      });
+
+      if (filterStatus !== 'TODOS') {
+        allOrders = allOrders.filter(o => o.status === filterStatus);
+      }
+
+      if (allOrders.length === 0) {
+        body.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#94a3b8; padding:25px;">No hay pedidos en este estado.</td></tr>';
+        return;
+      }
+
+      allOrders.forEach((o, idx) => {
+        const isDelivered = o.status === 'Entregado';
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${o.number || ('PED-' + (idx + 1))}</strong></td>
+          <td><span class="pill" style="font-size:0.75rem; background:rgba(56,189,248,0.15); color:#38bdf8;">${o.channel || 'POS'}</span></td>
+          <td>${o.client || 'Consumidor Final'}</td>
+          <td>${o.date || '-'}</td>
+          <td style="color: var(--verde-italia); font-weight: bold;">$${(o.total || 0).toLocaleString('es-AR')}</td>
+          <td>
+            <span class="pill" style="font-size:0.75rem; ${isDelivered ? 'background:rgba(16,185,129,0.2); color:#34d399;' : 'background:rgba(245,158,11,0.2); color:#fbbf24;'}">
+              ${o.status || 'Pendiente'}
+            </span>
+          </td>
+          <td>
+            <button class="btn btn-outline" style="padding: 4px 8px; font-size: 0.75rem;" onclick="toggleOrderStatus('${o.number}')">
+              ${isDelivered ? 'Marcar Pendiente' : '✅ Marcar Entregado'}
+            </button>
+          </td>
+        `;
+        body.appendChild(tr);
+      });
+    }
+
+    function filterOrders(status) {
+      renderOrdersTable(status);
+    }
+
+    function toggleOrderStatus(orderNumber) {
+      let ord = orders.find(o => o.number === orderNumber);
+      if (!ord) {
+        ord = { number: orderNumber, status: 'Entregado' };
+        orders.push(ord);
+      } else {
+        ord.status = ord.status === 'Entregado' ? 'Pendiente' : 'Entregado';
+      }
+      saveStorageData();
+      renderOrdersTable();
+    }
+
+    // 3. NOTAS DE CRÉDITO / DÉBITO
+    function renderCreditNotesTable() {
+      const body = document.getElementById('creditNotesTableBody');
+      if (!body) return;
+      body.innerHTML = '';
+
+      if (!creditNotes || creditNotes.length === 0) {
+        body.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#94a3b8; padding:25px;">No hay notas de crédito emitidas. Use "+ Emitir Nota de Crédito" para devoluciones o anulaciones.</td></tr>';
+        return;
+      }
+
+      creditNotes.forEach(nc => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${nc.number}</strong></td>
+          <td><span class="pill" style="font-size:0.75rem; background:rgba(239,68,68,0.15); color:#f87171;">${nc.type || 'Nota de Crédito'}</span></td>
+          <td><code>${nc.invoiceRef || '-'}</code></td>
+          <td>${nc.client}</td>
+          <td>${nc.date}</td>
+          <td style="color:#f87171; font-weight:bold;">-$${(nc.amount || 0).toLocaleString('es-AR')}</td>
+          <td>${nc.reason}</td>
+        `;
+        body.appendChild(tr);
+      });
+    }
+
+    function openNewCreditNoteModal() {
+      const invoiceNo = prompt("Ingrese N° de Factura asociada (ej: FC-0001-00005100):") || "FC-0001-00005100";
+      const clientName = prompt("Cliente:") || "Consumidor Final";
+      const amount = parseFloat(prompt("Monto a devolver / acreditar ($):") || "10000");
+      const reason = prompt("Motivo (ej: Devolución de mercadería, Error de tipeo):") || "Devolución de mercadería";
+
+      if (isNaN(amount) || amount <= 0) return;
+
+      const ncNo = `NC-0001-${String(creditNotes.length + 1).padStart(6, '0')}`;
+      creditNotes.unshift({
+        id: Date.now(),
+        number: ncNo,
+        type: 'Nota de Crédito',
+        invoiceRef: invoiceNo,
+        client: clientName,
+        date: new Date().toLocaleDateString(),
+        amount: amount,
+        reason: reason
+      });
+
+      saveStorageData();
+      renderCreditNotesTable();
+      alert(`¡Nota de Crédito ${ncNo} emitida correctamente!`);
+    }
+
+    // 4. REMITOS DE TRASLADO
+    function renderRemitosTable() {
+      const body = document.getElementById('remitosTableBody');
+      if (!body) return;
+      body.innerHTML = '';
+
+      if (!remitos || remitos.length === 0) {
+        body.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#94a3b8; padding:25px;">No hay remitos emitidos. Use "+ Nuevo Remito de Entrega" para despachos de mercadería.</td></tr>';
+        return;
+      }
+
+      remitos.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${r.number}</strong></td>
+          <td>${r.recipient}</td>
+          <td>${r.date}</td>
+          <td>${r.packages} Bulto(s)</td>
+          <td>${r.carrier}</td>
+          <td><span class="pill" style="font-size:0.75rem; background:rgba(16,185,129,0.15); color:#34d399;">${r.status || 'En Tránsito'}</span></td>
+          <td>
+            <button class="btn btn-outline" style="padding: 4px 8px; font-size: 0.75rem;" onclick="alert('Remito ${r.number} impreso.')">
+              <ion-icon name="print-outline"></ion-icon> Imprimir
+            </button>
+          </td>
+        `;
+        body.appendChild(tr);
+      });
+    }
+
+    function openNewRemitoModal() {
+      const recipient = prompt("Destinatario / Comercio de entrega:") || "Sucursal Belgrano";
+      const packages = parseInt(prompt("Cantidad de bultos:") || "2");
+      const carrier = prompt("Transporte / Mensajería:") || "Logística Andreani / Propio";
+
+      const remNo = `REM-0001-${String(remitos.length + 1).padStart(6, '0')}`;
+      remitos.unshift({
+        id: Date.now(),
+        number: remNo,
+        recipient: recipient,
+        date: new Date().toLocaleDateString(),
+        packages: packages || 1,
+        carrier: carrier,
+        status: 'En Tránsito'
+      });
+
+      saveStorageData();
+      renderRemitosTable();
+      alert(`¡Remito ${remNo} emitido para ${recipient}!`);
     }
 
     function renderCashMovements() {
