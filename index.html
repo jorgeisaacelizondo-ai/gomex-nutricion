@@ -1361,6 +1361,21 @@
       transition: all 0.2s;
     }
 
+    /* ==========================================
+       RESPONSIVE & MOBILE OVERFLOW CONTROLS
+       ========================================== */
+    html, body {
+      max-width: 100vw;
+      overflow-x: hidden !important;
+      position: relative;
+    }
+
+    #view-ecommerce, #view-pos-admin, .app-container, .main-layout {
+      max-width: 100vw;
+      overflow-x: hidden;
+      box-sizing: border-box;
+    }
+
     @media (max-width: 1024px) {
       .hero-container {
         grid-template-columns: 1fr;
@@ -1390,14 +1405,130 @@
     }
 
     @media (max-width: 768px) {
+      .top-announcement {
+        font-size: 0.75rem;
+        padding: 5px 10px;
+        line-height: 1.3;
+      }
+      .ecom-navbar {
+        padding: 10px 14px;
+        width: 100%;
+        max-width: 100vw;
+      }
       .ecom-nav-links {
         display: none;
       }
+      .ecom-nav-actions {
+        gap: 6px;
+      }
+      .btn-nav-b2b {
+        padding: 7px 10px;
+        font-size: 0.8rem;
+      }
+      .btn-nav-b2b span {
+        display: none;
+      }
+      .btn-nav-staff {
+        padding: 7px 10px;
+        font-size: 0.8rem;
+      }
+      .btn-nav-staff span {
+        display: none;
+      }
+      .btn-cart-toggle {
+        padding: 7px 12px;
+      }
+      .btn-cart-toggle span:not(.cart-badge) {
+        display: none;
+      }
+      .hero-container {
+        padding: 24px 14px;
+        margin: 10px 10px 0;
+        border-radius: 20px;
+      }
       .hero-title {
-        font-size: 2.2rem;
+        font-size: clamp(1.6rem, 6vw, 2.3rem);
+        line-height: 1.18;
+      }
+      .hero-subtitle {
+        font-size: 0.92rem;
+        line-height: 1.45;
+      }
+      .hero-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+      }
+      .btn-hero-primary, .btn-hero-secondary {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 16px;
+        font-size: 0.9rem;
+      }
+      .hero-trust-badges {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .catalog-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        width: 100%;
+      }
+      .catalog-search-wrap {
+        width: 100%;
+      }
+      .category-chips {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 8px;
+        padding-bottom: 6px;
+        scrollbar-width: none;
+      }
+      .category-chips::-webkit-scrollbar {
+        display: none;
+      }
+      .chip {
+        white-space: nowrap;
+        flex-shrink: 0;
+        padding: 7px 14px;
+        font-size: 0.82rem;
+      }
+      .ecommerce-products-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .story-card-main {
+        padding: 24px 18px;
+        border-radius: 20px;
+      }
+      .story-pillars-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .mission-banner {
+        padding: 24px 16px;
+        border-radius: 20px;
+        margin: 0 8px;
+      }
+      .mission-quote {
+        font-size: 1.05rem;
+      }
+      .b2b-section {
+        padding: 40px 14px;
       }
       .footer-container {
         grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
       }
     }
 
@@ -2452,7 +2583,8 @@
         bottom: 0;
         left: -270px;
         width: 260px !important;
-        box-shadow: 4px 0 15px rgba(0,0,0,0.3);
+        box-shadow: 4px 0 25px rgba(0,0,0,0.6);
+        z-index: 99999;
       }
 
       aside.mobile-open {
@@ -2460,26 +2592,82 @@
       }
 
       header {
-        padding: 0 15px;
+        padding: 8px 12px;
+        height: auto;
+        min-height: 54px;
+        gap: 6px;
+        justify-content: space-between;
+      }
+
+      .header-left h3 {
+        display: none;
+      }
+
+      .header-right {
+        gap: 6px;
+        flex-wrap: nowrap;
+      }
+
+      #firebaseHeaderStatus {
+        padding: 4px 8px !important;
+        font-size: 0.72rem !important;
+      }
+
+      .btn-store-return {
+        padding: 5px 8px !important;
+        font-size: 0.75rem !important;
+      }
+
+      .btn-store-return span {
+        display: none;
+      }
+
+      .user-profile {
+        padding: 3px 6px !important;
+      }
+
+      .user-profile span {
+        display: none;
+      }
+
+      .btn-logout {
+        padding: 5px 8px !important;
+        font-size: 0.75rem !important;
       }
 
       .content-area {
-        padding: 15px;
+        padding: 12px 10px;
+        max-width: 100vw;
+        overflow-x: hidden;
       }
 
       .pos-layout {
         display: flex;
         flex-direction: column;
         height: auto;
+        gap: 15px;
       }
 
       .pos-products, .pos-cart {
         height: auto;
         max-height: none;
+        width: 100%;
       }
 
       .grid-cards {
         grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .data-table-container {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .data-table {
+        min-width: 620px;
       }
 
       .form-row-2, .form-row-3 {
@@ -2491,8 +2679,9 @@
       }
 
       .modal-box {
-        padding: 15px;
+        padding: 18px 14px;
         max-width: 95vw;
+        margin: 10px;
       }
     }
 
@@ -2908,7 +3097,10 @@
 
       <div class="footer-bottom">
         <div>© 2026 GOMEX Nutrition Argentina S.R.L. Todos los derechos reservados.</div>
-        <div>Fórmulas aprobadas y registradas ante autoridades sanitarias.</div>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--celeste-brand); font-weight: 700; font-size: 0.82rem;">
+          <ion-icon name="code-slash-outline" style="font-size: 1.1rem;"></ion-icon>
+          <span>Desarrollado por <strong>David Ramírez</strong></span>
+        </div>
       </div>
     </footer>
 
@@ -3178,6 +3370,13 @@
         </div>
       </li>
 
+      <li style="margin: 25px 12px 15px; padding: 12px 14px; background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; font-size: 0.78rem; color: #94a3b8; list-style: none;">
+        <div style="display: flex; align-items: center; gap: 6px; color: var(--celeste-brand); font-weight: 700; margin-bottom: 2px;">
+          <ion-icon name="code-slash-outline" style="font-size: 1rem;"></ion-icon>
+          <span>David Ramírez</span>
+        </div>
+        <div style="font-size: 0.72rem; opacity: 0.85;">Desarrollador de Software</div>
+      </li>
     </div>
   </aside>
 
@@ -4546,7 +4745,7 @@
         <div class="form-row-2">
           <div class="form-group">
             <label>Usuario (Ingreso)</label>
-            <input type="text" id="newColabUsername" class="input-field" required placeholder="Ej: Rosita">
+            <input type="text" id="newColabUsername" class="input-field" required placeholder="Ej: nuevo_usuario">
           </div>
           <div class="form-group">
             <label>Contraseña</label>
@@ -4554,14 +4753,16 @@
           </div>
         </div>
         <div class="form-group">
-          <label>Rol / Cargo</label>
+          <label>Rol / Nivel de Acceso</label>
           <select id="newColabRole" class="input-field">
-            <option value="Administrador">Administrador</option>
-            <option value="Encargado">Encargado de Local</option>
+            <option value="Super Administrador">⭐ Super Administrador (Acceso Total)</option>
+            <option value="Administrador" selected>Administrador</option>
+            <option value="Encargada de Ventas">Encargado/a de Ventas</option>
             <option value="Vendedor POS">Vendedor POS</option>
+            <option value="Cajero">Cajero / Facturación</option>
           </select>
         </div>
-        <button type="submit" class="btn btn-green" style="width: 100%; justify-content: center;">Guardar Colaborador</button>
+        <button type="submit" class="btn btn-green" style="width: 100%; justify-content: center; padding: 12px;">Guardar Colaborador</button>
       </form>
     </div>
   </div>
@@ -4590,14 +4791,16 @@
           </div>
         </div>
         <div class="form-group">
-          <label>Rol / Cargo</label>
+          <label>Rol / Nivel de Acceso</label>
           <select id="editColabRole" class="input-field">
+            <option value="Super Administrador">⭐ Super Administrador (Acceso Total)</option>
             <option value="Administrador">Administrador</option>
-            <option value="Encargado">Encargado de Local</option>
+            <option value="Encargada de Ventas">Encargado/a de Ventas</option>
             <option value="Vendedor POS">Vendedor POS</option>
+            <option value="Cajero">Cajero / Facturación</option>
           </select>
         </div>
-        <button type="submit" class="btn btn-green" style="width: 100%; justify-content: center;">Guardar Cambios del Colaborador</button>
+        <button type="submit" class="btn btn-green" style="width: 100%; justify-content: center; padding: 12px;">Guardar Cambios del Colaborador</button>
       </form>
     </div>
   </div>
@@ -4936,12 +5139,12 @@
     let importHistory = [];
     let selectedEcommerceCategory = 'all';
 
-    let colaboradores = [
-      { id: 1, name: 'Administrador Principal', username: 'admin', password: '12345', role: 'Administrador' },
-      { id: 2, name: 'Eugenio Golfieri', username: 'Eugenio', password: '12345', role: 'Administrador' },
-      { id: 3, name: 'Rosita Golfieri', username: 'Rosita', password: '12345', role: 'Encargada de Ventas' },
-      { id: 4, name: 'Jorge Elizondo', username: 'Jorge', password: '12345', role: 'Vendedor POS' }
+    const defaultColaboradores = [
+      { id: 1, name: 'David Ramírez (SuperAdmin)', username: 'superadmin', password: '123', role: 'Super Administrador' },
+      { id: 2, name: 'Administrador GOMEX', username: 'admin', password: '123', role: 'Administrador' }
     ];
+
+    let colaboradores = [...defaultColaboradores];
 
     let clients = [
       { cuit: '00-00000000-0', name: 'Consumidor Final', phone: '-', email: '-' }
@@ -5249,10 +5452,20 @@
 
         const storedColabs = localStorage.getItem('gomex_colabs');
         if (storedColabs) {
-          colaboradores = JSON.parse(storedColabs);
-          if (!colaboradores.some(c => c.username.toLowerCase() === 'admin')) {
-            colaboradores.unshift({ id: 1, name: 'Administrador Principal', username: 'admin', password: '12345', role: 'Administrador' });
+          const parsed = JSON.parse(storedColabs);
+          // Filtrar colaboradores de prueba anteriores si existen
+          const cleaned = parsed.filter(c => 
+            !['eugenio', 'rosita', 'jorge'].includes(c.username.toLowerCase())
+          );
+          if (!cleaned.some(c => c.username.toLowerCase() === 'superadmin')) {
+            cleaned.unshift({ id: 1, name: 'David Ramírez (SuperAdmin)', username: 'superadmin', password: '123', role: 'Super Administrador' });
           }
+          if (!cleaned.some(c => c.username.toLowerCase() === 'admin')) {
+            cleaned.push({ id: 2, name: 'Administrador GOMEX', username: 'admin', password: '123', role: 'Administrador' });
+          }
+          colaboradores = cleaned;
+        } else {
+          colaboradores = [...defaultColaboradores];
         }
 
         const storedOffers = localStorage.getItem('gomex_offers');
@@ -5275,13 +5488,23 @@
         localStorage.setItem('gomex_offers', JSON.stringify(offers));
         localStorage.setItem('gomex_ecom_cart', JSON.stringify(ecommerceCart));
 
-        if (syncToCloud && isFirebaseConnected && db && products.length > 0) {
-          const batch = db.batch();
-          products.forEach(p => {
-            const ref = db.collection('products').doc(String(p.id || p.code || p.internalCode));
-            batch.set(ref, p, { merge: true });
-          });
-          batch.commit().catch(e => console.warn("Firestore sync:", e.message));
+        if (syncToCloud && isFirebaseConnected && db) {
+          if (products.length > 0) {
+            const batch = db.batch();
+            products.forEach(p => {
+              const ref = db.collection('products').doc(String(p.id || p.code || p.internalCode));
+              batch.set(ref, p, { merge: true });
+            });
+            batch.commit().catch(e => console.warn("Firestore sync products:", e.message));
+          }
+          if (colaboradores.length > 0) {
+            const colabBatch = db.batch();
+            colaboradores.forEach(c => {
+              const ref = db.collection('collaborators').doc(String(c.id || c.username));
+              colabBatch.set(ref, c, { merge: true });
+            });
+            colabBatch.commit().catch(e => console.warn("Firestore sync colabs:", e.message));
+          }
         }
       } catch (e) {
         console.error(e);
@@ -5912,9 +6135,13 @@
         c.username.toLowerCase() === userVal.toLowerCase() && c.password === passVal
       );
 
-      // Credenciales requeridas por el administrador: admin / 12345
-      if (!matchedColab && userVal.toLowerCase() === 'admin' && passVal === '12345') {
-        matchedColab = { id: 1, name: 'Administrador Principal', username: 'admin', password: '12345', role: 'Administrador' };
+      // SuperAdmin y Admin Master fallbacks (soporta 123 o 12345)
+      if (!matchedColab) {
+        if (userVal.toLowerCase() === 'superadmin' && (passVal === '123' || passVal === '12345')) {
+          matchedColab = { id: 1, name: 'David Ramírez (SuperAdmin)', username: 'superadmin', password: passVal, role: 'Super Administrador' };
+        } else if (userVal.toLowerCase() === 'admin' && (passVal === '123' || passVal === '12345')) {
+          matchedColab = { id: 2, name: 'Administrador GOMEX', username: 'admin', password: passVal, role: 'Administrador' };
+        }
       }
 
       if (matchedColab) {
@@ -5927,7 +6154,7 @@
         initApp();
       } else {
         errorDiv.style.display = 'flex';
-        document.getElementById('loginErrorMsg').textContent = 'Usuario o contraseña incorrectos. Ingrese con admin / 12345.';
+        document.getElementById('loginErrorMsg').textContent = 'Credenciales incorrectas. (SuperAdmin: superadmin / Clave: 123)';
       }
     }
 
@@ -7312,17 +7539,34 @@ function removeOffer(index) {
       if (!body) return;
       body.innerHTML = '';
 
+      if (!colaboradores || colaboradores.length === 0) {
+        body.innerHTML = `
+          <tr>
+            <td colspan="4" style="text-align:center; padding:30px; color:#94a3b8;">
+              <div>No hay colaboradores registrados.</div>
+              <button class="btn btn-green" onclick="openAddColaboradorModal()" style="margin-top:10px;">+ Registrar Primer Colaborador</button>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
       colaboradores.forEach(col => {
+        const isSuper = col.role === 'Super Administrador';
+        const roleStyle = isSuper 
+          ? 'background: rgba(245, 158, 11, 0.2); border: 1px solid rgba(245, 158, 11, 0.4); color: #fbbf24; font-weight: 800;'
+          : 'background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3); color: #38bdf8; font-weight: 600;';
+
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td><strong>${col.name}</strong></td>
+          <td><strong>${col.name}</strong> ${isSuper ? '👑' : ''}</td>
           <td><code>${col.username}</code></td>
-          <td><span class="pill" style="font-size: 0.75rem;">${col.role}</span></td>
+          <td><span class="pill" style="font-size: 0.75rem; ${roleStyle}">${isSuper ? '⭐ ' : ''}${col.role}</span></td>
           <td style="white-space: nowrap;">
-            <button class="btn btn-outline" style="padding: 4px 8px; font-size: 0.75rem; border-color: var(--verde-italia); color: var(--verde-italia); margin-right: 4px;" onclick="openEditColaboradorModal(${col.id})">
+            <button class="btn btn-outline" style="padding: 4px 8px; font-size: 0.75rem; border-color: #38bdf8; color: #38bdf8; margin-right: 4px;" onclick="openEditColaboradorModal(${col.id})">
               <ion-icon name="create-outline"></ion-icon> Editar
             </button>
-            <button class="btn btn-red" style="padding: 4px 8px; font-size: 0.75rem;" onclick="deleteColaborador(${col.id})">
+            <button class="btn btn-red" style="padding: 4px 8px; font-size: 0.75rem;" onclick="deleteColaborador(${col.id})" ${isSuper && colaboradores.filter(c => c.role === 'Super Administrador').length <= 1 ? 'disabled title="No se puede eliminar el SuperAdmin principal" style="opacity:0.4; cursor:not-allowed;"' : ''}>
               Eliminar
             </button>
           </td>
@@ -7332,6 +7576,9 @@ function removeOffer(index) {
     }
 
     function openAddColaboradorModal() {
+      document.getElementById('newColabName').value = '';
+      document.getElementById('newColabUsername').value = '';
+      document.getElementById('newColabPassword').value = '';
       document.getElementById('addColaboradorModal').classList.add('active');
     }
     function closeAddColaboradorModal() {
@@ -7351,16 +7598,17 @@ function removeOffer(index) {
       }
 
       colaboradores.push({
-        id: colaboradores.length + 1,
+        id: Date.now(),
         name,
         username,
         password,
         role
       });
 
+      saveStorageData();
       closeAddColaboradorModal();
       renderDBColaboradores();
-      alert('¡Colaborador registrado correctamente! Ahora puede ingresar al sistema.');
+      alert(`¡Colaborador "${name}" registrado correctamente! Ahora puede ingresar con usuario "${username}".`);
     }
 
     function openEditColaboradorModal(id) {
@@ -7403,20 +7651,38 @@ function removeOffer(index) {
         document.getElementById('headerUserAvatar').textContent = col.name.charAt(0).toUpperCase();
       }
 
+      saveStorageData();
       closeEditColaboradorModal();
       renderDBColaboradores();
       alert('¡Colaborador actualizado correctamente!');
     }
 
-    function deleteColaborador(id) {
+    async function deleteColaborador(id) {
+      const col = colaboradores.find(c => c.id === id);
+      if (!col) return;
+
+      if (col.role === 'Super Administrador' && colaboradores.filter(c => c.role === 'Super Administrador').length <= 1) {
+        alert('No es posible eliminar al Super Administrador principal del sistema.');
+        return;
+      }
+
       if (colaboradores.length <= 1) {
         alert('Debe existir al menos un colaborador registrado.');
         return;
       }
-      const col = colaboradores.find(c => c.id === id);
-      if (confirm(`¿Está seguro de eliminar a ${col ? col.name : 'este colaborador'}?`)) {
+
+      if (confirm(`¿Está seguro de eliminar a ${col.name} (@${col.username})?`)) {
         colaboradores = colaboradores.filter(c => c.id !== id);
+        saveStorageData();
+        if (isFirebaseConnected && db) {
+          try {
+            await db.collection('collaborators').doc(String(id)).delete();
+          } catch (e) {
+            console.warn("Firestore delete colab:", e);
+          }
+        }
         renderDBColaboradores();
+        alert('Colaborador eliminado.');
       }
     }
 
