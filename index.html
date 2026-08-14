@@ -2568,20 +2568,38 @@
     /* TICKET IMPRESIÓN STYLES */
     .ticket-view {
       font-family: 'Courier New', Courier, monospace;
-      background: #fff;
-      padding: 15px;
-      border: 1px dashed #aaa;
+      background: #ffffff !important;
+      color: #0f172a !important;
+      padding: 20px;
+      border: 1px dashed #64748b;
+      border-radius: 8px;
       margin-top: 15px;
-      font-size: 0.85rem;
+      font-size: 0.88rem;
+      line-height: 1.45;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
 
-    .ticket-center {
+    .ticket-view,
+    .ticket-view div,
+    .ticket-view span,
+    .ticket-view p,
+    .ticket-view strong,
+    .ticket-view code {
+      color: #0f172a !important;
+    }
+
+    .ticket-view strong {
+      color: #000000 !important;
+      font-weight: 800;
+    }
+
+    .ticket-view .ticket-center {
       text-align: center;
     }
 
-    .ticket-divider {
-      border-top: 1px dashed #000;
-      margin: 10px 0;
+    .ticket-view .ticket-divider {
+      border-top: 1px dashed #64748b !important;
+      margin: 12px 0;
     }
 
     .pagination-bar {
@@ -4335,8 +4353,73 @@
         </section>
 
         <section id="mod-cfg-tesoreria" class="module-section">
-          <h2 class="page-title"><ion-icon name="options-outline"></ion-icon> Configuración Tesorería</h2>
-          <p>Monedas, tarjetas, métodos de pago aceptados y bancos.</p>
+          <h2 class="page-title"><ion-icon name="card-outline"></ion-icon> Configuración de Cuentas de Cobro & Mercado Pago</h2>
+          <p style="color: var(--text-muted); margin-bottom: 20px;">
+            Define los datos bancarios y de Mercado Pago para transferencias. Estos datos aparecerán automáticamente en los comprobantes/tickets cuando el cliente pague por transferencia.
+          </p>
+
+          <form onsubmit="handleSaveBankConfig(event)">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+              <!-- Tarjeta Mercado Pago -->
+              <div class="card" style="border-top-color: #009ee3;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 15px;">
+                  <ion-icon name="wallet-outline" style="font-size: 1.4rem; color: #009ee3;"></ion-icon>
+                  <h3 style="margin: 0; color: #ffffff;">Mercado Pago</h3>
+                </div>
+
+                <div class="form-group">
+                  <label>Alias Mercado Pago</label>
+                  <input type="text" id="cfgAliasMpInput" class="input-field" placeholder="Ej: gomex.nutricion.mp" required>
+                </div>
+
+                <div class="form-group">
+                  <label>CVU Mercado Pago (22 dígitos)</label>
+                  <input type="text" id="cfgCvuMpInput" class="input-field" placeholder="Ej: 0000003100084920194820" required>
+                </div>
+              </div>
+
+              <!-- Tarjeta Cuenta Bancaria CBU -->
+              <div class="card" style="border-top-color: #10b981;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 15px;">
+                  <ion-icon name="business-outline" style="font-size: 1.4rem; color: #10b981;"></ion-icon>
+                  <h3 style="margin: 0; color: #ffffff;">Cuenta Bancaria Tradicional (CBU)</h3>
+                </div>
+
+                <div class="form-group">
+                  <label>Banco</label>
+                  <input type="text" id="cfgBankNameInput" class="input-field" placeholder="Ej: Banco Santander / Galicia / BBVA" required>
+                </div>
+
+                <div class="form-group">
+                  <label>Alias CBU</label>
+                  <input type="text" id="cfgAliasCbuInput" class="input-field" placeholder="Ej: GOMEX.ARG.BANCO" required>
+                </div>
+
+                <div class="form-group">
+                  <label>CBU Bancario (22 dígitos)</label>
+                  <input type="text" id="cfgCbuInput" class="input-field" placeholder="Ej: 0170099220000012345678" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="margin-bottom: 20px; border-top-color: var(--celeste-brand);">
+              <h3 style="margin-bottom: 15px; color: #ffffff;">Titularidad de la Cuenta</h3>
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label>Titular / Razón Social</label>
+                  <input type="text" id="cfgHolderInput" class="input-field" placeholder="Ej: GOMEX Nutrition Argentina S.R.L." required>
+                </div>
+                <div class="form-group">
+                  <label>CUIT / CUIL del Titular</label>
+                  <input type="text" id="cfgBankCuitInput" class="input-field" placeholder="Ej: 30-71829340-9" required>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-green" style="padding: 12px 24px; font-weight: 700;">
+              💾 Guardar Datos de Transferencia & Mercado Pago
+            </button>
+          </form>
         </section>
 
         <section id="mod-cfg-parametros" class="module-section">
@@ -5481,6 +5564,16 @@
       logoUrl: 'logo.jpg'
     };
 
+    let bankConfig = {
+      aliasMp: 'gomex.nutricion.mp',
+      cvuMp: '0000003100084920194820',
+      aliasCbu: 'GOMEX.ARG',
+      cbu: '0170099220000012345678',
+      bankName: 'Banco Santander / Mercado Pago',
+      holder: 'GOMEX Nutrition Argentina S.R.L.',
+      cuit: '30-71829340-9'
+    };
+
     // ==========================================
     // INTEGRACIÓN Y SINCRONIZACIÓN FIREBASE CLOUD
     // ==========================================
@@ -5797,6 +5890,9 @@
 
         const storedRemitos = localStorage.getItem('gomex_remitos');
         if (storedRemitos) remitos = JSON.parse(storedRemitos);
+
+        const storedBank = localStorage.getItem('gomex_bank_config');
+        if (storedBank) bankConfig = { ...bankConfig, ...JSON.parse(storedBank) };
       } catch (e) {
         console.error("Error al leer storage:", e);
       }
@@ -5815,6 +5911,7 @@
         localStorage.setItem('gomex_orders', JSON.stringify(orders));
         localStorage.setItem('gomex_credit_notes', JSON.stringify(creditNotes));
         localStorage.setItem('gomex_remitos', JSON.stringify(remitos));
+        localStorage.setItem('gomex_bank_config', JSON.stringify(bankConfig));
 
         if (syncToCloud && isFirebaseConnected && db) {
           if (products.length > 0) {
@@ -6531,6 +6628,7 @@
       renderCatalog();
       renderImportHistory();
       renderPurchasesTable();
+      initBankConfigUI();
     }
 
 
@@ -7280,42 +7378,60 @@
       const paymentMethod = sale.method || sale.paymentMethod || 'Efectivo';
       const taxCondition = (storeConfig.taxCondition || storeConfig.ivaCondition || 'Responsable Inscripto').toUpperCase();
 
+      const isTransfer = paymentMethod.toLowerCase().includes('transferencia') || paymentMethod.toLowerCase().includes('mercado pago') || paymentMethod.toLowerCase().includes('mp');
+
+      let bankInfoHtml = '';
+      if (isTransfer) {
+        bankInfoHtml = `
+          <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:10px; margin:10px 0; font-size:0.8rem; line-height:1.45; text-align:left; color:#0f172a !important;">
+            <div style="font-weight:800; color:#0284c7 !important; margin-bottom:4px; font-size:0.85rem;">💳 DATOS DE TRANSFERENCIA / MERCADO PAGO</div>
+            <div style="color:#0f172a !important;"><strong style="color:#000 !important;">Alias MP:</strong> <span style="font-family:monospace; font-weight:700; background:#e2e8f0; padding:1px 4px; border-radius:3px;">${bankConfig.aliasMp || 'gomex.nutricion.mp'}</span></div>
+            <div style="color:#0f172a !important;"><strong style="color:#000 !important;">CVU MP:</strong> <span style="font-family:monospace;">${bankConfig.cvuMp || '0000003100084920194820'}</span></div>
+            <div style="color:#0f172a !important;"><strong style="color:#000 !important;">Banco:</strong> ${bankConfig.bankName || 'Santander / Galicia / BBVA'}</div>
+            <div style="color:#0f172a !important;"><strong style="color:#000 !important;">Alias CBU:</strong> <span style="font-family:monospace; font-weight:700; background:#e2e8f0; padding:1px 4px; border-radius:3px;">${bankConfig.aliasCbu || 'GOMEX.ARG.BANCO'}</span></div>
+            <div style="color:#0f172a !important;"><strong style="color:#000 !important;">CBU:</strong> <span style="font-family:monospace;">${bankConfig.cbu || '0170099220000012345678'}</span></div>
+            <div style="color:#0f172a !important;"><strong style="color:#000 !important;">Titular:</strong> ${bankConfig.holder || storeConfig.businessName || 'GOMEX Nutrition S.R.L.'} (CUIT: ${bankConfig.cuit || storeConfig.cuit})</div>
+          </div>
+        `;
+      }
+
       ticketContent.innerHTML = `
-        <div class="ticket-center" style="text-align:center; margin-bottom:12px;">
+        <div class="ticket-center" style="text-align:center; margin-bottom:12px; color:#0f172a !important;">
           <img src="${storeConfig.logoUrl || storeConfig.logo || 'logo.jpg'}" style="max-width: 150px; height: auto; margin-bottom: 6px; border-radius: 8px;"><br>
-          <strong style="font-size:1.1rem; color: #0f172a;">${(storeConfig.tradeName || 'GOMEX Nutrition').toUpperCase()}</strong><br>
-          <span style="font-size:0.82rem; color: #475569;">${storeConfig.businessName || 'GOMEX Nutrition Argentina S.R.L.'}</span><br>
-          <span style="font-size:0.82rem; color: #475569;">${storeConfig.address || 'Av. Libertador 4500, CABA'}</span><br>
-          <span style="font-size:0.82rem; color: #475569;">CUIT: ${storeConfig.cuit || '30-71829340-9'}</span><br>
-          <span style="font-size:0.82rem; font-weight:700; color: #0284c7;">IVA ${taxCondition}</span>
+          <strong style="font-size:1.15rem; color: #000000 !important;">${(storeConfig.tradeName || 'GOMEX Nutrition').toUpperCase()}</strong><br>
+          <span style="font-size:0.82rem; color: #1e293b !important;">${storeConfig.businessName || 'GOMEX Nutrition Argentina S.R.L.'}</span><br>
+          <span style="font-size:0.82rem; color: #1e293b !important;">${storeConfig.address || 'Av. Libertador 4500, CABA'}</span><br>
+          <span style="font-size:0.82rem; color: #1e293b !important;">CUIT: ${storeConfig.cuit || '30-71829340-9'}</span><br>
+          <span style="font-size:0.85rem; font-weight:800; color: #0284c7 !important;">IVA ${taxCondition}</span>
         </div>
-        <div class="ticket-divider" style="border-top:1px dashed #94a3b8; margin:10px 0;"></div>
-        <div style="font-size:0.85rem; line-height:1.4;">
-          <div>Comprobante: <strong>${invoiceNo}</strong></div>
-          <div>Fecha: ${sale.date || new Date().toLocaleString()}</div>
-          <div>Vendedor: <strong>${sellerName}</strong></div>
-          <div>Cliente: <strong>${clientName}</strong></div>
-          <div>Forma de Pago: <span style="font-weight:600; color:#0369a1;">${paymentMethod}</span></div>
+        <div class="ticket-divider" style="border-top:1px dashed #475569 !important; margin:10px 0;"></div>
+        <div style="font-size:0.88rem; line-height:1.5; color:#0f172a !important;">
+          <div style="color:#0f172a !important;">Comprobante: <strong style="color:#000 !important;">${invoiceNo}</strong></div>
+          <div style="color:#0f172a !important;">Fecha: <span style="color:#0f172a !important;">${sale.date || new Date().toLocaleString()}</span></div>
+          <div style="color:#0f172a !important;">Vendedor: <strong style="color:#000 !important;">${sellerName}</strong></div>
+          <div style="color:#0f172a !important;">Cliente: <strong style="color:#000 !important;">${clientName}</strong></div>
+          <div style="color:#0f172a !important;">Forma de Pago: <span style="font-weight:700; color:#0284c7 !important;">${paymentMethod}</span></div>
         </div>
-        <div class="ticket-divider" style="border-top:1px dashed #94a3b8; margin:10px 0;"></div>
-        <div style="margin: 8px 0;">
+        <div class="ticket-divider" style="border-top:1px dashed #475569 !important; margin:10px 0;"></div>
+        ${bankInfoHtml}
+        <div style="margin: 8px 0; color:#0f172a !important;">
           ${itemsHtml}
         </div>
-        <div class="ticket-divider" style="border-top:1px dashed #94a3b8; margin:10px 0;"></div>
-        <div style="display:flex; justify-content:space-between; font-size:0.85rem;">
-          <span>Subtotal Neto:</span>
-          <span>$${subtotalVal.toLocaleString('es-AR')}</span>
+        <div class="ticket-divider" style="border-top:1px dashed #475569 !important; margin:10px 0;"></div>
+        <div style="display:flex; justify-content:space-between; font-size:0.88rem; color:#0f172a !important;">
+          <span style="color:#0f172a !important;">Subtotal Neto:</span>
+          <span style="color:#0f172a !important; font-weight:600;">$${subtotalVal.toLocaleString('es-AR')}</span>
         </div>
-        <div style="display:flex; justify-content:space-between; font-size:0.85rem;">
-          <span>IVA (21%):</span>
-          <span>$${taxVal.toLocaleString('es-AR')}</span>
+        <div style="display:flex; justify-content:space-between; font-size:0.88rem; color:#0f172a !important;">
+          <span style="color:#0f172a !important;">IVA (21%):</span>
+          <span style="color:#0f172a !important; font-weight:600;">$${taxVal.toLocaleString('es-AR')}</span>
         </div>
-        <div style="display:flex; justify-content:space-between; font-weight:800; font-size:1.15rem; margin-top:8px; padding-top:6px; border-top:1px solid #cbd5e1; color:#0f172a;">
-          <span>TOTAL:</span>
-          <span style="color:#16a34a;">$${totalVal.toLocaleString('es-AR')}</span>
+        <div style="display:flex; justify-content:space-between; font-weight:900; font-size:1.2rem; margin-top:8px; padding-top:6px; border-top:1px solid #cbd5e1; color:#000000 !important;">
+          <span style="color:#000000 !important;">TOTAL:</span>
+          <span style="color:#16a34a !important;">$${totalVal.toLocaleString('es-AR')}</span>
         </div>
-        <div class="ticket-divider" style="border-top:1px dashed #94a3b8; margin:12px 0 8px;"></div>
-        <div class="ticket-center" style="text-align:center; font-size:0.78rem; color:#64748b;">
+        <div class="ticket-divider" style="border-top:1px dashed #475569 !important; margin:12px 0 8px;"></div>
+        <div class="ticket-center" style="text-align:center; font-size:0.8rem; color:#475569 !important;">
           ${storeConfig.ticketMsg || storeConfig.receiptFooter || '¡Gracias por su compra en GOMEX Nutrition!'}
         </div>
       `;
@@ -7329,6 +7445,32 @@
     function closeTicketModal() {
       const modal = document.getElementById('ticketModal');
       if (modal) modal.classList.remove('active');
+    }
+
+    function initBankConfigUI() {
+      if (document.getElementById('cfgAliasMpInput')) {
+        document.getElementById('cfgAliasMpInput').value = bankConfig.aliasMp || '';
+        document.getElementById('cfgCvuMpInput').value = bankConfig.cvuMp || '';
+        document.getElementById('cfgBankNameInput').value = bankConfig.bankName || '';
+        document.getElementById('cfgAliasCbuInput').value = bankConfig.aliasCbu || '';
+        document.getElementById('cfgCbuInput').value = bankConfig.cbu || '';
+        document.getElementById('cfgHolderInput').value = bankConfig.holder || '';
+        document.getElementById('cfgBankCuitInput').value = bankConfig.cuit || '';
+      }
+    }
+
+    function handleSaveBankConfig(e) {
+      e.preventDefault();
+      bankConfig.aliasMp = document.getElementById('cfgAliasMpInput').value.trim();
+      bankConfig.cvuMp = document.getElementById('cfgCvuMpInput').value.trim();
+      bankConfig.bankName = document.getElementById('cfgBankNameInput').value.trim();
+      bankConfig.aliasCbu = document.getElementById('cfgAliasCbuInput').value.trim();
+      bankConfig.cbu = document.getElementById('cfgCbuInput').value.trim();
+      bankConfig.holder = document.getElementById('cfgHolderInput').value.trim();
+      bankConfig.cuit = document.getElementById('cfgBankCuitInput').value.trim();
+
+      saveStorageData();
+      alert('¡Datos de cuentas de cobro y Mercado Pago guardados correctamente!');
     }
 
     // VERIFICADOR DE PRECIOS CON MOSTRADO DE IMAGEN
