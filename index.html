@@ -4,10 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GOMEX Nutrition - Suplementos en Formato Gomita</title>
+  <title>GOMEX Nutrition - Suplementos Gomitas</title>
 
   <!-- Favicon / Logo -->
-  <link rel="icon" type="image/jpeg" href="logo.jpg">
+  <link rel="icon" type="image/jpeg" href="public/logo.jpg">
 
   <!-- Ionicons para iconografía moderna -->
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
@@ -88,7 +88,7 @@
     body {
       background:
         linear-gradient(180deg, rgba(8, 17, 30, 0.82) 0%, rgba(11, 23, 39, 0.88) 50%, rgba(15, 23, 42, 0.94) 100%),
-        url('bg.jpg') center top / cover no-repeat fixed;
+        url('public/bg.jpg') center top / cover no-repeat fixed;
       color: var(--text-dark);
       overflow-x: hidden;
       overflow-y: auto !important;
@@ -437,6 +437,16 @@
       position: relative;
       width: 100%;
       max-width: 420px;
+      display: block;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+    }
+
+    .hero-showcase-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 26px 50px rgba(0, 0, 0, 0.6), 0 0 35px rgba(56, 189, 248, 0.25);
+      border-color: rgba(56, 189, 248, 0.45);
     }
 
     .hero-showcase-img {
@@ -1153,49 +1163,111 @@
     }
 
     /* ==========================================
-       CART DRAWER (E-COMMERCE)
+       CART DRAWER & FLOATING CART BUTTON (E-COMMERCE)
        ========================================== */
-    .cart-drawer-backdrop {
+    .floating-cart-btn {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      z-index: 9990;
+      bottom: 24px;
+      right: 20px;
+      z-index: 9980;
+      background: linear-gradient(135deg, #00a8e8, #0284c7);
+      color: #ffffff;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(0, 168, 232, 0.5);
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s;
+    }
+
+    .floating-cart-btn:hover {
+      transform: scale(1.08) translateY(-3px);
+      box-shadow: 0 12px 30px rgba(0, 168, 232, 0.7);
+    }
+
+    .floating-cart-btn:active {
+      transform: scale(0.94);
+    }
+
+    .floating-cart-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: #ef4444;
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 800;
+      min-width: 22px;
+      height: 22px;
+      border-radius: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #0b1423;
+      padding: 0 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .cart-drawer-backdrop {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      height: 100vh !important;
+      height: 100dvh !important;
+      background: rgba(0, 0, 0, 0.75) !important;
+      backdrop-filter: blur(8px) !important;
+      -webkit-backdrop-filter: blur(8px) !important;
+      z-index: 999998 !important;
       opacity: 0;
       visibility: hidden;
-      transition: all 0.25s ease;
+      pointer-events: none;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
     }
 
     .cart-drawer-backdrop.active {
-      opacity: 1;
-      visibility: visible;
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
     }
 
     .cart-drawer {
-      position: fixed;
-      top: 0;
-      right: -460px;
-      width: 100%;
-      max-width: 440px;
-      height: 100vh;
-      background: rgba(11, 20, 35, 0.96);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      z-index: 9991;
-      box-shadow: -10px 0 40px rgba(0, 0, 0, 0.7);
-      border-left: 1px solid rgba(255, 255, 255, 0.1);
-      transition: right 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      color: #f8fafc;
+      position: fixed !important;
+      top: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100% !important;
+      max-width: 440px !important;
+      height: 100% !important;
+      height: 100vh !important;
+      height: 100dvh !important;
+      background: #0b1423 !important;
+      background-color: #0b1423 !important;
+      z-index: 999999 !important;
+      box-shadow: -10px 0 40px rgba(0, 0, 0, 0.9) !important;
+      border-left: 1px solid rgba(255, 255, 255, 0.15) !important;
+      transform: translateX(105%) !important;
+      transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1), visibility 0.3s !important;
+      display: flex !important;
+      flex-direction: column !important;
+      color: #f8fafc !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+      box-sizing: border-box !important;
     }
 
     .cart-drawer.active {
-      right: 0;
+      transform: translateX(0) !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
     }
 
     .cart-drawer-header {
@@ -1336,7 +1408,7 @@
     }
 
     .btn-checkout-online {
-      background: var(--celeste-gradient);
+      background: linear-gradient(135deg, #009ee3, #0284c7);
       color: #fff;
       border: none;
       padding: 12px 18px;
@@ -1348,7 +1420,377 @@
       justify-content: center;
       gap: 8px;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+      box-shadow: 0 4px 15px rgba(0, 158, 227, 0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-checkout-online:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 158, 227, 0.5);
+    }
+
+    /* ==========================================
+       MODAL DE PAGO / TRANSFERENCIA (MERCADO PAGO & BANCO)
+       ========================================== */
+    .payment-modal-card {
+      max-width: 520px;
+      width: 94%;
+      max-height: 92vh;
+      overflow-y: auto;
+      background: #0b1524;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), 0 0 35px rgba(56, 189, 248, 0.15);
+      border-radius: 24px;
+      padding: 24px;
+      position: relative;
+      color: #e2e8f0;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(56, 189, 248, 0.3) rgba(15, 23, 42, 0.6);
+    }
+
+    .payment-modal-card::-webkit-scrollbar {
+      width: 6px;
+    }
+    .payment-modal-card::-webkit-scrollbar-thumb {
+      background: rgba(56, 189, 248, 0.3);
+      border-radius: 4px;
+    }
+
+    .payment-header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+
+    .payment-amount-box {
+      background: linear-gradient(135deg, rgba(15, 29, 50, 0.95), rgba(11, 21, 36, 0.98));
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 16px;
+      padding: 16px;
+      text-align: center;
+      margin: 12px 0 14px 0;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .payment-amount-val {
+      font-size: 2.1rem;
+      font-weight: 900;
+      color: var(--celeste-brand);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .payment-draft-summary {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+      font-size: 0.82rem;
+      color: #94a3b8;
+    }
+
+    .payment-draft-summary-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+    }
+
+    .payment-draft-items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      max-height: 110px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .payment-draft-item {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: #94a3b8;
+    }
+
+    .payment-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 4px;
+      border-radius: 14px;
+      margin-bottom: 14px;
+    }
+
+    .payment-tab-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 9px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .payment-tab-btn.active {
+      background: #1e3a5f;
+      color: #38bdf8;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .payment-info-card {
+      background: #112238;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .payment-field-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .payment-field-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .payment-field-label {
+      font-size: 0.78rem;
+      color: #94a3b8;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .payment-field-val {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 2px 8px;
+      border-radius: 6px;
+      word-break: break-all;
+    }
+
+    .btn-copy-chip {
+      background: #1e3a5f;
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 5px 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+      margin-left: 6px;
+      flex-shrink: 0;
+    }
+
+    .btn-copy-chip:hover {
+      background: #0284c7;
+      color: #fff;
+    }
+
+    .btn-confirm-order {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #ffffff;
+      border: none;
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 20px;
+      font-size: 1rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s, filter 0.2s;
+      letter-spacing: -0.01em;
+    }
+
+    .btn-confirm-order:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+      filter: brightness(1.05);
+    }
+
+    .btn-confirm-order:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .btn-return-cart {
+      background: transparent;
+      color: #94a3b8;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      width: 100%;
+      padding: 10px 16px;
+      border-radius: 18px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-return-cart:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* ==========================================
+       TICKET / COMPROBANTE DIGITAL DE CONFIRMACIÓN
+       ========================================== */
+    .order-receipt-ticket {
+      background: #112238;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 18px;
+      padding: 16px;
+      margin: 14px 0;
+      text-align: left;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .receipt-meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.12);
+    }
+
+    .receipt-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .receipt-meta-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #64748b;
+      letter-spacing: 0.5px;
+    }
+
+    .receipt-meta-val {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .receipt-datetime-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      color: #38bdf8;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      width: 100%;
+      box-sizing: border-box;
+      justify-content: center;
+    }
+
+    .receipt-items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+      max-height: 160px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .receipt-item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.84rem;
+      color: #cbd5e1;
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .receipt-item-row:last-child {
+      border-bottom: none;
+    }
+
+    .receipt-total-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .receipt-total-bar .total-amount {
+      color: var(--celeste-brand);
+      font-size: 1.3rem;
+      font-weight: 900;
+    }
+
+    .btn-whatsapp-proof {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #ffffff;
+      border: none;
+      width: 100%;
+      padding: 13px 18px;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-bottom: 8px;
+    }
+
+    .btn-whatsapp-proof:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.45);
     }
 
     .btn-store-return {
@@ -1358,11 +1800,13 @@
       font-weight: 700;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
-      padding: 7px 14px;
+      padding: 10px 18px;
       border-radius: 20px;
       cursor: pointer;
       transition: all 0.2s;
+      width: 100%;
     }
 
     /* ==========================================
@@ -1426,44 +1870,52 @@
         line-height: 1.3;
       }
 
-      .ecom-navbar {
-        padding: 10px 14px;
-        width: 100%;
-        max-width: 100vw;
+      .ecom-nav-container {
+        padding: 10px 14px !important;
+        gap: 8px !important;
+        justify-content: space-between;
+      }
+
+      .ecom-brand img {
+        height: 38px !important;
+        max-height: 38px !important;
       }
 
       .ecom-nav-links {
-        display: none;
+        display: none !important;
       }
 
       .ecom-nav-actions {
-        gap: 6px;
+        gap: 8px !important;
+        flex-shrink: 0;
       }
 
-      .btn-nav-b2b {
-        padding: 7px 10px;
-        font-size: 0.8rem;
+      .btn-ecom-cart {
+        padding: 8px 12px !important;
+        font-size: 0.82rem !important;
+        gap: 6px !important;
       }
 
-      .btn-nav-b2b span {
-        display: none;
+      .btn-ecom-cart .btn-ecom-cart-label {
+        display: inline-block;
       }
 
-      .btn-nav-staff {
-        padding: 7px 10px;
-        font-size: 0.8rem;
+      .btn-staff-login {
+        padding: 8px 10px !important;
+        font-size: 0.8rem !important;
       }
 
-      .btn-nav-staff span {
-        display: none;
+      .cart-drawer {
+        width: 100% !important;
+        max-width: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+        border-left: none !important;
       }
 
-      .btn-cart-toggle {
-        padding: 7px 12px;
-      }
-
-      .btn-cart-toggle span:not(.cart-badge) {
-        display: none;
+      .cart-drawer-checkout {
+        padding: 14px 16px !important;
+        padding-bottom: max(18px, env(safe-area-inset-bottom)) !important;
       }
 
       .hero-container {
@@ -1860,6 +2312,622 @@
     .arrow {
       transition: transform 0.3s ease;
       font-size: 0.8rem;
+    }
+
+    /* Ocultar elementos del sidebar */
+    .oculto-sidebar {
+      display: none !important;
+    }
+
+    /* ==========================================
+       DASHBOARD MOBILE-FIRST & FACTURACIÓN PRO
+       ========================================== */
+    .dash-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      padding-bottom: 20px;
+    }
+
+    /* Welcome / Status Bar */
+    .dash-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      background: linear-gradient(135deg, rgba(15, 29, 50, 0.95) 0%, rgba(11, 20, 36, 0.98) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .dash-user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .dash-user-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--celeste-gradient);
+      color: #060b14;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.15rem;
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+      flex-shrink: 0;
+    }
+
+    .dash-user-text h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .dash-user-text span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .dash-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: rgba(52, 211, 153, 0.12);
+      border: 1px solid rgba(52, 211, 153, 0.25);
+      color: #34d399;
+    }
+
+    .dash-live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 8px #34d399;
+      animation: pulse-dot 2s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    /* Hero POS Big Tap Action */
+    .dash-hero-pos-btn {
+      background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+      border: none;
+      border-radius: 18px;
+      padding: 18px 22px;
+      color: #060b14;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: 0 10px 28px rgba(56, 189, 248, 0.35);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 100%;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dash-hero-pos-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .dash-hero-pos-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 34px rgba(56, 189, 248, 0.45);
+      filter: brightness(1.04);
+    }
+
+    .dash-hero-pos-btn:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .dash-hero-pos-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .dash-hero-pos-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: #060b14;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.9rem;
+      flex-shrink: 0;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .dash-hero-pos-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #060b14;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .dash-hero-pos-desc {
+      font-size: 0.85rem;
+      color: rgba(6, 11, 20, 0.85);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .dash-hero-pos-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #060b14;
+      color: #38bdf8;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 0.92rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Facturación & Quick Operations Grid */
+    .dash-section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-top: 4px;
+      margin-bottom: 12px;
+    }
+
+    .dash-section-title ion-icon {
+      color: var(--celeste-brand);
+      font-size: 1.25rem;
+    }
+
+    .dash-quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 12px;
+    }
+
+    .dash-quick-btn {
+      background: #0f1d32;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 8px;
+      cursor: pointer;
+      color: #f8fafc;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      min-height: 88px;
+      justify-content: center;
+    }
+
+    .dash-quick-btn:hover {
+      background: #162640;
+      border-color: var(--celeste-brand);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .dash-quick-btn:active {
+      transform: scale(0.96);
+    }
+
+    .dash-quick-btn ion-icon {
+      font-size: 1.6rem;
+      color: var(--celeste-brand);
+      transition: transform 0.2s ease;
+    }
+
+    .dash-quick-btn:hover ion-icon {
+      transform: scale(1.1);
+    }
+
+    .dash-quick-btn span {
+      font-size: 0.82rem;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    /* KPI Cards Row */
+    .dash-kpi-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+    }
+
+    .dash-kpi-card {
+      background: #0f1d32;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    .dash-kpi-info .kpi-label {
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+    }
+
+    .dash-kpi-info .kpi-val {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-top: 4px;
+      line-height: 1.1;
+    }
+
+    .dash-kpi-info .kpi-sub {
+      font-size: 0.72rem;
+      color: #34d399;
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    .dash-kpi-icon-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--celeste-brand);
+      flex-shrink: 0;
+    }
+
+    /* Catálogo Rápido de Productos */
+    .dash-products-box {
+      background: #0b1424;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .dash-search-container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .dash-search-input-wrap {
+      flex: 1;
+      position: relative;
+      min-width: 200px;
+    }
+
+    .dash-search-input-wrap ion-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 1.2rem;
+    }
+
+    .dash-search-input {
+      width: 100%;
+      background: #060b14;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 12px 14px 12px 42px;
+      color: #ffffff;
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .dash-search-input:focus {
+      border-color: var(--celeste-brand);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+    }
+
+    .dash-filter-chips {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .dash-filter-chips::-webkit-scrollbar {
+      display: none;
+    }
+
+    .dash-chip {
+      background: #0f1d32;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .dash-chip:hover,
+    .dash-chip.active {
+      background: var(--celeste-brand);
+      color: #060b14;
+      border-color: var(--celeste-brand);
+      font-weight: 700;
+    }
+
+    /* Products Grid Cards */
+    .dash-products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+
+    .dash-prod-card {
+      background: #0f1d32;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .dash-prod-card:hover {
+      border-color: rgba(56, 189, 248, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    .dash-prod-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .dash-prod-img {
+      width: 46px;
+      height: 46px;
+      border-radius: 10px;
+      object-fit: cover;
+      background: #060b14;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      flex-shrink: 0;
+    }
+
+    .dash-prod-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 10px;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--celeste-brand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .dash-prod-details {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .dash-prod-cat {
+      font-size: 0.7rem;
+      color: var(--celeste-brand);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .dash-prod-name {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.25;
+      margin-top: 2px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .dash-prod-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .dash-prod-price {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .dash-prod-stock {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 8px;
+      background: rgba(52, 211, 153, 0.12);
+      color: #34d399;
+      white-space: nowrap;
+    }
+
+    .dash-prod-stock.stock-low {
+      background: rgba(251, 113, 133, 0.15);
+      color: var(--rojo-italia);
+    }
+
+    .dash-prod-btn-pos {
+      width: 100%;
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--celeste-brand);
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.84rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-height: 38px;
+    }
+
+    .dash-prod-btn-pos:hover {
+      background: var(--celeste-brand);
+      color: #060b14;
+    }
+
+    .dash-prod-btn-pos:active {
+      transform: scale(0.97);
+    }
+
+    /* Banner Stock Alert */
+    .dash-stock-alert-banner {
+      background: linear-gradient(135deg, rgba(251, 113, 133, 0.12) 0%, rgba(225, 29, 72, 0.08) 100%);
+      border: 1px solid rgba(251, 113, 133, 0.3);
+      border-radius: 14px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .dash-stock-alert-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dash-stock-alert-left ion-icon {
+      font-size: 1.4rem;
+      color: var(--rojo-italia);
+    }
+
+    .dash-stock-alert-text strong {
+      color: #ffffff;
+      font-size: 0.88rem;
+    }
+
+    .dash-stock-alert-text p {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 600px) {
+      .dash-header-bar {
+        padding: 12px 14px;
+      }
+      .dash-hero-pos-btn {
+        padding: 16px;
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .dash-hero-pos-badge {
+        justify-content: center;
+        width: 100%;
+      }
+      .dash-quick-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+      .dash-quick-btn {
+        padding: 12px 8px;
+        min-height: 80px;
+      }
+      .dash-kpi-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .dash-products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+      .dash-prod-card {
+        padding: 10px;
+      }
+      .dash-prod-img,
+      .dash-prod-icon {
+        width: 38px;
+        height: 38px;
+      }
+      .dash-prod-name {
+        font-size: 0.82rem;
+      }
+      .dash-prod-price {
+        font-size: 1rem;
+      }
+      .dash-prod-btn-pos {
+        font-size: 0.78rem;
+        padding: 6px 8px;
+      }
     }
 
     /* ==========================================
@@ -2913,7 +3981,7 @@
     <header class="ecom-header">
       <div class="ecom-nav-container">
         <a href="#view-ecommerce" class="ecom-brand" title="GOMEX Nutrition">
-          <img src="logo.jpg" onerror="this.onerror=null; this.src='logo.jpg';" alt="GOMEX Nutrition">
+          <img src="public/logo.jpg" onerror="this.onerror=null; this.src='public/logo.jpg';" alt="GOMEX Nutrition">
         </a>
 
         <div class="ecom-nav-actions">
@@ -2978,10 +4046,10 @@
         </div>
 
         <div class="hero-visual">
-          <div class="hero-showcase-card">
-            <img src="bolsaGomitas.jpg" onerror="this.src='cajaGomitas.jpg'" class="hero-showcase-img"
+          <a href="#tienda" class="hero-showcase-card" title="Ver Catálogo de Fórmulas GOMEX">
+            <img src="public/bolsaGomitas.jpg" onerror="this.src='public/cajaGomitas.jpg'" class="hero-showcase-img"
               alt="GOMEX Nutrition">
-          </div>
+          </a>
         </div>
       </div>
     </section>
@@ -3159,7 +4227,7 @@
     <footer class="ecom-footer" id="contacto">
       <div class="footer-container">
         <div class="footer-brand">
-          <img src="logo.jpg" onerror="this.src='logo.jpg'" alt="GOMEX Nutrition">
+          <img src="public/logo.jpg" onerror="this.src='public/logo.jpg'" alt="GOMEX Nutrition">
           <p>Suplementación en formato gomita masticable con respaldo científico. Industria Argentina.</p>
         </div>
 
@@ -3208,6 +4276,12 @@
       </div>
     </footer>
 
+    <!-- Botón Flotante del Carrito (Móvil & Escritorio) -->
+    <button type="button" class="floating-cart-btn" id="ecomFloatingCartBtn" onclick="toggleEcommerceCart(true)" title="Ver Carrito de Compras">
+      <ion-icon name="cart"></ion-icon>
+      <span class="floating-cart-badge" id="floatingCartBadge">0</span>
+    </button>
+
     <!-- Cart Drawer Flotante -->
     <div class="cart-drawer-backdrop" id="cartDrawerBackdrop" onclick="toggleEcommerceCart(false)"></div>
     <aside class="cart-drawer" id="cartDrawer">
@@ -3253,8 +4327,8 @@
           </button>
 
           <button type="button" class="btn-checkout-online" onclick="checkoutOnlineOrder()">
-            <ion-icon name="flash-outline" style="font-size: 1.2rem;"></ion-icon>
-            <span>Confirmar Pedido Online</span>
+            <ion-icon name="wallet-outline" style="font-size: 1.2rem;"></ion-icon>
+            <span>Pagar con Transferencia / MP</span>
           </button>
         </div>
       </div>
@@ -3285,23 +4359,219 @@
       <img id="lightboxImgTarget" src="" class="lightbox-img" alt="Zoom Producto GOMEX">
     </div>
 
-    <!-- Modal Confirmación Compra Online Exitosa -->
-    <div class="modal-overlay" id="ecommerceSuccessModal" style="display:none;">
-      <div class="modal-card" style="max-width: 440px; text-align: center; padding: 30px 20px;">
-        <div style="font-size: 3rem; color: #10b981; margin-bottom: 10px;">🎉</div>
-        <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--text-dark); margin-bottom: 6px;">¡Pedido
-          Confirmado!</h3>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px;">
-          Orden <strong id="successOrderId">#GMX-1001</strong> registrada. Stock actualizado.
-        </p>
-        <div
-          style="background: #f0f9ff; border: 1px solid var(--border-color); border-radius: 12px; padding: 14px; text-align: left; margin-bottom: 20px;"
-          id="successOrderSummary">
-        </div>
-        <button type="button" class="btn btn-primary" onclick="closeSuccessModal()"
-          style="width: 100%; padding: 10px; border-radius: 20px; background: var(--celeste-gradient);">
-          Continuar
+    <!-- Modal Pago / Transferencia & Confirmación de Pedido -->
+    <div class="modal-overlay" id="ecommerceSuccessModal" style="display:none;" onclick="if(event.target === this) closeSuccessModal()">
+      <div class="payment-modal-card">
+        <button type="button" onclick="closeSuccessModal()"
+          style="position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.08); border: none; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; cursor: pointer; color: #94a3b8; z-index: 10;"
+          title="Cerrar modal">
+          <ion-icon name="close-outline"></ion-icon>
         </button>
+
+        <!-- PASO 1: DATOS DE TRANSFERENCIA Y BOTÓN DE CONFIRMAR PEDIDO -->
+        <div id="payStepTransfer">
+          <div style="text-align: center;">
+            <div class="payment-header-badge">
+              <ion-icon name="wallet-outline"></ion-icon>
+              <span>Paso 2 de 2 • Pago con Transferencia</span>
+            </div>
+            <h3 style="font-size: 1.35rem; font-weight: 800; color: #ffffff; margin-bottom: 4px;">Datos para Transferir</h3>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin: 0 auto 10px auto;">
+              Realizá la transferencia por el monto exacto y luego confirmá tu pedido aquí debajo.
+            </p>
+          </div>
+
+          <!-- Caja de Monto Total -->
+          <div class="payment-amount-box">
+            <div style="font-size: 0.78rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px;">
+              Monto Total a Transferir
+            </div>
+            <div class="payment-amount-val" id="payModalAmount">$0</div>
+            <div style="font-size: 0.8rem; color: #34d399; font-weight: 700; margin-top: 4px;" id="payModalSummaryBrief">
+              1 producto
+            </div>
+          </div>
+
+          <!-- Resumen Rápido de Productos a Comprar -->
+          <div class="payment-draft-summary" id="payDraftSummary">
+            <div class="payment-draft-summary-header">
+              <span><ion-icon name="bag-check-outline" style="vertical-align: middle;"></ion-icon> Productos a pedir:</span>
+              <span id="payDraftTotalItemsCount" style="color: #38bdf8;">0 ítems</span>
+            </div>
+            <div class="payment-draft-items-list" id="payDraftItemsList">
+              <!-- Inyectado dinámicamente -->
+            </div>
+          </div>
+
+          <!-- Selector de Pestañas: Mercado Pago vs Banco Nación -->
+          <div class="payment-tabs">
+            <button type="button" class="payment-tab-btn active" id="btnTabMp" onclick="switchPaymentTab('mp')">
+              <ion-icon name="wallet-outline"></ion-icon>
+              <span>Mercado Pago</span>
+            </button>
+            <button type="button" class="payment-tab-btn" id="btnTabBank" onclick="switchPaymentTab('bank')">
+              <ion-icon name="business-outline"></ion-icon>
+              <span>Banco Nación / CBU</span>
+            </button>
+          </div>
+
+          <!-- Vista Mercado Pago -->
+          <div class="payment-info-card" id="payViewMp">
+            <div class="payment-field-row">
+              <div>
+                <div class="payment-field-label">Alias Mercado Pago</div>
+                <div class="payment-field-val" id="payAliasMp">gomex.nutricion.mp</div>
+              </div>
+              <button type="button" class="btn-copy-chip" onclick="copyPaymentData(document.getElementById('payAliasMp').textContent, this)">
+                <ion-icon name="copy-outline"></ion-icon>
+                <span>Copiar</span>
+              </button>
+            </div>
+
+            <div class="payment-field-row">
+              <div>
+                <div class="payment-field-label">CVU Mercado Pago</div>
+                <div class="payment-field-val" id="payCvuMp">0000003100084920194820</div>
+              </div>
+              <button type="button" class="btn-copy-chip" onclick="copyPaymentData(document.getElementById('payCvuMp').textContent, this)">
+                <ion-icon name="copy-outline"></ion-icon>
+                <span>Copiar</span>
+              </button>
+            </div>
+
+            <div class="payment-field-row">
+              <div>
+                <div class="payment-field-label">Titular de la Cuenta</div>
+                <div style="font-size: 0.85rem; font-weight: 700; color: #f8fafc;" id="payHolderMp">GOMEX Nutrition S.R.L.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Vista Banco Nación / Tradicional -->
+          <div class="payment-info-card" id="payViewBank" style="display: none;">
+            <div class="payment-field-row">
+              <div>
+                <div class="payment-field-label">Banco</div>
+                <div style="font-size: 0.85rem; font-weight: 700; color: #f8fafc;" id="payBankName">Banco de la Nación Argentina</div>
+              </div>
+            </div>
+
+            <div class="payment-field-row">
+              <div>
+                <div class="payment-field-label">Alias CBU Bancario</div>
+                <div class="payment-field-val" id="payAliasCbu">GOMEX.NACION</div>
+              </div>
+              <button type="button" class="btn-copy-chip" onclick="copyPaymentData(document.getElementById('payAliasCbu').textContent, this)">
+                <ion-icon name="copy-outline"></ion-icon>
+                <span>Copiar</span>
+              </button>
+            </div>
+
+            <div class="payment-field-row">
+              <div>
+                <div class="payment-field-label">CBU (22 dígitos)</div>
+                <div class="payment-field-val" id="payCbu">0110599520000012345678</div>
+              </div>
+              <button type="button" class="btn-copy-chip" onclick="copyPaymentData(document.getElementById('payCbu').textContent, this)">
+                <ion-icon name="copy-outline"></ion-icon>
+                <span>Copiar</span>
+              </button>
+            </div>
+
+            <div class="payment-field-row">
+              <div>
+                <div class="payment-field-label">Titular & CUIT</div>
+                <div style="font-size: 0.82rem; font-weight: 700; color: #cbd5e1;" id="payBankHolder">GOMEX Nutrition S.R.L. (CUIT: 30-71829340-9)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botones de Acción Paso 1 -->
+          <div style="margin-top: 16px;">
+            <button type="button" class="btn-confirm-order" id="btnConfirmOrder" onclick="confirmOnlineOrder()">
+              <ion-icon name="checkmark-circle-outline" style="font-size: 1.35rem;"></ion-icon>
+              <span>Confirmar Pedido y Enviar Detalle</span>
+            </button>
+
+            <button type="button" class="btn-return-cart" onclick="returnToCartDrawer()">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+              <span>Volver al Carrito</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- PASO 2: PEDIDO CONFIRMADO & COMPROBANTE DIGITAL CON FECHA Y HORA -->
+        <div id="payStepConfirmed" style="display: none;">
+          <div style="text-align: center;">
+            <div style="width: 58px; height: 58px; background: rgba(16, 185, 129, 0.15); border: 2px solid #10b981; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #34d399; font-size: 2rem; margin-bottom: 10px;">
+              <ion-icon name="checkmark-circle"></ion-icon>
+            </div>
+            <div class="payment-header-badge">
+              <span>¡Pedido Confirmado con Éxito!</span>
+            </div>
+            <h3 style="font-size: 1.35rem; font-weight: 800; color: #ffffff; margin-bottom: 4px;">Comprobante de Pedido</h3>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin: 0 auto 10px auto;">
+              Tu solicitud fue registrada correctamente y enviada a nuestro equipo de atención.
+            </p>
+          </div>
+
+          <!-- Ticket Digital con Fecha, Hora y Desglose Completo -->
+          <div class="order-receipt-ticket" id="orderReceiptPrintable">
+            <div class="receipt-datetime-badge">
+              <ion-icon name="time-outline"></ion-icon>
+              <span id="receiptDateTime">16/08/2026 16:30 hs</span>
+            </div>
+
+            <div class="receipt-meta-grid">
+              <div class="receipt-meta-item">
+                <span class="receipt-meta-label">N° de Pedido</span>
+                <span class="receipt-meta-val" id="receiptOrderId" style="color: #38bdf8; font-family: monospace;">#GMX-0001</span>
+              </div>
+              <div class="receipt-meta-item">
+                <span class="receipt-meta-label">Método de Pago</span>
+                <span class="receipt-meta-val" id="receiptPaymentMethod">Mercado Pago</span>
+              </div>
+              <div class="receipt-meta-item" style="grid-column: 1 / -1;">
+                <span class="receipt-meta-label">Cliente & Entrega</span>
+                <span class="receipt-meta-val" id="receiptClientInfo">Juan Pérez • WhatsApp: 1123456789</span>
+                <span style="font-size: 0.78rem; color: #94a3b8;" id="receiptAddressInfo">Entrega: Av. Santa Fe 1234</span>
+              </div>
+            </div>
+
+            <div style="font-size: 0.78rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px;">
+              📦 Detalle de Productos:
+            </div>
+
+            <div class="receipt-items-list" id="receiptItemsList">
+              <!-- Desglose inyectado dinámicamente -->
+            </div>
+
+            <div class="receipt-total-bar">
+              <span>Total Abonado:</span>
+              <span class="total-amount" id="receiptTotalVal">$0</span>
+            </div>
+          </div>
+
+          <!-- Botones de Acción Paso 2 -->
+          <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 8px;">
+            <button type="button" class="btn-whatsapp-proof" onclick="resendOrderWhatsApp()">
+              <ion-icon name="logo-whatsapp" style="font-size: 1.3rem;"></ion-icon>
+              <span>Abrir / Reenviar en WhatsApp</span>
+            </button>
+
+            <button type="button" class="btn btn-outline"
+              style="width: 100%; justify-content: center; padding: 11px; border-radius: 20px; font-size: 0.9rem; color: #94a3b8; border-color: rgba(255,255,255,0.15);"
+              onclick="printEcomReceipt()">
+              <ion-icon name="print-outline"></ion-icon>
+              <span>Imprimir / Guardar Comprobante</span>
+            </button>
+
+            <button type="button" class="btn-store-return" onclick="closeSuccessModal()">
+              <ion-icon name="bag-check-outline"></ion-icon>
+              <span>Seguir Comprando</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -3354,7 +4624,7 @@
     <aside id="sidebar">
       <div class="brand" style="justify-content: center; padding: 15px;">
         <div class="brand-logo" style="display:flex; justify-content:center; align-items:center;">
-          <img src="logo.jpg" onerror="this.onerror=null; this.src='logo.jpg';"
+          <img src="public/logo.jpg" onerror="this.onerror=null; this.src='public/logo.jpg';"
             style="max-height: 44px; width: auto; object-fit: contain; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 168, 232, 0.3);"
             alt="GOMEX Nutrition Logo">
         </div>
@@ -3383,7 +4653,7 @@
             <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
           </div>
           <div class="submenu">
-            <a class="nav-link" onclick="showModule('mod-pos', this)">Punto POS</a>
+            <a id="menu-pos" class="nav-link" onclick="showModule('mod-pos', this)">Punto POS</a>
             <a class="nav-link" onclick="showModule('mod-ventas', this)">Ventas</a>
             <a class="nav-link" onclick="showModule('mod-presupuesto', this)">Presupuesto</a>
             <a class="nav-link" onclick="showModule('mod-pedido', this)">Pedido</a>
@@ -3393,7 +4663,7 @@
         </li>
 
         <!-- COMPRAS -->
-        <li class="nav-item open">
+        <li class="nav-item open oculto-sidebar">
           <div class="nav-link" onclick="toggleSubmenu(this)">
             <div class="link-content">
               <ion-icon name="cart-outline"></ion-icon>
@@ -3408,7 +4678,7 @@
         </li>
 
         <!-- STOCK -->
-        <li class="nav-item">
+        <li class="nav-item oculto-sidebar">
           <div class="nav-link" onclick="showModule('mod-stock', this)">
             <div class="link-content">
               <ion-icon name="cube-outline"></ion-icon>
@@ -3433,7 +4703,7 @@
         </li>
 
         <!-- BASE DE DATOS -->
-        <li class="nav-item open">
+        <li class="nav-item open oculto-sidebar">
           <div class="nav-link" onclick="toggleSubmenu(this)">
             <div class="link-content">
               <ion-icon name="server-outline"></ion-icon>
@@ -3537,146 +4807,137 @@
       <div class="content-area">
 
         <!-- MÓDULO: PUNTO POS PROPIAMENTE DICHO -->
-        <!-- MÓDULO: DASHBOARD / PANEL PRINCIPAL -->
+        <!-- MÓDULO: DASHBOARD / PANEL PRINCIPAL (OPTIMIZADO MOBILE-FIRST) -->
         <section id="mod-dashboard" class="module-section active">
-          <h2 class="page-title"><ion-icon name="speedometer-outline"></ion-icon> Panel de Control & Estadísticas -
-            GOMEX Nutrition</h2>
-
-          <!-- Cards de Indicadores Clave -->
-          <div class="grid-cards">
-            <div class="card">
-              <div class="card-title">Ventas del Mes</div>
-              <div class="card-value" id="dashMonthlySales">$0</div>
-              <div style="font-size:0.78rem; color:var(--text-muted); margin-top:5px;">+18.4% respecto al mes anterior
-              </div>
-            </div>
-            <div class="card" style="border-top-color: #0d6efd;">
-              <div class="card-title">Ganancia Neta Estimada</div>
-              <div class="card-value" id="dashEstimatedProfit" style="color: #0d6efd;">$0</div>
-              <div style="font-size:0.78rem; color:var(--text-muted); margin-top:5px;">Margen promedio: ~50%</div>
-            </div>
-            <div class="card accent-red">
-              <div class="card-title">Stock Crítico (<= 5 Unid)</div>
-                  <div class="card-value" id="dashLowStockCount" style="color: var(--rojo-italia);">0</div>
-                  <div style="font-size:0.78rem; color:var(--text-muted); margin-top:5px;">Artículos que requieren
-                    reposición</div>
-              </div>
-              <div class="card" style="border-top-color: #ffc107;">
-                <div class="card-title">Productos en Oferta</div>
-                <div class="card-value" id="dashOfferCount" style="color: #d39e00;">0</div>
-                <div style="font-size:0.78rem; color:var(--text-muted); margin-top:5px;">Promociones activas en POS
+          
+          <div class="dash-wrapper">
+            <!-- Barra Superior / Bienvenida & Estado -->
+            <div class="dash-header-bar">
+              <div class="dash-user-info">
+                <div class="dash-user-avatar">G</div>
+                <div class="dash-user-text">
+                  <h2 id="dashWelcomeUser">Panel Principal</h2>
+                  <span>GOMEX Nutrition • Terminal de Caja</span>
                 </div>
+              </div>
+              <div class="dash-live-badge">
+                <div class="dash-live-dot"></div>
+                <span id="dashLiveStatus">Sistema Activo</span>
               </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 25px;">
-              <!-- Bloque Ofertas y Promociones -->
-              <div class="card" style="border-top-color: #ffc107;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                  <h3>🔥 Productos en Oferta & Promociones</h3>
-                  <button class="btn btn-green" style="padding:4px 10px; font-size:0.8rem;"
-                    onclick="openAddOfferModal()">+ Agregar Oferta</button>
+            <!-- Botón Grande Principal: Abrir Punto de Venta (Hero POS) -->
+            <button type="button" class="dash-hero-pos-btn" onclick="showModule('mod-pos', document.getElementById('menu-pos'))" title="Abrir Punto de Venta">
+              <div class="dash-hero-pos-left">
+                <div class="dash-hero-pos-icon">
+                  <ion-icon name="calculator-outline"></ion-icon>
                 </div>
-                <div class="data-table-container" style="box-shadow:none; border:1px solid var(--border-color);">
-                  <table class="data-table" style="font-size:0.85rem;">
-                    <thead>
-                      <tr>
-                        <th>Producto</th>
-                        <th>Categoría</th>
-                        <th>Precio Normal</th>
-                        <th>Descuento (%)</th>
-                        <th>Precio Oferta</th>
-                        <th>Acción</th>
-                      </tr>
-                    </thead>
-                    <tbody id="dashOffersTableBody">
-                      <!-- Dinámico -->
-                    </tbody>
-                  </table>
+                <div>
+                  <div class="dash-hero-pos-title">Iniciar Venta / Punto POS</div>
+                  <div class="dash-hero-pos-desc">Facturación rápida, cobro con QR / MP, tarjeta y emisión de tickets</div>
                 </div>
               </div>
+              <div class="dash-hero-pos-badge">
+                <span>Abrir Caja</span>
+                <ion-icon name="arrow-forward-outline"></ion-icon>
+              </div>
+            </button>
 
-              <!-- Canales de Pago -->
-              <div class="card">
-                <h3>💳 Distribución por Forma de Pago</h3>
-                <div style="margin-top:15px; display:flex; flex-direction:column; gap:12px;">
-                  <div>
-                    <div style="display:flex; justify-content:space-between; font-size:0.85rem; font-weight:bold;">
-                      <span>Efectivo</span>
-                      <span id="dashPayPercentCash">45%</span>
-                    </div>
-                    <div class="progress-bar-container" style="height:8px; margin:4px 0 0 0;">
-                      <div class="progress-bar-fill" id="dashPayBarCash"
-                        style="width:45%; background:var(--verde-italia);"></div>
-                    </div>
-                  </div>
+            <!-- Accesos Rápidos de Facturación & Operaciones -->
+            <div>
+              <div class="dash-section-title">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <ion-icon name="receipt-outline"></ion-icon>
+                  <span>Módulo de Facturación & Caja</span>
+                </div>
+                <span style="font-size:0.78rem; color:var(--text-muted); font-weight:normal;">Accesos directos</span>
+              </div>
 
-                  <div>
-                    <div style="display:flex; justify-content:space-between; font-size:0.85rem; font-weight:bold;">
-                      <span>Tarjeta Débito / Crédito</span>
-                      <span id="dashPayPercentCard">35%</span>
-                    </div>
-                    <div class="progress-bar-container" style="height:8px; margin:4px 0 0 0;">
-                      <div class="progress-bar-fill" id="dashPayBarCard" style="width:35%; background:#0d6efd;"></div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div style="display:flex; justify-content:space-between; font-size:0.85rem; font-weight:bold;">
-                      <span>Mercado Pago / Transferencia</span>
-                      <span id="dashPayPercentMP">20%</span>
-                    </div>
-                    <div class="progress-bar-container" style="height:8px; margin:4px 0 0 0;">
-                      <div class="progress-bar-fill" id="dashPayBarMP" style="width:20%; background:#009ee3;"></div>
-                    </div>
-                  </div>
+              <div class="dash-quick-grid">
+                <div class="dash-quick-btn" onclick="showModule('mod-pos', document.getElementById('menu-pos'))">
+                  <ion-icon name="cart-outline"></ion-icon>
+                  <span>Punto POS</span>
+                </div>
+                <div class="dash-quick-btn" onclick="showModule('mod-ventas', document.querySelector('.submenu a[onclick*=\'mod-ventas\']'))">
+                  <ion-icon name="document-text-outline"></ion-icon>
+                  <span>Historial Ventas</span>
+                </div>
+                <div class="dash-quick-btn" onclick="showModule('mod-presupuesto', document.querySelector('.submenu a[onclick*=\'mod-presupuesto\']'))">
+                  <ion-icon name="reader-outline"></ion-icon>
+                  <span>Presupuestos</span>
+                </div>
+                <div class="dash-quick-btn" onclick="showModule('mod-pedido', document.querySelector('.submenu a[onclick*=\'mod-pedido\']'))">
+                  <ion-icon name="bag-check-outline"></ion-icon>
+                  <span>Pedidos</span>
+                </div>
+                <div class="dash-quick-btn" onclick="showModule('mod-caja-diaria', document.querySelector('.submenu a[onclick*=\'mod-caja-diaria\']'))">
+                  <ion-icon name="wallet-outline"></ion-icon>
+                  <span>Caja Diaria</span>
                 </div>
               </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-              <!-- Top Productos Más Vendidos -->
-              <div class="card">
-                <h3>⭐ Top Productos Más Vendidos</h3>
-                <div class="data-table-container"
-                  style="box-shadow:none; border:1px solid var(--border-color); margin-top:15px;">
-                  <table class="data-table" style="font-size:0.85rem;">
-                    <thead>
-                      <tr>
-                        <th>Ranking</th>
-                        <th>Artículo</th>
-                        <th>Categoría</th>
-                        <th>Unidades Vendidas</th>
-                      </tr>
-                    </thead>
-                    <tbody id="dashTopProductsBody">
-                      <!-- Dinámico -->
-                    </tbody>
-                  </table>
+            <!-- Resumen de Métricas Clave -->
+            <div class="dash-kpi-row">
+              <div class="dash-kpi-card">
+                <div class="dash-kpi-info">
+                  <div class="kpi-label">Ventas Registradas</div>
+                  <div class="kpi-val" id="dashMonthlySales">$0</div>
+                  <div class="kpi-sub" id="dashSalesCountBadge">0 operaciones realizadas</div>
+                </div>
+                <div class="dash-kpi-icon-wrap">
+                  <ion-icon name="cash-outline"></ion-icon>
                 </div>
               </div>
 
-              <!-- Alertas de Stock Bajo -->
-              <div class="card accent-red">
-                <h3>⚠️ Alertas de Reposición de Stock</h3>
-                <div class="data-table-container"
-                  style="box-shadow:none; border:1px solid var(--border-color); margin-top:15px;">
-                  <table class="data-table" style="font-size:0.85rem;">
-                    <thead>
-                      <tr>
-                        <th>Artículo</th>
-                        <th>Cód. Interno</th>
-                        <th>Stock Actual</th>
-                        <th>Acción</th>
-                      </tr>
-                    </thead>
-                    <tbody id="dashLowStockBody">
-                      <!-- Dinámico -->
-                    </tbody>
-                  </table>
+              <div class="dash-kpi-card">
+                <div class="dash-kpi-info">
+                  <div class="kpi-label">Total Productos Activos</div>
+                  <div class="kpi-val" id="dashProductCount">0</div>
+                  <div class="kpi-sub" style="color:var(--celeste-brand);" id="dashCategoriesCount">En catálogo oficial</div>
+                </div>
+                <div class="dash-kpi-icon-wrap">
+                  <ion-icon name="cube-outline"></ion-icon>
                 </div>
               </div>
             </div>
+
+            <!-- Alerta Compacta de Stock Crítico (si aplica) -->
+            <div id="dashStockAlertContainer" style="display:none;">
+              <!-- Inyectado dinámicamente si hay stock <= 5 -->
+            </div>
+
+            <!-- Catálogo Rápido de Productos & Consulta de Precios -->
+            <div class="dash-products-box">
+              <div class="dash-section-title" style="margin-top:0;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <ion-icon name="grid-outline"></ion-icon>
+                  <span>Productos Disponibles</span>
+                </div>
+                <span id="dashProdsFoundBadge" style="font-size:0.8rem; color:var(--text-muted);">Cargando...</span>
+              </div>
+
+              <!-- Buscador Instantáneo -->
+              <div class="dash-search-container">
+                <div class="dash-search-input-wrap">
+                  <ion-icon name="search-outline"></ion-icon>
+                  <input type="text" id="dashSearchInput" class="dash-search-input"
+                    placeholder="Buscar producto por nombre, código o sabor..." oninput="filterDashProducts()">
+                </div>
+              </div>
+
+              <!-- Chips de Categorías Deslizables -->
+              <div class="dash-filter-chips" id="dashCategoryChips">
+                <button type="button" class="dash-chip active" onclick="filterDashCategory('all', this)">Todos</button>
+              </div>
+
+              <!-- Grid de Productos -->
+              <div class="dash-products-grid" id="dashProductsGrid">
+                <!-- Renderizado dinámico -->
+              </div>
+            </div>
+          </div>
+
         </section>
 
         <section id="mod-pos" class="module-section">
@@ -4226,7 +5487,7 @@
             <img id="checkerProdImage"
               style="width: 80px; height: 80px; object-fit: cover; border-radius: 12px; display: none; margin: 0 auto 10px auto; border: 2px solid var(--verde-italia);">
 
-            <img src="logo.jpg" onerror="this.src='logo.jpg'"
+            <img src="public/logo.jpg" onerror="this.src='public/logo.jpg'"
               style="max-width: 220px; height: auto; margin: 0 auto 12px auto; display: block;"
               alt="GOMEX Nutrition Logo">
             <h2>VERIFICADOR DE PRECIOS BAZAR</h2>
@@ -4254,7 +5515,7 @@
             <!-- Vista Previa de la Empresa -->
             <div class="card">
               <div style="text-align: center; margin-bottom: 15px;">
-                <img id="cfgLogoPreview" src="logo.jpg"
+                <img id="cfgLogoPreview" src="public/logo.jpg"
                   style="max-width: 260px; max-height: 90px; height: auto; object-fit: contain; border: 1px solid var(--border-color); padding: 8px; border-radius: 8px; background: white;"
                   alt="Logo Oficial GOMEX Nutrition">
               </div>
@@ -4455,7 +5716,7 @@
       </button>
       <div class="login-header">
         <div style="text-align: center; margin-bottom: 14px;">
-          <img src="logo.jpg" onerror="this.onerror=null; this.src='logo.jpg';"
+          <img src="public/logo.jpg" onerror="this.onerror=null; this.src='public/logo.jpg';"
             style="max-height: 54px; width: auto; border-radius: 12px; box-shadow: 0 4px 14px rgba(0, 168, 232, 0.35); display: inline-block;"
             alt="GOMEX Nutrition">
         </div>
@@ -5440,7 +6701,7 @@
         portion: '2 gomitas diarias (3g Creatina)',
         description: 'Creatina monohidratada en gomitas masticables. Fuerza y recuperación sin shakers ni textura arenosa.',
         activos: ['Creatina Monohidratada 100% Pura', 'Electrolitos'],
-        image: 'bolsaGomitas.jpg',
+        image: 'public/bolsaGomitas.jpg',
         featured: true,
         badge: 'MÁS VENDIDO ⭐'
       },
@@ -5460,7 +6721,7 @@
         portion: '2 gomitas por la mañana',
         description: '12 vitaminas y minerales clave para reforzar defensas y energía diaria.',
         activos: ['Vitamina C (500mg)', 'Vitamina D3', 'Zinc Quelado', 'Complejo B'],
-        image: 'cajaGomitas.jpg',
+        image: 'public/cajaGomitas.jpg',
         featured: true,
         badge: 'DEFENSAS 🛡️'
       },
@@ -5480,7 +6741,7 @@
         portion: '2 gomitas antes de dormir',
         description: 'Conciliación rápida del sueño y descanso profundo sin somnolencia diurna.',
         activos: ['Melatonina Pura (3mg)', 'Citrato de Magnesio', 'L-Teanina'],
-        image: 'bolsaGomita.jpg',
+        image: 'public/bolsaGomita.jpg',
         featured: true,
         badge: 'SUEÑO PROFUNDO 🌙'
       },
@@ -5500,7 +6761,7 @@
         portion: 'Rutina completa día y noche',
         description: 'Creatina + Multivitamínico + Sleep con 20% de ahorro.',
         activos: ['1x Creatina GOMEX', '1x Multivitamínico GOMEX', '1x Sleep GOMEX'],
-        image: 'gomitas.jpg',
+        image: 'public/gomitas.jpg',
         featured: true,
         badge: 'OFERTA PACK -20% 🔥'
       }
@@ -5519,6 +6780,10 @@
     let categories = [];
     let cart = [];
     let ecommerceCart = [];
+    let ecomOrderCounter = 0;
+    let currentEcomDraft = null;
+    let lastConfirmedOrder = null;
+    let currentSelectedPaymentTab = 'mp';
     let sales = [];
     let budgets = [];
     let orders = [];
@@ -5560,16 +6825,16 @@
       ivaCondition: 'Responsable Inscripto',
       ticketMsg: '¡Gracias por elegir GOMEX Nutrition! Suplementación sin fricción.',
       receiptFooter: '¡Gracias por elegir GOMEX Nutrition! Suplementación sin fricción.',
-      logo: 'logo.jpg',
-      logoUrl: 'logo.jpg'
+      logo: 'public/logo.jpg',
+      logoUrl: 'public/logo.jpg'
     };
 
     let bankConfig = {
       aliasMp: 'gomex.nutricion.mp',
       cvuMp: '0000003100084920194820',
-      aliasCbu: 'GOMEX.ARG',
-      cbu: '0170099220000012345678',
-      bankName: 'Banco Santander / Mercado Pago',
+      aliasCbu: 'GOMEX.NACION',
+      cbu: '0110599520000012345678',
+      bankName: 'Banco de la Nación Argentina',
       holder: 'GOMEX Nutrition Argentina S.R.L.',
       cuit: '30-71829340-9'
     };
@@ -5824,16 +7089,18 @@
     }
 
     function handleClearAllSales() {
-      if (!confirm("¿Deseas reiniciar las ventas, caja y vaciar el carrito?")) return;
+      if (!confirm("¿Deseas reiniciar las ventas, caja, contador de pedidos y vaciar el carrito?")) return;
       sales = [];
       cart = [];
       ecommerceCart = [];
+      ecomOrderCounter = 0;
+      localStorage.setItem('gomex_ecom_order_counter', '0');
       saveStorageData();
       renderDashboard();
       renderSalesTable();
       renderEcommerceCart();
       closeResetDatabaseModal();
-      alert("✅ Historial de ventas y carritos limpiados correctamente.");
+      alert("✅ Historial de ventas, carritos y número de pedidos reiniciados a 0 correctamente.");
     }
 
     function loadStorageData() {
@@ -5851,6 +7118,11 @@
 
         const storedSales = localStorage.getItem('gomex_sales');
         if (storedSales) sales = JSON.parse(storedSales);
+
+        const storedCounter = localStorage.getItem('gomex_ecom_order_counter');
+        if (storedCounter !== null) {
+          ecomOrderCounter = parseInt(storedCounter, 10) || 0;
+        }
 
         const storedClients = localStorage.getItem('gomex_clients');
         if (storedClients) clients = JSON.parse(storedClients);
@@ -5903,6 +7175,7 @@
         localStorage.setItem('gomex_products', JSON.stringify(products));
         localStorage.setItem('gomex_categories', JSON.stringify(categories));
         localStorage.setItem('gomex_sales', JSON.stringify(sales));
+        localStorage.setItem('gomex_ecom_order_counter', ecomOrderCounter.toString());
         localStorage.setItem('gomex_clients', JSON.stringify(clients));
         localStorage.setItem('gomex_colabs', JSON.stringify(colaboradores));
         localStorage.setItem('gomex_offers', JSON.stringify(offers));
@@ -6064,7 +7337,7 @@
         const finalPrice = offer ? offer.offerPrice : p.price;
         const stockStatus = p.stock > 10 ? 'En Stock' : (p.stock > 0 ? `Últimas ${p.stock}` : 'Agotado');
         const stockClass = p.stock > 0 ? '#10b981' : '#ef4444';
-        const imgSource = p.image || 'bolsaGomitas.jpg';
+        const imgSource = p.image || 'public/bolsaGomitas.jpg';
         const badge = p.badge || (offer ? `-${offer.discount}% OFF` : 'FÓRMULA GOMEX');
 
         const card = document.createElement('div');
@@ -6072,7 +7345,7 @@
         card.innerHTML = `
           <div class="product-card-badge">${badge}</div>
           <div class="product-card-img-wrap" onclick="openProductModal(${p.id})" title="Hacé clic para ampliar y ver detalles">
-            <img src="${imgSource}" onerror="this.src='bolsaGomitas.jpg'" class="product-card-img" alt="${p.name}">
+            <img src="${imgSource}" onerror="this.src='public/bolsaGomitas.jpg'" class="product-card-img" alt="${p.name}">
             <div class="img-zoom-hint">
               <ion-icon name="search-outline"></ion-icon>
               <span>Ampliar</span>
@@ -6134,7 +7407,7 @@
 
       const offer = offers.find(o => o.productId === prod.id);
       const finalPrice = offer ? offer.offerPrice : prod.price;
-      const imgSource = prod.image || 'bolsaGomitas.jpg';
+      const imgSource = prod.image || 'public/bolsaGomitas.jpg';
 
       const body = document.getElementById('modalProdBody');
       const activosHtml = prod.activos && prod.activos.length
@@ -6145,7 +7418,7 @@
         <div style="display: grid; grid-template-columns: 1fr 1.15fr; gap: 30px; align-items: start;">
           <div>
             <div class="product-zoom-img-container" onclick="openImageLightbox('${imgSource}')" title="Hacé clic para ver en pantalla completa">
-              <img src="${imgSource}" onerror="this.src='bolsaGomitas.jpg'" class="product-zoom-img" alt="${prod.name}">
+              <img src="${imgSource}" onerror="this.src='public/bolsaGomitas.jpg'" class="product-zoom-img" alt="${prod.name}">
               <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color:#fff; font-size:0.75rem; padding: 4px 10px; border-radius: 12px; display: flex; align-items: center; gap: 4px;">
                 <ion-icon name="expand-outline"></ion-icon>
                 <span>Pantalla Completa</span>
@@ -6266,9 +7539,11 @@
       if (show) {
         drawer.classList.add('active');
         backdrop.classList.add('active');
+        document.body.style.overflow = 'hidden';
       } else {
         drawer.classList.remove('active');
         backdrop.classList.remove('active');
+        document.body.style.overflow = '';
       }
     }
 
@@ -6280,6 +7555,8 @@
 
       const totalCount = ecommerceCart.reduce((sum, item) => sum + item.quantity, 0);
       if (badge) badge.textContent = totalCount;
+      const floatingBadge = document.getElementById('floatingCartBadge');
+      if (floatingBadge) floatingBadge.textContent = totalCount;
 
       let subtotal = 0;
       ecommerceCart.forEach(item => {
@@ -6317,7 +7594,7 @@
         const card = document.createElement('div');
         card.className = 'cart-item-card';
         card.innerHTML = `
-          <img src="${item.product.image || 'bolsaGomitas.jpg'}" onerror="this.src='bolsaGomitas.jpg'" class="cart-item-img" alt="${item.product.name}">
+          <img src="${item.product.image || 'public/bolsaGomitas.jpg'}" onerror="this.src='public/bolsaGomitas.jpg'" class="cart-item-img" alt="${item.product.name}">
           <div class="cart-item-details">
             <div class="cart-item-name">${item.product.name}</div>
             <div class="cart-item-unit-price">$${price.toLocaleString('es-AR')} c/u</div>
@@ -6343,90 +7620,495 @@
 
     function checkoutWhatsApp() {
       if (ecommerceCart.length === 0) {
-        alert('Tu carrito está vacío.');
+        alert('Tu carrito está vacío. Sumá algún producto antes de continuar.');
         return;
       }
 
-      const buyerName = document.getElementById('buyerName')?.value.trim() || 'Cliente';
-      const buyerPhone = document.getElementById('buyerPhone')?.value.trim() || '-';
-      const buyerAddress = document.getElementById('buyerAddress')?.value.trim() || 'A coordinar';
+      const buyerName = (document.getElementById('buyerName')?.value || '').trim() || 'Cliente';
+      const buyerPhone = (document.getElementById('buyerPhone')?.value || '').trim() || '-';
+      const buyerAddress = (document.getElementById('buyerAddress')?.value || '').trim() || 'Entrega a coordinar';
+
+      ecomOrderCounter = (parseInt(localStorage.getItem('gomex_ecom_order_counter') || '0', 10)) + 1;
+      localStorage.setItem('gomex_ecom_order_counter', ecomOrderCounter.toString());
+      const orderId = 'GMX-' + String(ecomOrderCounter).padStart(4, '0');
+
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      const timeStr = now.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit', hour12: false }) + ' hs';
 
       let total = 0;
       let itemsText = '';
+      const saleLines = [];
 
-      ecommerceCart.forEach(item => {
+      ecommerceCart.forEach((item, idx) => {
         const offer = offers.find(o => o.productId === item.product.id);
         const price = offer ? offer.offerPrice : item.product.price;
         const lineTotal = price * item.quantity;
         total += lineTotal;
-        itemsText += `  • ${item.quantity}x ${item.product.name} ($${lineTotal.toLocaleString('es-AR')})\n`;
+        itemsText += `  ${idx + 1}. *${item.quantity}x* ${item.product.name} ($${price.toLocaleString('es-AR')} c/u)\n      ↳ Subtotal: *$${lineTotal.toLocaleString('es-AR')}*\n`;
+
+        const prod = products.find(p => p.id === item.product.id);
+        if (prod) prod.stock = Math.max(0, prod.stock - item.quantity);
+
+        saleLines.push({
+          id: item.product.id,
+          name: item.product.name,
+          qty: item.quantity,
+          price: price,
+          subtotal: lineTotal
+        });
       });
 
-      const message = `👋 ¡Hola GOMEX Nutrition! Quiero pedir:\n\n` +
-        `🛍️ *PRODUCTOS:*\n${itemsText}\n` +
-        `💰 *TOTAL:* $${total.toLocaleString('es-AR')}\n\n` +
-        `📍 *DATOS:*\n` +
-        `• Nombre: ${buyerName}\n` +
-        `• Teléfono: ${buyerPhone}\n` +
-        `• Entrega: ${buyerAddress}`;
+      const saleRecord = {
+        id: orderId,
+        date: dateStr + ' ' + timeStr,
+        seller: 'Tienda E-Commerce GOMEX',
+        client: buyerName,
+        paymentMethod: 'E-Commerce (WhatsApp Directo)',
+        lines: saleLines,
+        total: total
+      };
 
-      recordEcommerceSale(buyerName, buyerPhone, 'WhatsApp');
+      sales.unshift(saleRecord);
+      ecommerceCart = [];
+      saveStorageData();
+      renderEcommerceProducts();
+      renderStockTable();
+      renderDBProducts();
+      renderSalesTable();
+      renderDashboard();
+      renderEcommerceCart();
+      toggleEcommerceCart(false);
 
+      const message = `🛒 *PEDIDO POR WHATSAPP - GOMEX NUTRITION*\n` +
+        `━━━━━━━━━━━━━━━━━━━━━━━\n` +
+        `🔖 *N° de Pedido:* #${orderId}\n` +
+        `📅 *Fecha:* ${dateStr}\n` +
+        `⏰ *Hora:* ${timeStr}\n\n` +
+        `👤 *DATOS DEL CLIENTE:*\n` +
+        `• *Nombre:* ${buyerName}\n` +
+        `• *WhatsApp:* ${buyerPhone}\n` +
+        `• *Dirección:* ${buyerAddress}\n\n` +
+        `📦 *DETALLE DE PRODUCTOS:*\n${itemsText}\n` +
+        `💰 *TOTAL:* *$${total.toLocaleString('es-AR')}*\n` +
+        `━━━━━━━━━━━━━━━━━━━━━━━\n` +
+        `👋 ¡Hola GOMEX! Quiero confirmar la disponibilidad y coordinar la entrega.`;
+
+      const cleanStorePhone = (storeConfig.phone || '5491112345678').replace(/\D/g, '') || '5491112345678';
       const encodedMsg = encodeURIComponent(message);
-      window.open(`https://wa.me/5491112345678?text=${encodedMsg}`, '_blank');
+      window.open(`https://wa.me/${cleanStorePhone}?text=${encodedMsg}`, '_blank');
+    }
+
+    function switchPaymentTab(tab) {
+      currentSelectedPaymentTab = tab;
+      const btnMp = document.getElementById('btnTabMp');
+      const btnBank = document.getElementById('btnTabBank');
+      const viewMp = document.getElementById('payViewMp');
+      const viewBank = document.getElementById('payViewBank');
+
+      if (!btnMp || !btnBank || !viewMp || !viewBank) return;
+
+      if (tab === 'mp') {
+        btnMp.classList.add('active');
+        btnBank.classList.remove('active');
+        viewMp.style.display = 'block';
+        viewBank.style.display = 'none';
+      } else {
+        btnBank.classList.add('active');
+        btnMp.classList.remove('active');
+        viewBank.style.display = 'block';
+        viewMp.style.display = 'none';
+      }
+    }
+
+    function copyPaymentData(text, btnElem) {
+      if (!text) return;
+      const cleanText = text.trim();
+      const originalHtml = btnElem.innerHTML;
+
+      const successFeedback = () => {
+        btnElem.innerHTML = `<ion-icon name="checkmark-circle"></ion-icon> <span>¡Copiado!</span>`;
+        btnElem.style.background = '#10b981';
+        btnElem.style.color = '#ffffff';
+        setTimeout(() => {
+          btnElem.innerHTML = originalHtml;
+          btnElem.style.background = '';
+          btnElem.style.color = '';
+        }, 2000);
+      };
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(cleanText).then(successFeedback).catch(() => {
+          fallbackCopy(cleanText, successFeedback);
+        });
+      } else {
+        fallbackCopy(cleanText, successFeedback);
+      }
+    }
+
+    function fallbackCopy(text, callback) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        if (callback) callback();
+      } catch (e) {
+        console.warn('Fallback copy failed', e);
+      }
+      document.body.removeChild(ta);
     }
 
     function checkoutOnlineOrder() {
       if (ecommerceCart.length === 0) {
-        alert('Tu carrito está vacío.');
+        alert('Tu carrito está vacío. Sumá algún producto antes de continuar.');
         return;
       }
 
-      const buyerName = document.getElementById('buyerName')?.value.trim();
-      const buyerPhone = document.getElementById('buyerPhone')?.value.trim();
-      const buyerAddress = document.getElementById('buyerAddress')?.value.trim();
+      const buyerName = (document.getElementById('buyerName')?.value || '').trim();
+      const buyerPhone = (document.getElementById('buyerPhone')?.value || '').trim();
+      const buyerAddress = (document.getElementById('buyerAddress')?.value || '').trim();
 
       if (!buyerName || !buyerPhone) {
-        alert('Por favor completá tu Nombre y WhatsApp para el pedido.');
+        alert('Por favor completá tu Nombre y WhatsApp para coordinar tu pedido.');
+        if (!buyerName) {
+          document.getElementById('buyerName')?.focus();
+        } else {
+          document.getElementById('buyerPhone')?.focus();
+        }
         return;
       }
 
-      const orderId = 'GMX-' + Math.floor(1000 + Math.random() * 9000);
-      const sale = recordEcommerceSale(buyerName, buyerPhone, 'Web Online', orderId);
-
-      document.getElementById('successOrderId').textContent = '#' + orderId;
-
-      const summaryDiv = document.getElementById('successOrderSummary');
-      let summaryHtml = `<strong>Cliente:</strong> ${buyerName} (${buyerPhone})<br><strong>Entrega:</strong> ${buyerAddress || 'A coordinar'}<hr style="margin:6px 0; border:0; border-top:1px solid #bae6fd;">`;
-
-      sale.lines.forEach(l => {
-        summaryHtml += `<div style="display:flex; justify-content:space-between; font-size:0.82rem; margin-bottom:3px;">
-          <span>${l.qty}x ${l.name}</span>
-          <strong>$${l.subtotal.toLocaleString('es-AR')}</strong>
-        </div>`;
+      // Preparar borrador del pedido con precios vigentes
+      const draftItems = ecommerceCart.map(item => {
+        const offer = offers.find(o => o.productId === item.product.id);
+        const price = offer ? offer.offerPrice : item.product.price;
+        return {
+          id: item.product.id,
+          name: item.product.name,
+          qty: item.quantity,
+          price: price,
+          subtotal: price * item.quantity
+        };
       });
-      summaryHtml += `<div style="display:flex; justify-content:space-between; font-weight:800; font-size:0.95rem; margin-top:6px; color:var(--celeste-dark);">
-        <span>Total:</span>
-        <span>$${sale.total.toLocaleString('es-AR')}</span>
-      </div>`;
 
-      summaryDiv.innerHTML = summaryHtml;
+      const total = draftItems.reduce((acc, it) => acc + it.subtotal, 0);
+      const totalQty = draftItems.reduce((acc, it) => acc + it.qty, 0);
 
-      ecommerceCart = [];
-      saveStorageData();
-      renderEcommerceCart();
+      currentEcomDraft = {
+        buyerName,
+        buyerPhone,
+        buyerAddress: buyerAddress || 'Entrega a coordinar',
+        items: draftItems,
+        total: total,
+        totalQty: totalQty
+      };
+
+      // Cargar datos en el modal de transferencia (Paso 1)
+      const payAmount = document.getElementById('payModalAmount');
+      if (payAmount) payAmount.textContent = `$${total.toLocaleString('es-AR')}`;
+
+      const briefElem = document.getElementById('payModalSummaryBrief');
+      if (briefElem) {
+        briefElem.textContent = `${totalQty} ${totalQty === 1 ? 'unidad' : 'unidades'} • ${buyerName}`;
+      }
+
+      const draftCountElem = document.getElementById('payDraftTotalItemsCount');
+      if (draftCountElem) {
+        draftCountElem.textContent = `${totalQty} ${totalQty === 1 ? 'ítem' : 'ítems'}`;
+      }
+
+      const draftListContainer = document.getElementById('payDraftItemsList');
+      if (draftListContainer) {
+        draftListContainer.innerHTML = draftItems.map(it => `
+          <div class="payment-draft-item">
+            <span><strong>${it.qty}x</strong> ${it.name}</span>
+            <strong style="color: #38bdf8;">$${it.subtotal.toLocaleString('es-AR')}</strong>
+          </div>
+        `).join('');
+      }
+
+      // Población dinámica de datos bancarios actuales
+      const elAliasMp = document.getElementById('payAliasMp');
+      if (elAliasMp) elAliasMp.textContent = bankConfig.aliasMp || 'gomex.nutricion.mp';
+
+      const elCvuMp = document.getElementById('payCvuMp');
+      if (elCvuMp) elCvuMp.textContent = bankConfig.cvuMp || '0000003100084920194820';
+
+      const elHolderMp = document.getElementById('payHolderMp');
+      if (elHolderMp) elHolderMp.textContent = bankConfig.holder || storeConfig.businessName || 'GOMEX Nutrition S.R.L.';
+
+      const elBankName = document.getElementById('payBankName');
+      if (elBankName) elBankName.textContent = bankConfig.bankName || 'Banco de la Nación Argentina';
+
+      const elAliasCbu = document.getElementById('payAliasCbu');
+      if (elAliasCbu) elAliasCbu.textContent = bankConfig.aliasCbu || 'GOMEX.NACION';
+
+      const elCbu = document.getElementById('payCbu');
+      if (elCbu) elCbu.textContent = bankConfig.cbu || '0110599520000012345678';
+
+      const elBankHolder = document.getElementById('payBankHolder');
+      if (elBankHolder) {
+        elBankHolder.textContent = `${bankConfig.holder || storeConfig.businessName || 'GOMEX Nutrition S.R.L.'} (CUIT: ${bankConfig.cuit || storeConfig.cuit || '30-71829340-9'})`;
+      }
+
+      // Restablecer vistas del modal: Mostrar Paso 1, ocultar Paso 2
+      const stepTransfer = document.getElementById('payStepTransfer');
+      const stepConfirmed = document.getElementById('payStepConfirmed');
+      if (stepTransfer) stepTransfer.style.display = 'block';
+      if (stepConfirmed) stepConfirmed.style.display = 'none';
+
+      switchPaymentTab('mp');
       toggleEcommerceCart(false);
 
-      document.getElementById('ecommerceSuccessModal').style.display = 'flex';
+      const modal = document.getElementById('ecommerceSuccessModal');
+      if (modal) modal.style.display = 'flex';
+    }
+
+    function confirmOnlineOrder() {
+      if (!currentEcomDraft || !currentEcomDraft.items || currentEcomDraft.items.length === 0) {
+        alert('No hay un pedido activo para confirmar.');
+        return;
+      }
+
+      // 1. Contador secuencial de pedidos iniciando desde 0001
+      ecomOrderCounter = (parseInt(localStorage.getItem('gomex_ecom_order_counter') || '0', 10)) + 1;
+      localStorage.setItem('gomex_ecom_order_counter', ecomOrderCounter.toString());
+      const orderId = 'GMX-' + String(ecomOrderCounter).padStart(4, '0');
+
+      // 2. Captura exacta de Fecha y Hora local
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      const timeStr = now.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit', hour12: false }) + ' hs';
+      const dateTimeStr = `${dateStr} • ${timeStr}`;
+
+      // 3. Descontar stock y registrar venta
+      currentEcomDraft.items.forEach(it => {
+        const prod = products.find(p => p.id === it.id);
+        if (prod) prod.stock = Math.max(0, prod.stock - it.qty);
+      });
+
+      const methodStr = currentSelectedPaymentTab === 'mp'
+        ? 'Mercado Pago (Transferencia / CVU)'
+        : 'Transferencia Bancaria (CBU / Alias)';
+
+      const saleRecord = {
+        id: orderId,
+        date: dateStr + ' ' + timeStr,
+        seller: 'Tienda E-Commerce GOMEX',
+        client: currentEcomDraft.buyerName,
+        paymentMethod: `E-Commerce (${methodStr})`,
+        lines: currentEcomDraft.items,
+        total: currentEcomDraft.total
+      };
+
+      sales.unshift(saleRecord);
+      saveStorageData();
+
+      // 4. Vaciar carrito de compras
+      ecommerceCart = [];
+      saveStorageData();
+      renderEcommerceProducts();
+      renderStockTable();
+      renderDBProducts();
+      renderSalesTable();
+      renderDashboard();
+      renderEcommerceCart();
+
+      // 5. Construir mensaje detallado para WhatsApp
+      let itemsWaText = '';
+      currentEcomDraft.items.forEach((it, idx) => {
+        itemsWaText += `  ${idx + 1}. *${it.qty}x* ${it.name} ($${it.price.toLocaleString('es-AR')} c/u)\n      ↳ Subtotal: *$${it.subtotal.toLocaleString('es-AR')}*\n`;
+      });
+
+      const waMsg =
+        `🛒 *CONFIRMACIÓN DE PEDIDO - GOMEX NUTRITION*\n` +
+        `━━━━━━━━━━━━━━━━━━━━━━━\n` +
+        `🔖 *N° de Pedido:* #${orderId}\n` +
+        `📅 *Fecha:* ${dateStr}\n` +
+        `⏰ *Hora:* ${timeStr}\n\n` +
+        `👤 *DATOS DEL CLIENTE:*\n` +
+        `• *Nombre:* ${currentEcomDraft.buyerName}\n` +
+        `• *WhatsApp:* ${currentEcomDraft.buyerPhone}\n` +
+        `• *Dirección:* ${currentEcomDraft.buyerAddress}\n\n` +
+        `💳 *MÉTODO DE PAGO:* ${methodStr}\n\n` +
+        `📦 *DETALLE DE PRODUCTOS:*\n` +
+        `${itemsWaText}\n` +
+        `💰 *TOTAL A TRANSFERIR:* *$${currentEcomDraft.total.toLocaleString('es-AR')}*\n` +
+        `━━━━━━━━━━━━━━━━━━━━━━━\n` +
+        `📸 *Comprobante:* Adjunto aquí el comprobante de pago 👇`;
+
+      lastConfirmedOrder = {
+        orderId,
+        dateStr,
+        timeStr,
+        dateTimeStr,
+        methodStr,
+        buyerName: currentEcomDraft.buyerName,
+        buyerPhone: currentEcomDraft.buyerPhone,
+        buyerAddress: currentEcomDraft.buyerAddress,
+        items: [...currentEcomDraft.items],
+        total: currentEcomDraft.total,
+        waMsg: waMsg
+      };
+
+      // 6. Abrir WhatsApp automáticamente con el detalle completo
+      const cleanStorePhone = (storeConfig.phone || '5491112345678').replace(/\D/g, '') || '5491112345678';
+      const encodedMsg = encodeURIComponent(waMsg);
+      window.open(`https://wa.me/${cleanStorePhone}?text=${encodedMsg}`, '_blank');
+
+      // 7. Renderizar comprobante digital (Paso 2)
+      const orderBadge = document.getElementById('receiptOrderId');
+      if (orderBadge) orderBadge.textContent = '#' + orderId;
+
+      const dtElem = document.getElementById('receiptDateTime');
+      if (dtElem) dtElem.textContent = `📅 ${dateStr} • ⏰ ${timeStr}`;
+
+      const methodElem = document.getElementById('receiptPaymentMethod');
+      if (methodElem) methodElem.textContent = currentSelectedPaymentTab === 'mp' ? 'Mercado Pago' : 'Banco Nación / CBU';
+
+      const clientElem = document.getElementById('receiptClientInfo');
+      if (clientElem) clientElem.textContent = `${currentEcomDraft.buyerName} • WhatsApp: ${currentEcomDraft.buyerPhone}`;
+
+      const addrElem = document.getElementById('receiptAddressInfo');
+      if (addrElem) addrElem.textContent = `Entrega: ${currentEcomDraft.buyerAddress}`;
+
+      const itemsListElem = document.getElementById('receiptItemsList');
+      if (itemsListElem) {
+        itemsListElem.innerHTML = currentEcomDraft.items.map(it => `
+          <div class="receipt-item-row">
+            <div>
+              <strong style="color: #f8fafc;">${it.qty}x</strong> ${it.name}
+              <small style="color: #94a3b8; font-size: 0.75rem;">($${it.price.toLocaleString('es-AR')} c/u)</small>
+            </div>
+            <strong style="color: #38bdf8;">$${it.subtotal.toLocaleString('es-AR')}</strong>
+          </div>
+        `).join('');
+      }
+
+      const totalElem = document.getElementById('receiptTotalVal');
+      if (totalElem) totalElem.textContent = `$${currentEcomDraft.total.toLocaleString('es-AR')}`;
+
+      // Mostrar Paso 2 y ocultar Paso 1
+      const stepTransfer = document.getElementById('payStepTransfer');
+      const stepConfirmed = document.getElementById('payStepConfirmed');
+      if (stepTransfer) stepTransfer.style.display = 'none';
+      if (stepConfirmed) stepConfirmed.style.display = 'block';
+    }
+
+    function resendOrderWhatsApp() {
+      if (!lastConfirmedOrder) {
+        const cleanStorePhone = (storeConfig.phone || '5491112345678').replace(/\D/g, '') || '5491112345678';
+        window.open(`https://wa.me/${cleanStorePhone}`, '_blank');
+        return;
+      }
+
+      const cleanStorePhone = (storeConfig.phone || '5491112345678').replace(/\D/g, '') || '5491112345678';
+      const encodedMsg = encodeURIComponent(lastConfirmedOrder.waMsg);
+      window.open(`https://wa.me/${cleanStorePhone}?text=${encodedMsg}`, '_blank');
+    }
+
+    function returnToCartDrawer() {
+      const modal = document.getElementById('ecommerceSuccessModal');
+      if (modal) modal.style.display = 'none';
+      toggleEcommerceCart(true);
+    }
+
+    function printEcomReceipt() {
+      if (!lastConfirmedOrder) {
+        window.print();
+        return;
+      }
+
+      const printWindow = window.open('', '_blank', 'width=650,height=750');
+      if (!printWindow) {
+        window.print();
+        return;
+      }
+
+      const itemsHtml = lastConfirmedOrder.items.map(it => `
+        <tr>
+          <td style="padding: 6px 0; border-bottom: 1px solid #e2e8f0;">${it.qty}x ${it.name}</td>
+          <td style="padding: 6px 0; text-align: right; border-bottom: 1px solid #e2e8f0;">$${it.price.toLocaleString('es-AR')}</td>
+          <td style="padding: 6px 0; text-align: right; font-weight: bold; border-bottom: 1px solid #e2e8f0;">$${it.subtotal.toLocaleString('es-AR')}</td>
+        </tr>
+      `).join('');
+
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Comprobante de Pedido #${lastConfirmedOrder.orderId} - GOMEX Nutrition</title>
+          <style>
+            body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 30px; color: #1e293b; }
+            .header { text-align: center; border-bottom: 2px solid #0284c7; padding-bottom: 15px; margin-bottom: 20px; }
+            .title { font-size: 22px; font-weight: 800; color: #0284c7; margin: 0; }
+            .meta-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 20px; font-size: 14px; }
+            table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px; }
+            th { text-align: left; background: #f1f5f9; padding: 8px 4px; border-bottom: 2px solid #cbd5e1; }
+            .total-row { font-size: 18px; font-weight: bold; text-align: right; margin-top: 15px; color: #0284c7; }
+            .footer { margin-top: 30px; text-align: center; font-size: 12px; color: #64748b; border-top: 1px dashed #cbd5e1; padding-top: 15px; }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <h1 class="title">${(storeConfig.tradeName || 'GOMEX NUTRITION').toUpperCase()}</h1>
+            <p style="margin: 4px 0 0 0; font-size: 13px; color: #64748b;">Suplementación Inteligente en Gomitas • Industria Argentina</p>
+          </div>
+
+          <div class="meta-box">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+              <strong>Comprobante de Pedido: #${lastConfirmedOrder.orderId}</strong>
+              <span>📅 ${lastConfirmedOrder.dateStr} - ⏰ ${lastConfirmedOrder.timeStr}</span>
+            </div>
+            <div><strong>Cliente:</strong> ${lastConfirmedOrder.buyerName}</div>
+            <div><strong>WhatsApp:</strong> ${lastConfirmedOrder.buyerPhone}</div>
+            <div><strong>Entrega:</strong> ${lastConfirmedOrder.buyerAddress}</div>
+            <div><strong>Método de Pago:</strong> ${lastConfirmedOrder.methodStr}</div>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th style="text-align: right;">Unitario</th>
+                <th style="text-align: right;">Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${itemsHtml}
+            </tbody>
+          </table>
+
+          <div class="total-row">
+            TOTAL ABONADO: $${lastConfirmedOrder.total.toLocaleString('es-AR')}
+          </div>
+
+          <div class="footer">
+            <p>¡Gracias por tu compra! Tu pedido está siendo procesado para entrega inmediata.</p>
+            <p>${storeConfig.tradeName || 'GOMEX Nutrition'} • ${storeConfig.phone || ''} • ${storeConfig.email || ''}</p>
+          </div>
+
+          <script>
+            window.onload = function() { window.print(); }
+          <\/script>
+        </body>
+        </html>
+      `);
+      printWindow.document.close();
     }
 
     function closeSuccessModal() {
-      document.getElementById('ecommerceSuccessModal').style.display = 'none';
+      const modal = document.getElementById('ecommerceSuccessModal');
+      if (modal) modal.style.display = 'none';
     }
 
     function recordEcommerceSale(buyerName, buyerPhone, origin = 'Web', customOrderId = null) {
       const now = new Date();
-      const dateStr = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const dateStr = now.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' }) + ' ' + now.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit', hour12: false }) + ' hs';
       const saleLines = [];
       let total = 0;
 
@@ -6612,8 +8294,18 @@
 
       if (linkElem) {
         linkElem.classList.add('active');
+      } else {
+        // Encontrar automáticamente el nav-link en el sidebar que navega a este moduleId
+        const matchingLink = Array.from(document.querySelectorAll('.nav-link, .submenu a')).find(el => {
+          const clickStr = el.getAttribute('onclick') || '';
+          return clickStr.includes(`showModule('${moduleId}'`) || clickStr.includes(`showModule("${moduleId}"`);
+        });
+        if (matchingLink) {
+          matchingLink.classList.add('active');
+        }
       }
 
+      renderDashboard();
       renderCategoriesUI();
       renderStockTable();
       renderDBProducts();
@@ -6803,99 +8495,186 @@
     }
 
 
+    let selectedDashCategory = 'all';
+
     function renderDashboard() {
-      renderDashboardCards();
-      renderDashboardOffers();
-      renderDashboardTopProducts();
-      renderDashboardLowStock();
+      renderDashboardHeader();
+      renderDashboardMetrics();
+      renderDashboardCategories();
+      renderDashboardProducts();
+      renderDashboardStockAlert();
     }
 
-    function renderDashboardCards() {
+    function renderDashboardHeader() {
+      const userElem = document.getElementById('dashWelcomeUser');
+      if (userElem) {
+        userElem.textContent = currentUser ? `Hola, ${currentUser.name}` : 'Panel Principal';
+      }
+      const liveStatus = document.getElementById('dashLiveStatus');
+      if (liveStatus) {
+        liveStatus.textContent = boxSession.status === 'ABIERTA' ? 'Caja Abierta' : 'Sistema Activo';
+      }
+    }
+
+    function renderDashboardMetrics() {
       const totalSalesSum = sales.reduce((acc, s) => acc + s.total, 0);
-      document.getElementById('dashMonthlySales').textContent = `$${totalSalesSum.toLocaleString()}`;
+      const salesCount = sales.length;
+      
+      const salesValElem = document.getElementById('dashMonthlySales');
+      if (salesValElem) salesValElem.textContent = `$${totalSalesSum.toLocaleString('es-AR')}`;
 
-      const estimatedProfit = Math.round(totalSalesSum * 0.33);
-      document.getElementById('dashEstimatedProfit').textContent = `$${estimatedProfit.toLocaleString()}`;
+      const salesBadge = document.getElementById('dashSalesCountBadge');
+      if (salesBadge) salesBadge.textContent = `${salesCount} ${salesCount === 1 ? 'operación' : 'operaciones'} en total`;
 
-      const lowStockProds = products.filter(p => p.stock <= 5);
-      document.getElementById('dashLowStockCount').textContent = lowStockProds.length;
+      const prodCountElem = document.getElementById('dashProductCount');
+      if (prodCountElem) prodCountElem.textContent = products.length;
 
-      document.getElementById('dashOfferCount').textContent = offers.length;
+      const catCountElem = document.getElementById('dashCategoriesCount');
+      if (catCountElem) {
+        const catCount = new Set(products.map(p => p.category).filter(Boolean)).size;
+        catCountElem.textContent = `${catCount} ${catCount === 1 ? 'categoría' : 'categorías'} activas`;
+      }
     }
 
-    function renderDashboardOffers() {
-      const tbody = document.getElementById('dashOffersTableBody');
-      if (!tbody) return;
-      tbody.innerHTML = '';
+    function renderDashboardCategories() {
+      const container = document.getElementById('dashCategoryChips');
+      if (!container) return;
+      container.innerHTML = '';
 
-      if (offers.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--text-muted); padding:15px;">No hay promociones activas en este momento.</td></tr>';
+      const allBtn = document.createElement('button');
+      allBtn.type = 'button';
+      allBtn.className = `dash-chip ${selectedDashCategory === 'all' ? 'active' : ''}`;
+      allBtn.textContent = 'Todos';
+      allBtn.onclick = () => filterDashCategory('all', allBtn);
+      container.appendChild(allBtn);
+
+      const uniqueCats = Array.from(new Set(products.map(p => p.category).filter(Boolean)));
+      uniqueCats.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `dash-chip ${selectedDashCategory === cat ? 'active' : ''}`;
+        btn.textContent = cat;
+        btn.onclick = () => filterDashCategory(cat, btn);
+        container.appendChild(btn);
+      });
+    }
+
+    function filterDashCategory(cat, btnElem) {
+      selectedDashCategory = cat;
+      const chips = document.querySelectorAll('#dashCategoryChips .dash-chip');
+      chips.forEach(c => c.classList.remove('active'));
+      if (btnElem) btnElem.classList.add('active');
+      renderDashboardProducts();
+    }
+
+    function filterDashProducts() {
+      renderDashboardProducts();
+    }
+
+    function renderDashboardProducts() {
+      const grid = document.getElementById('dashProductsGrid');
+      const badge = document.getElementById('dashProdsFoundBadge');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      const searchInput = document.getElementById('dashSearchInput');
+      const search = (searchInput ? searchInput.value : '').toLowerCase().trim();
+
+      const filtered = products.filter(p => {
+        const matchCategory = selectedDashCategory === 'all' || p.category === selectedDashCategory;
+        const matchSearch = !search ||
+          (p.name && p.name.toLowerCase().includes(search)) ||
+          (p.code && p.code.toLowerCase().includes(search)) ||
+          (p.internalCode && p.internalCode.toLowerCase().includes(search)) ||
+          (p.flavor && p.flavor.toLowerCase().includes(search));
+        return matchCategory && matchSearch;
+      });
+
+      if (badge) {
+        badge.textContent = `${filtered.length} ${filtered.length === 1 ? 'producto' : 'productos'}`;
+      }
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 30px 15px; color: var(--text-muted);">
+            <ion-icon name="search-outline" style="font-size: 2.2rem; opacity: 0.5; margin-bottom: 8px;"></ion-icon>
+            <p style="font-size: 0.95rem; font-weight: 600;">No se encontraron productos con ese criterio.</p>
+          </div>
+        `;
         return;
       }
 
-      offers.forEach((off, idx) => {
-        const prod = products.find(p => p.id === off.productId);
-        if (!prod) return;
+      filtered.forEach(p => {
+        const isLow = p.stock <= 5;
+        const card = document.createElement('div');
+        card.className = 'dash-prod-card';
 
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-      <td><strong>${prod.name}</strong></td>
-      <td>${prod.category}</td>
-      <td><del style="color:var(--text-muted);">$${prod.price.toLocaleString()}</del></td>
-      <td><span class="pill" style="background:#fff3cd; color:#856404; font-weight:bold;">${off.discount}% OFF</span></td>
-      <td style="color:var(--verde-italia); font-weight:bold; font-size:1rem;">$${off.offerPrice.toLocaleString()}</td>
-      <td>
-        <button class="btn btn-red" style="padding:3px 6px; font-size:0.75rem;" onclick="removeOffer(${idx})">Eliminar</button>
-      </td>
-    `;
-        tbody.appendChild(tr);
+        let visualElem = `<div class="dash-prod-icon"><ion-icon name="${p.icon || 'shapes-outline'}"></ion-icon></div>`;
+        if (p.image) {
+          visualElem = `<img src="${p.image}" class="dash-prod-img" alt="${p.name}" onerror="this.src='public/bolsaGomitas.jpg'">`;
+        }
+
+        card.innerHTML = `
+          <div>
+            <div class="dash-prod-top">
+              ${visualElem}
+              <div class="dash-prod-details">
+                <div class="dash-prod-cat">${p.category || 'Suplementos'}</div>
+                <div class="dash-prod-name" title="${p.name}">${p.name}</div>
+              </div>
+            </div>
+            <div class="dash-prod-bottom">
+              <div class="dash-prod-price">$${p.price.toLocaleString('es-AR')}</div>
+              <div class="dash-prod-stock ${isLow ? 'stock-low' : ''}">${p.stock} dispon.</div>
+            </div>
+          </div>
+          <button type="button" class="dash-prod-btn-pos" onclick="dashQuickAddToCart(${p.id})">
+            <ion-icon name="cart-outline"></ion-icon>
+            <span>Cobrar en POS</span>
+          </button>
+        `;
+        grid.appendChild(card);
       });
     }
 
-    function renderDashboardTopProducts() {
-      const tbody = document.getElementById('dashTopProductsBody');
-      if (!tbody) return;
-      tbody.innerHTML = '';
-
-      const topList = [...products].sort((a, b) => b.price - a.price).slice(0, 5);
-
-      topList.forEach((p, rank) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-      <td><strong>#${rank + 1}</strong></td>
-      <td>${p.name}</td>
-      <td>${p.category}</td>
-      <td><strong>${35 - rank * 4} Unid.</strong></td>
-    `;
-        tbody.appendChild(tr);
-      });
+    function dashQuickAddToCart(productId) {
+      addToCart(productId);
+      showModule('mod-pos', document.getElementById('menu-pos'));
     }
 
-    function renderDashboardLowStock() {
-      const tbody = document.getElementById('dashLowStockBody');
-      if (!tbody) return;
-      tbody.innerHTML = '';
+    function renderDashboardStockAlert() {
+      const container = document.getElementById('dashStockAlertContainer');
+      if (!container) return;
+      const lowStockList = products.filter(p => p.stock <= 5);
 
-      const lowStock = products.filter(p => p.stock <= 5);
-
-      if (lowStock.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--verde-italia); padding:15px;">¡Excelente! No hay productos con stock crítico.</td></tr>';
+      if (lowStockList.length === 0) {
+        container.style.display = 'none';
+        container.innerHTML = '';
         return;
       }
 
-      lowStock.forEach(p => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-      <td><strong>${p.name}</strong></td>
-      <td><code>${p.internalCode}</code></td>
-      <td><strong style="color:var(--rojo-italia);">${p.stock} Unid.</strong></td>
-      <td>
-        <button class="btn btn-green" style="padding:3px 8px; font-size:0.75rem;" onclick="openNewPurchaseModal()">+ Reponer</button>
-      </td>
-    `;
-        tbody.appendChild(tr);
-      });
+      container.style.display = 'block';
+      container.innerHTML = `
+        <div class="dash-stock-alert-banner">
+          <div class="dash-stock-alert-left">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <div class="dash-stock-alert-text">
+              <strong>Atención: ${lowStockList.length} ${lowStockList.length === 1 ? 'producto tiene' : 'productos tienen'} stock crítico (≤ 5 unidades).</strong>
+              <p>${lowStockList.slice(0, 3).map(p => `${p.name} (${p.stock} unid)`).join(', ')}${lowStockList.length > 3 ? '...' : ''}</p>
+            </div>
+          </div>
+          <button class="btn btn-red" style="padding: 6px 14px; font-size: 0.8rem;" onclick="showModule('mod-stock', document.querySelector('.nav-link[onclick*=\\'mod-stock\\']'))">
+            Ver Stock
+          </button>
+        </div>
+      `;
     }
+
+    // Funciones retrocompatibles para eventos del modal
+    function renderDashboardCards() { renderDashboardMetrics(); }
+    function renderDashboardOffers() {}
+    function renderDashboardTopProducts() {}
+    function renderDashboardLowStock() { renderDashboardStockAlert(); }
 
     function openAddOfferModal() {
       const sel = document.getElementById('offerProductSelect');
@@ -7397,7 +9176,7 @@
 
       ticketContent.innerHTML = `
         <div class="ticket-center" style="text-align:center; margin-bottom:12px; color:#0f172a !important;">
-          <img src="${storeConfig.logoUrl || storeConfig.logo || 'logo.jpg'}" style="max-width: 150px; height: auto; margin-bottom: 6px; border-radius: 8px;"><br>
+          <img src="${storeConfig.logoUrl || storeConfig.logo || 'public/logo.jpg'}" style="max-width: 150px; height: auto; margin-bottom: 6px; border-radius: 8px;"><br>
           <strong style="font-size:1.15rem; color: #000000 !important;">${(storeConfig.tradeName || 'GOMEX Nutrition').toUpperCase()}</strong><br>
           <span style="font-size:0.82rem; color: #1e293b !important;">${storeConfig.businessName || 'GOMEX Nutrition Argentina S.R.L.'}</span><br>
           <span style="font-size:0.82rem; color: #1e293b !important;">${storeConfig.address || 'Av. Libertador 4500, CABA'}</span><br>
