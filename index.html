@@ -22,11 +22,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
     rel="stylesheet">
 
-  <!-- Firebase App, Firestore, Auth & Analytics SDKs (Compat v9 para ejecución directa en navegador) -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+  <!-- Supabase JS Client v2 (Base de Datos PostgreSQL, Storage y Realtime) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     /* ==========================================
@@ -3763,7 +3760,7 @@
         flex-wrap: nowrap;
       }
 
-      #firebaseHeaderStatus {
+      #supabaseHeaderStatus {
         padding: 4px 8px !important;
         font-size: 0.72rem !important;
       }
@@ -3897,15 +3894,16 @@
     }
 
     .modal-card.product-detail-card {
-      background: #fff;
+      background: #0f1d32;
       border-radius: 24px;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
-      border: 1px solid var(--border-color);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       width: 100%;
       max-width: 860px;
       max-height: 90vh;
       overflow-y: auto;
       position: relative;
+      color: #f8fafc;
       animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -3925,8 +3923,8 @@
       position: relative;
       border-radius: 18px;
       overflow: hidden;
-      background: #f0f9ff;
-      border: 1px solid var(--border-color);
+      background: #0b1424;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       cursor: zoom-in;
     }
 
@@ -3980,7 +3978,7 @@
     <!-- Header / Navbar -->
     <header class="ecom-header">
       <div class="ecom-nav-container">
-        <a href="#view-ecommerce" class="ecom-brand" title="GOMEX Nutrition">
+        <a href="#hero" class="ecom-brand" title="GOMEX Nutrition">
           <img src="public/logo.jpg" onerror="this.onerror=null; this.src='public/logo.jpg';" alt="GOMEX Nutrition">
         </a>
 
@@ -4255,7 +4253,7 @@
           <h5>Gestión & Contacto</h5>
           <ul class="footer-links">
             <li><a href="mailto:contacto@gomexnutrition.com.ar">contacto@gomexnutrition.com.ar</a></li>
-            <li><a href="https://wa.me/5491112345678" target="_blank">WhatsApp Ventas</a></li>
+            <li><a href="javascript:void(0)" onclick="openStoreWhatsAppDirect()">WhatsApp Ventas</a></li>
             <li style="margin-top: 10px;">
               <a href="javascript:void(0)" onclick="openStaffLoginModal()"
                 style="color: var(--celeste-brand); font-weight: 700;">
@@ -4340,7 +4338,9 @@
       onclick="if(event.target === this) closeProductModal()">
       <div class="modal-card product-detail-card">
         <button type="button" onclick="closeProductModal()"
-          style="position: absolute; top: 16px; right: 16px; background: #f1f5f9; border: none; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; cursor: pointer; color: var(--text-dark); z-index: 10;"
+          style="position: absolute; top: 16px; right: 16px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.12); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; cursor: pointer; color: #94a3b8; z-index: 10; transition: all 0.2s ease;"
+          onmouseover="this.style.color='#ffffff'; this.style.background='rgba(255,255,255,0.18)';"
+          onmouseout="this.style.color='#94a3b8'; this.style.background='rgba(255,255,255,0.08)';"
           title="Cerrar">
           <ion-icon name="close-outline"></ion-icon>
         </button>
@@ -4643,93 +4643,68 @@
           </div>
         </li>
 
+        <!-- CATÁLOGO DIGITAL -->
+        <li class="nav-item">
+          <div class="nav-link" onclick="showModule('mod-catalogo', this)">
+            <div class="link-content">
+              <ion-icon name="grid-outline"></ion-icon>
+              <span>Catálogo & Fórmulas</span>
+            </div>
+          </div>
+        </li>
+
         <!-- FACTURACIÓN / VENTAS -->
         <li class="nav-item open">
           <div class="nav-link" onclick="toggleSubmenu(this)">
             <div class="link-content">
               <ion-icon name="receipt-outline"></ion-icon>
-              <span>Facturación</span>
+              <span>Facturación & Ventas</span>
             </div>
             <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
           </div>
           <div class="submenu">
             <a id="menu-pos" class="nav-link" onclick="showModule('mod-pos', this)">Punto POS</a>
-            <a class="nav-link" onclick="showModule('mod-ventas', this)">Ventas</a>
-            <a class="nav-link" onclick="showModule('mod-presupuesto', this)">Presupuesto</a>
-            <a class="nav-link" onclick="showModule('mod-pedido', this)">Pedido</a>
+            <a class="nav-link" onclick="showModule('mod-ventas', this)">Historial Ventas</a>
+            <a class="nav-link" onclick="showModule('mod-presupuesto', this)">Presupuestos</a>
+            <a class="nav-link" onclick="showModule('mod-pedido', this)">Pedidos</a>
             <a class="nav-link" onclick="showModule('mod-notas', this)">Nota Crédito / Débito</a>
             <a class="nav-link" onclick="showModule('mod-remito', this)">Remito</a>
           </div>
         </li>
 
-        <!-- COMPRAS -->
-        <li class="nav-item open oculto-sidebar">
-          <div class="nav-link" onclick="toggleSubmenu(this)">
+        <div class="menu-category">Gestión & Personal</div>
+
+        <!-- COLABORADORES & ROLES -->
+        <li class="nav-item">
+          <div class="nav-link" onclick="showModule('mod-colaboradores', this)">
             <div class="link-content">
-              <ion-icon name="cart-outline"></ion-icon>
-              <span>Compras</span>
+              <ion-icon name="people-circle-outline"></ion-icon>
+              <span>Colaboradores & Roles</span>
             </div>
-            <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
           </div>
-          <div class="submenu">
-            <a class="nav-link" onclick="showModule('mod-compras-stock', this)">Ingreso de Stock</a>
-            <a class="nav-link" onclick="showModule('mod-compras-gastos', this)">Control de Gastos</a>
+        </li>
+
+        <!-- CLIENTES -->
+        <li class="nav-item">
+          <div class="nav-link" onclick="showModule('mod-clientes', this)">
+            <div class="link-content">
+              <ion-icon name="people-outline"></ion-icon>
+              <span>Padrón de Clientes</span>
+            </div>
           </div>
         </li>
 
         <!-- STOCK -->
-        <li class="nav-item oculto-sidebar">
+        <li class="nav-item">
           <div class="nav-link" onclick="showModule('mod-stock', this)">
             <div class="link-content">
               <ion-icon name="cube-outline"></ion-icon>
-              <span>Stock / Consultas</span>
+              <span>Control de Stock</span>
             </div>
-          </div>
-        </li>
-
-        <!-- TESORERÍA -->
-        <li class="nav-item">
-          <div class="nav-link" onclick="toggleSubmenu(this)">
-            <div class="link-content">
-              <ion-icon name="wallet-outline"></ion-icon>
-              <span>Tesorería</span>
-            </div>
-            <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
-          </div>
-          <div class="submenu">
-            <a class="nav-link" onclick="showModule('mod-caja-diaria', this)">Caja Diaria</a>
-            <a class="nav-link" onclick="showModule('mod-caja-apertura', this)">Apertura y Cierre</a>
-          </div>
-        </li>
-
-        <!-- BASE DE DATOS -->
-        <li class="nav-item open oculto-sidebar">
-          <div class="nav-link" onclick="toggleSubmenu(this)">
-            <div class="link-content">
-              <ion-icon name="server-outline"></ion-icon>
-              <span>Base de Datos</span>
-            </div>
-            <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
-          </div>
-          <div class="submenu">
-            <a class="nav-link" onclick="showModule('mod-productos', this)">Productos</a>
-            <a class="nav-link" onclick="showModule('mod-clientes', this)">Clientes</a>
-            <a class="nav-link" onclick="showModule('mod-colaboradores', this)">Colaboradores</a>
-            <a class="nav-link" onclick="showModule('mod-importaciones', this)">Importaciones</a>
           </div>
         </li>
 
         <div class="menu-category">Herramientas & Ajustes</div>
-
-        <!-- CATÁLOGO -->
-        <li class="nav-item">
-          <div class="nav-link" onclick="showModule('mod-catalogo', this)">
-            <div class="link-content">
-              <ion-icon name="grid-outline"></ion-icon>
-              <span>Catálogo</span>
-            </div>
-          </div>
-        </li>
 
         <!-- VERIFICADOR DE PRECIOS -->
         <li class="nav-item">
@@ -4752,7 +4727,7 @@
           </div>
           <div class="submenu">
             <a class="nav-link" onclick="showModule('mod-cfg-general', this)">General</a>
-            <a class="nav-link" onclick="showModule('mod-cfg-tesoreria', this)">Tesorería</a>
+            <a class="nav-link" onclick="showModule('mod-cfg-tesoreria', this)">Cuentas de Cobro</a>
             <a class="nav-link" onclick="showModule('mod-cfg-parametros', this)">Parámetros</a>
             <a class="nav-link" onclick="showModule('mod-cfg-productos', this)">Productos</a>
             <a class="nav-link" onclick="showModule('mod-cfg-ventas', this)">Ventas</a>
@@ -4780,11 +4755,11 @@
         </div>
         <div class="header-right">
 
-          <div id="firebaseHeaderStatus" onclick="openFirebaseConfigModal()"
-            style="cursor:pointer; display:flex; align-items:center; gap:6px; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.35); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; color: #fbbf24;"
-            title="Configuración de Sincronización Firebase Cloud">
-            <ion-icon name="flame"></ion-icon>
-            <span id="firebaseStatusText">Firebase: Local</span>
+          <div id="supabaseHeaderStatus" onclick="openSupabaseConfigModal()"
+            style="cursor:pointer; display:flex; align-items:center; gap:6px; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.35); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; color: #38bdf8; transition: all 0.2s ease;"
+            title="Configuración de Base de Datos Supabase Cloud (PostgreSQL)">
+            <ion-icon name="flash-outline"></ion-icon>
+            <span id="supabaseStatusText">Supabase: Online 🟢</span>
           </div>
 
           <button type="button" class="btn-store-return" onclick="switchView('ecommerce')"
@@ -4870,9 +4845,13 @@
                   <ion-icon name="bag-check-outline"></ion-icon>
                   <span>Pedidos</span>
                 </div>
-                <div class="dash-quick-btn" onclick="showModule('mod-caja-diaria', document.querySelector('.submenu a[onclick*=\'mod-caja-diaria\']'))">
-                  <ion-icon name="wallet-outline"></ion-icon>
-                  <span>Caja Diaria</span>
+                <div class="dash-quick-btn" onclick="showModule('mod-catalogo', document.querySelector('.nav-link[onclick*=\'mod-catalogo\']'))">
+                  <ion-icon name="grid-outline"></ion-icon>
+                  <span>Catálogo</span>
+                </div>
+                <div class="dash-quick-btn" onclick="showModule('mod-colaboradores', document.querySelector('.nav-link[onclick*=\'mod-colaboradores\']'))">
+                  <ion-icon name="people-circle-outline"></ion-icon>
+                  <span>Colaboradores & Roles</span>
                 </div>
               </div>
             </div>
@@ -5345,10 +5324,10 @@
               <ion-icon name="trash-outline" style="font-size: 1.1rem;"></ion-icon>
               Limpiar / Vaciar Datos
             </button>
-            <button class="btn btn-blue" onclick="openFirebaseConfigModal()"
-              style="background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);">
-              <ion-icon name="flame" style="font-size: 1.1rem;"></ion-icon>
-              Firebase Cloud
+            <button class="btn btn-blue" onclick="openSupabaseConfigModal()"
+              style="background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);">
+              <ion-icon name="server-outline" style="font-size: 1.1rem;"></ion-icon>
+              Supabase Cloud
             </button>
           </div>
 
@@ -5401,9 +5380,26 @@
 
         <!-- MÓDULO: BASE DE DATOS - COLABORADORES -->
         <section id="mod-colaboradores" class="module-section">
-          <h2 class="page-title"><ion-icon name="people-circle-outline"></ion-icon> BD - Colaboradores y Usuarios</h2>
-          <button class="btn btn-green" style="margin-bottom: 15px;" onclick="openAddColaboradorModal()">+ Registrar
-            Colaborador</button>
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px;">
+            <div>
+              <h2 class="page-title" style="margin-bottom: 4px;"><ion-icon name="people-circle-outline"></ion-icon> Colaboradores, Roles & Permisos</h2>
+              <p style="color: var(--text-muted); font-size: 0.88rem;">Gestioná el personal, asigná roles y configurá qué módulos puede ver y editar cada usuario.</p>
+            </div>
+            <button type="button" class="btn btn-green" onclick="openAddColaboradorModal()" style="padding: 10px 18px; border-radius: 12px; font-weight: 800; display: flex; align-items: center; gap: 6px;">
+              <ion-icon name="person-add-outline" style="font-size: 1.2rem;"></ion-icon>
+              <span>+ Registrar Colaborador</span>
+            </button>
+          </div>
+
+          <!-- Banner para SuperAdmin (Modo Invisible) -->
+          <div id="superAdminNotice" style="display: none; background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35); padding: 14px 18px; border-radius: 14px; margin-bottom: 20px; color: #fbbf24; font-size: 0.88rem;">
+            <div style="display: flex; align-items: center; gap: 8px; font-weight: 800; margin-bottom: 4px;">
+              <ion-icon name="shield-outline" style="font-size: 1.3rem;"></ion-icon>
+              <span>👑 MODO SUPERADMIN MAESTRO (INVISIBLE) ACTIVO</span>
+            </div>
+            <div>Tu cuenta principal (<strong>@superadmin</strong>) tiene acceso total e irrestricto al sistema y <strong>no es visible</strong> en esta lista para otros administradores.</div>
+          </div>
+
           <div class="data-table-container">
             <table class="data-table">
               <thead>
@@ -5411,11 +5407,12 @@
                   <th>Nombre Completo</th>
                   <th>Usuario</th>
                   <th>Rol / Cargo</th>
+                  <th>Permisos Habilitados</th>
                   <th>Acciones</th>
                 </tr>
               </thead>
               <tbody id="dbColaboradoresTableBody">
-                <!-- Dynamic -->
+                <!-- Renderizado dinámico -->
               </tbody>
             </table>
           </div>
@@ -5470,12 +5467,25 @@
           </div>
         </section>
 
-        <!-- MÓDULO: CATÁLOGO -->
+        <!-- MÓDULO: CATÁLOGO DIGITAL -->
         <section id="mod-catalogo" class="module-section">
-          <h2 class="page-title"><ion-icon name="grid-outline"></ion-icon> Catálogo Digital de Artículos</h2>
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; background: rgba(15, 29, 50, 0.6); padding: 18px 22px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.08);">
+            <div>
+              <h2 class="page-title" style="margin-bottom: 4px;"><ion-icon name="grid-outline"></ion-icon> Catálogo Digital de Artículos</h2>
+              <p style="color: var(--text-muted); font-size: 0.88rem;">Gestioná, editá todas las propiedades de tus productos o creá nuevas fórmulas para tu tienda.</p>
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+              <input type="text" id="catalogSearchInput" class="input-field" placeholder="🔍 Filtrar en catálogo..." style="width: 220px; padding: 8px 14px; font-size: 0.88rem;" oninput="renderCatalog()">
+              <button type="button" class="btn btn-green" onclick="openAddProductModal()" style="padding: 10px 18px; border-radius: 12px; font-weight: 800; display: flex; align-items: center; gap: 6px;">
+                <ion-icon name="add-circle-outline" style="font-size: 1.25rem;"></ion-icon>
+                <span>+ Nuevo Producto</span>
+              </button>
+            </div>
+          </div>
+
           <div class="product-grid" id="catalogGrid"
-            style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
-            <!-- Dynamic -->
+            style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px;">
+            <!-- Renderizado dinámico -->
           </div>
         </section>
 
@@ -5928,222 +5938,278 @@
 
   <!-- Modal Nuevo Producto -->
   <div class="modal-overlay" id="addProductModal">
-    <div class="modal-box">
+    <div class="modal-box" style="max-width: 740px; max-height: 90vh; overflow-y: auto;">
       <div class="modal-header">
-        <h3><ion-icon name="add-circle-outline"></ion-icon> Alta de Artículo de Nutrición</h3>
+        <h3 style="color: var(--celeste-brand); display: flex; align-items: center; gap: 8px;">
+          <ion-icon name="add-circle-outline"></ion-icon> Crear Nuevo Producto / Fórmula
+        </h3>
         <span class="modal-close" onclick="closeAddProductModal()">&times;</span>
       </div>
       <form onsubmit="handleSaveProduct(event)">
 
+        <!-- Sección 1: Datos Básicos -->
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Nombre del Producto *</label>
+            <input type="text" id="newProdName" class="input-field" required placeholder="Ej: GOMEX Creatina Monohidratada en Gomitas">
+          </div>
+          <div class="form-group">
+            <label>Categoría *</label>
+            <select id="newProdCategorySelect" class="input-field" onchange="toggleNewCategoryInput()">
+              <!-- Dinámico -->
+            </select>
+            <input type="text" id="newProdCategoryCustom" class="input-field" placeholder="Escriba la nueva categoría..." style="display: none; margin-top: 8px;">
+          </div>
+        </div>
+
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>Sabor</label>
+            <input type="text" id="newProdFlavor" class="input-field" placeholder="Ej: Frutos Rojos">
+          </div>
+          <div class="form-group">
+            <label>Presentación / Envase</label>
+            <input type="text" id="newProdUnit" class="input-field" placeholder="Ej: Doypack 60 Gomitas">
+          </div>
+          <div class="form-group">
+            <label>Badge / Etiqueta</label>
+            <input type="text" id="newProdBadge" class="input-field" placeholder="Ej: MÁS VENDIDO ⭐">
+          </div>
+        </div>
+
         <div class="form-group">
-          <label>Imagen del Producto (.JPG / .PNG)</label>
-          <div style="display: flex; gap: 12px; align-items: center;">
-            <input type="file" id="newProdImageInput" accept="image/png, image/jpeg, image/jpg" class="input-field"
-              style="padding: 8px;" onchange="previewImageFile(this, 'newProdPreview')">
-            <img id="newProdPreview"
-              style="width: 42px; height: 42px; object-fit: cover; border-radius: 6px; display: none; border: 2px solid var(--verde-italia);">
+          <label>Dosis / Porción Sugerida</label>
+          <input type="text" id="newProdPortion" class="input-field" placeholder="Ej: 2 gomitas diarias (3g Creatina)">
+        </div>
+
+        <div class="form-group">
+          <label>Descripción Comercial</label>
+          <textarea id="newProdDescription" class="input-field" rows="2" placeholder="Fórmula masticable de absorción rápida y resultados comprobables..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Activos Principales (Separados por coma)</label>
+          <input type="text" id="newProdActivos" class="input-field" placeholder="Ej: Creatina Monohidratada 100% Pura, Electrolitos">
+        </div>
+
+        <!-- Sección 2: Códigos y Finanzas -->
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Código Interno *</label>
+            <input type="text" id="newProdInternalCode" class="input-field" required placeholder="Ej: GMX-CRE-01">
+          </div>
+          <div class="form-group">
+            <label>Código de Barras</label>
+            <input type="text" id="newProdCode" class="input-field" placeholder="Ej: 779812345601">
+          </div>
+        </div>
+
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>Costo s/IVA ($)</label>
+            <input type="number" id="newProdCost" class="input-field" placeholder="Ej: 14000" oninput="calculateFinalPrice()">
+          </div>
+          <div class="form-group">
+            <label>IVA (%)</label>
+            <select id="newProdTaxRate" class="input-field" onchange="calculateFinalPrice()">
+              <option value="21">21%</option>
+              <option value="10.5">10.5%</option>
+              <option value="0">0%</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Margen (%)</label>
+            <input type="number" id="newProdMargin" class="input-field" placeholder="Ej: 100" value="100" oninput="calculateFinalPrice()">
+          </div>
+        </div>
+
+        <div class="price-box-highlight" style="background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.3);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 0.85rem; color: #38bdf8; font-weight: 700; text-transform: uppercase;">
+              Precio Final de Venta ($)
+            </div>
+            <span style="font-size: 0.8rem; color: #94a3b8;">Podés escribir el precio directamente</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-top: 6px;">
+            <span style="font-size: 1.5rem; font-weight: 800; color: #38bdf8;">$</span>
+            <input type="number" id="newProdPrice" class="input-field" required placeholder="Ej: 28500" style="font-size: 1.3rem; font-weight: 800; color: #38bdf8; max-width: 240px;" oninput="document.getElementById('calculatedPriceDisplay').textContent = Number(this.value).toLocaleString('es-AR')">
+            <span id="calculatedPriceDisplay" style="display:none;">0</span>
           </div>
         </div>
 
         <div class="form-row-2">
           <div class="form-group">
-            <label>Código de Barras</label>
-            <input type="text" id="newProdCode" class="input-field" required placeholder="Ej: 779123456789">
+            <label>Stock Inicial *</label>
+            <input type="number" id="newProdStock" class="input-field" required placeholder="Ej: 45" value="45">
           </div>
-          <div class="form-group">
-            <label>Código Interno</label>
-            <input type="text" id="newProdInternalCode" class="input-field" required placeholder="Ej: INT-BAZ-015">
+          <div class="form-group" style="display: flex; align-items: center; gap: 10px; margin-top: 25px;">
+            <input type="checkbox" id="newProdFeatured" checked style="width: 18px; height: 18px; cursor: pointer;">
+            <label for="newProdFeatured" style="cursor: pointer; text-transform: none; margin: 0; font-size: 0.9rem;">⭐ Destacar en portada e-commerce</label>
           </div>
         </div>
 
+        <!-- Sección 3: Imagen -->
         <div class="form-group">
-          <label>Nombre del Artículo</label>
-          <input type="text" id="newProdName" class="input-field" required placeholder="Ej: Juego Cuchillos Inox x6">
-        </div>
-
-        <div class="form-group">
-          <label>Unidad de Medida</label>
-          <select id="newProdUnit" class="input-field">
-            <option value="Unid.">Unidades (Unid.)</option>
-            <option value="Metros">Metros (m)</option>
-            <option value="Kg">Kilos (Kg)</option>
-            <option value="Gramos">Gramos (g)</option>
-            <option value="Litros">Litros (L)</option>
-            <option value="Pqte.">Paquetes (Pqte.)</option>
-            <option value="Caja">Cajas (Caja)</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Categoría</label>
-          <select id="newProdCategorySelect" class="input-field" onchange="toggleNewCategoryInput()">
-            <!-- Dinámico -->
-          </select>
-          <input type="text" id="newProdCategoryCustom" class="input-field" placeholder="Escriba la nueva categoría..."
-            style="display: none; margin-top: 8px;">
-        </div>
-
-        <div class="form-row-3">
-          <div class="form-group">
-            <label>Costo (s/IVA)</label>
-            <input type="number" id="newProdCost" class="input-field" required placeholder="Ej: 4000"
-              oninput="calculateFinalPrice()">
+          <label>Imagen del Producto</label>
+          <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 8px;">
+            <input type="file" id="newProdImageInput" accept="image/png, image/jpeg, image/jpg" class="input-field" style="padding: 8px;" onchange="previewImageFile(this, 'newProdPreview')">
+            <img id="newProdPreview" style="width: 50px; height: 50px; object-fit: contain; border-radius: 8px; display: none; background: #0b1424; border: 1px solid #38bdf8;">
           </div>
-          <div class="form-group">
-            <label>Alícuota IVA</label>
-            <select id="newProdTaxRate" class="input-field" onchange="calculateFinalPrice()">
-              <option value="21">21%</option>
-              <option value="10.5">10.5%</option>
-              <option value="0">0% (Exento)</option>
-              <option value="27">27%</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Utilidad (%)</label>
-            <input type="number" id="newProdMargin" class="input-field" required placeholder="Ej: 50" value="50"
-              oninput="calculateFinalPrice()">
+          <input type="text" id="newProdImageUrl" class="input-field" placeholder="O pegar ruta/URL de imagen (ej: public/bolsaGomitas.jpg)" oninput="handleImageUrlInput(this, 'newProdPreview')">
+          <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px;">
+            <button type="button" class="btn-copy-chip" style="font-size: 0.75rem;" onclick="setPresetImage('newProdImageUrl', 'newProdPreview', 'public/bolsaGomitas.jpg')">🔵 Creatina</button>
+            <button type="button" class="btn-copy-chip" style="font-size: 0.75rem;" onclick="setPresetImage('newProdImageUrl', 'newProdPreview', 'public/cajaGomitas.jpg')">🟢 Multivitamínico</button>
+            <button type="button" class="btn-copy-chip" style="font-size: 0.75rem;" onclick="setPresetImage('newProdImageUrl', 'newProdPreview', 'public/bolsaGomita.jpg')">🟣 Sleep</button>
+            <button type="button" class="btn-copy-chip" style="font-size: 0.75rem;" onclick="setPresetImage('newProdImageUrl', 'newProdPreview', 'public/gomitas.jpg')">🟡 Combo Pack</button>
           </div>
         </div>
 
-        <div class="price-box-highlight">
-          <div style="font-size: 0.85rem; color: var(--verde-hover); font-weight: 700; text-transform: uppercase;">
-            Precio de Venta Sugerido (Final con IVA)
-          </div>
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 5px;">
-            <span style="font-size: 1.8rem; font-weight: 800; color: var(--verde-italia);">$<span
-                id="calculatedPriceDisplay">0</span></span>
-            <input type="hidden" id="newProdPrice" value="0">
-          </div>
-          <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;" id="priceBreakdownText">
-            Costo $0 + 50% Utilidad + 21% IVA
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Stock Inicial</label>
-          <input type="number" id="newProdStock" class="input-field" required placeholder="Ej: 20" value="10">
-        </div>
-
-        <button type="submit" class="btn btn-green" style="width: 100%; justify-content: center; padding: 12px;">
-          <ion-icon name="save-outline" style="font-size: 20px;"></ion-icon>
-          Guardar Artículo en el Sistema
+        <button type="submit" class="btn btn-green" style="width: 100%; justify-content: center; padding: 13px; font-weight: 800; font-size: 1rem; border-radius: 14px; margin-top: 10px;">
+          <ion-icon name="save-outline" style="font-size: 1.3rem;"></ion-icon>
+          Guardar y Publicar Producto en Supabase
         </button>
       </form>
     </div>
   </div>
 
-  <!-- Modal Modificar Producto -->
+  <!-- Modal Modificar Producto Completo -->
   <div class="modal-overlay" id="editProductModal">
-    <div class="modal-box">
+    <div class="modal-box" style="max-width: 740px; max-height: 90vh; overflow-y: auto;">
       <div class="modal-header">
-        <h3><ion-icon name="create-outline"></ion-icon> Modificar Artículo de Nutrición</h3>
+        <h3 style="color: var(--celeste-brand); display: flex; align-items: center; gap: 8px;">
+          <ion-icon name="create-outline"></ion-icon> Modificar Producto / Fórmula
+        </h3>
         <span class="modal-close" onclick="closeEditProductModal()">&times;</span>
       </div>
       <form onsubmit="handleUpdateProduct(event)">
         <input type="hidden" id="editProdId">
 
+        <!-- Sección 1: Datos Básicos -->
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Nombre del Producto *</label>
+            <input type="text" id="editProdName" class="input-field" required>
+          </div>
+          <div class="form-group">
+            <label>Categoría *</label>
+            <select id="editProdCategorySelect" class="input-field">
+              <!-- Dinámico -->
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>Sabor</label>
+            <input type="text" id="editProdFlavor" class="input-field" placeholder="Ej: Frutos Rojos">
+          </div>
+          <div class="form-group">
+            <label>Presentación / Envase</label>
+            <input type="text" id="editProdUnit" class="input-field" placeholder="Ej: Doypack 60 Gomitas">
+          </div>
+          <div class="form-group">
+            <label>Badge / Etiqueta</label>
+            <input type="text" id="editProdBadge" class="input-field" placeholder="Ej: MÁS VENDIDO ⭐">
+          </div>
+        </div>
+
         <div class="form-group">
-          <label>Imagen del Producto (.JPG / .PNG)</label>
-          <div style="display: flex; gap: 12px; align-items: center;">
-            <input type="file" id="editProdImageInput" accept="image/png, image/jpeg, image/jpg" class="input-field"
-              style="padding: 8px;" onchange="previewImageFile(this, 'editProdPreview')">
-            <img id="editProdPreview"
-              style="width: 42px; height: 42px; object-fit: cover; border-radius: 6px; border: 2px solid var(--verde-italia);">
+          <label>Dosis / Porción Sugerida</label>
+          <input type="text" id="editProdPortion" class="input-field" placeholder="Ej: 2 gomitas diarias (3g Creatina)">
+        </div>
+
+        <div class="form-group">
+          <label>Descripción Comercial</label>
+          <textarea id="editProdDescription" class="input-field" rows="2" placeholder="Fórmula masticable de absorción rápida..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Activos Principales (Separados por coma)</label>
+          <input type="text" id="editProdActivos" class="input-field" placeholder="Ej: Creatina Monohidratada 100% Pura, Electrolitos">
+        </div>
+
+        <!-- Sección 2: Códigos y Finanzas -->
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Código Interno *</label>
+            <input type="text" id="editProdInternalCode" class="input-field" required>
+          </div>
+          <div class="form-group">
+            <label>Código de Barras</label>
+            <input type="text" id="editProdCode" class="input-field">
+          </div>
+        </div>
+
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>Costo s/IVA ($)</label>
+            <input type="number" id="editProdCost" class="input-field" oninput="calculateEditFinalPrice()">
+          </div>
+          <div class="form-group">
+            <label>IVA (%)</label>
+            <select id="editProdTaxRate" class="input-field" onchange="calculateEditFinalPrice()">
+              <option value="21">21%</option>
+              <option value="10.5">10.5%</option>
+              <option value="0">0%</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Margen (%)</label>
+            <input type="number" id="editProdMargin" class="input-field" oninput="calculateEditFinalPrice()">
+          </div>
+        </div>
+
+        <div class="price-box-highlight" style="background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.3);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 0.85rem; color: #38bdf8; font-weight: 700; text-transform: uppercase;">
+              Precio Final de Venta ($)
+            </div>
+            <span style="font-size: 0.8rem; color: #94a3b8;">Podés escribir el precio directamente</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-top: 6px;">
+            <span style="font-size: 1.5rem; font-weight: 800; color: #38bdf8;">$</span>
+            <input type="number" id="editProdPrice" class="input-field" required style="font-size: 1.3rem; font-weight: 800; color: #38bdf8; max-width: 240px;" oninput="document.getElementById('editCalculatedPriceDisplay').textContent = Number(this.value).toLocaleString('es-AR')">
+            <span id="editCalculatedPriceDisplay" style="display:none;">0</span>
           </div>
         </div>
 
         <div class="form-row-2">
           <div class="form-group">
-            <label>Código de Barras</label>
-            <input type="text" id="editProdCode" class="input-field" required>
+            <label>Stock Disponible *</label>
+            <input type="number" id="editProdStock" class="input-field" required>
           </div>
-          <div class="form-group">
-            <label>Código Interno</label>
-            <input type="text" id="editProdInternalCode" class="input-field" required>
+          <div class="form-group" style="display: flex; align-items: center; gap: 10px; margin-top: 25px;">
+            <input type="checkbox" id="editProdFeatured" style="width: 18px; height: 18px; cursor: pointer;">
+            <label for="editProdFeatured" style="cursor: pointer; text-transform: none; margin: 0; font-size: 0.9rem;">⭐ Destacar en portada e-commerce</label>
           </div>
         </div>
 
+        <!-- Sección 3: Imagen -->
         <div class="form-group">
-          <label>Nombre del Artículo</label>
-          <input type="text" id="editProdName" class="input-field" required>
-        </div>
-
-        <div class="form-group">
-          <label>Unidad de Medida</label>
-          <select id="newProdUnit" class="input-field">
-            <option value="Unid.">Unidades (Unid.)</option>
-            <option value="Metros">Metros (m)</option>
-            <option value="Kg">Kilos (Kg)</option>
-            <option value="Gramos">Gramos (g)</option>
-            <option value="Litros">Litros (L)</option>
-            <option value="Pqte.">Paquetes (Pqte.)</option>
-            <option value="Caja">Cajas (Caja)</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Unidad de Medida</label>
-          <select id="editProdUnit" class="input-field">
-            <option value="Unid.">Unidades (Unid.)</option>
-            <option value="Metros">Metros (m)</option>
-            <option value="Kg">Kilos (Kg)</option>
-            <option value="Gramos">Gramos (g)</option>
-            <option value="Litros">Litros (L)</option>
-            <option value="Pqte.">Paquetes (Pqte.)</option>
-            <option value="Caja">Cajas (Caja)</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Categoría</label>
-          <select id="editProdCategorySelect" class="input-field">
-            <!-- Dinámico -->
-          </select>
-        </div>
-
-        <div class="form-row-3">
-          <div class="form-group">
-            <label>Costo (s/IVA)</label>
-            <input type="number" id="editProdCost" class="input-field" required oninput="calculateEditFinalPrice()">
+          <label>Imagen del Producto</label>
+          <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 8px;">
+            <input type="file" id="editProdImageInput" accept="image/png, image/jpeg, image/jpg" class="input-field" style="padding: 8px;" onchange="previewImageFile(this, 'editProdPreview')">
+            <img id="editProdPreview" style="width: 50px; height: 50px; object-fit: contain; border-radius: 8px; background: #0b1424; border: 1px solid #38bdf8;">
           </div>
-          <div class="form-group">
-            <label>Alícuota IVA</label>
-            <select id="editProdTaxRate" class="input-field" onchange="calculateEditFinalPrice()">
-              <option value="21">21%</option>
-              <option value="10.5">10.5%</option>
-              <option value="0">0% (Exento)</option>
-              <option value="27">27%</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Utilidad (%)</label>
-            <input type="number" id="editProdMargin" class="input-field" required oninput="calculateEditFinalPrice()">
+          <input type="text" id="editProdImageUrl" class="input-field" placeholder="O pegar ruta/URL de imagen (ej: public/bolsaGomitas.jpg)" oninput="handleImageUrlInput(this, 'editProdPreview')">
+          <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px;">
+            <button type="button" class="btn-copy-chip" style="font-size: 0.75rem;" onclick="setPresetImage('editProdImageUrl', 'editProdPreview', 'public/bolsaGomitas.jpg')">🔵 Creatina</button>
+            <button type="button" class="btn-copy-chip" style="font-size: 0.75rem;" onclick="setPresetImage('editProdImageUrl', 'editProdPreview', 'public/cajaGomitas.jpg')">🟢 Multivitamínico</button>
+            <button type="button" class="btn-copy-chip" style="font-size: 0.75rem;" onclick="setPresetImage('editProdImageUrl', 'editProdPreview', 'public/bolsaGomita.jpg')">🟣 Sleep</button>
+            <button type="button" class="btn-copy-chip" style="font-size: 0.75rem;" onclick="setPresetImage('editProdImageUrl', 'editProdPreview', 'public/gomitas.jpg')">🟡 Combo Pack</button>
           </div>
         </div>
 
-        <div class="price-box-highlight">
-          <div style="font-size: 0.85rem; color: var(--verde-hover); font-weight: 700; text-transform: uppercase;">
-            Precio de Venta Actualizado (Final con IVA)
-          </div>
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 5px;">
-            <span style="font-size: 1.8rem; font-weight: 800; color: var(--verde-italia);">$<span
-                id="editCalculatedPriceDisplay">0</span></span>
-            <input type="hidden" id="editProdPrice" value="0">
-          </div>
-          <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;" id="editPriceBreakdownText">
-            Desglose de cálculo
-          </div>
+        <div style="display: flex; gap: 10px; margin-top: 15px;">
+          <button type="submit" class="btn btn-green" style="flex: 1; justify-content: center; padding: 13px; font-weight: 800; font-size: 1rem; border-radius: 14px;">
+            <ion-icon name="checkmark-done-outline" style="font-size: 1.3rem;"></ion-icon>
+            Guardar Cambios en Supabase
+          </button>
+          <button type="button" class="btn btn-red" style="padding: 13px 18px; border-radius: 14px;" onclick="deleteCurrentEditingProduct()">
+            <ion-icon name="trash-outline"></ion-icon>
+            Eliminar
+          </button>
         </div>
-
-        <div class="form-group">
-          <label>Stock Disponible</label>
-          <input type="number" id="editProdStock" class="input-field" required>
-        </div>
-
-        <button type="submit" class="btn btn-green" style="width: 100%; justify-content: center; padding: 12px;">
-          <ion-icon name="checkmark-done-outline" style="font-size: 20px;"></ion-icon>
-          Guardar Cambios del Producto
-        </button>
       </form>
     </div>
   </div>
@@ -6357,77 +6423,189 @@
 
   <!-- Modal Nuevo Colaborador -->
   <div class="modal-overlay" id="addColaboradorModal">
-    <div class="modal-box">
+    <div class="modal-box" style="max-width: 680px; max-height: 90vh; overflow-y: auto;">
       <div class="modal-header">
-        <h3><ion-icon name="person-add-outline"></ion-icon> Registrar Colaborador / Usuario</h3>
+        <h3 style="color: var(--celeste-brand); display: flex; align-items: center; gap: 8px;">
+          <ion-icon name="person-add-outline"></ion-icon> Registrar Nuevo Colaborador
+        </h3>
         <span class="modal-close" onclick="closeAddColaboradorModal()">&times;</span>
       </div>
       <form onsubmit="handleSaveColaborador(event)">
         <div class="form-group">
-          <label>Nombre Completo</label>
-          <input type="text" id="newColabName" class="input-field" required placeholder="Ej: Rosita Golfieri">
+          <label>Nombre y Apellido *</label>
+          <input type="text" id="newColabName" class="input-field" required placeholder="Ej: Santiago Pérez">
         </div>
+
         <div class="form-row-2">
           <div class="form-group">
-            <label>Usuario (Ingreso)</label>
-            <input type="text" id="newColabUsername" class="input-field" required placeholder="Ej: nuevo_usuario">
+            <label>Nombre de Usuario (Login) *</label>
+            <input type="text" id="newColabUsername" class="input-field" required placeholder="Ej: sperez">
           </div>
           <div class="form-group">
-            <label>Contraseña</label>
-            <input type="password" id="newColabPassword" class="input-field" required placeholder="Clave de acceso">
+            <label>Contraseña de Acceso *</label>
+            <input type="password" id="newColabPassword" class="input-field" required placeholder="Contraseña segura">
           </div>
         </div>
+
         <div class="form-group">
-          <label>Rol / Nivel de Acceso</label>
-          <select id="newColabRole" class="input-field">
-            <option value="Super Administrador">⭐ Super Administrador (Acceso Total)</option>
-            <option value="Administrador" selected>Administrador</option>
-            <option value="Encargada de Ventas">Encargado/a de Ventas</option>
-            <option value="Vendedor POS">Vendedor POS</option>
-            <option value="Cajero">Cajero / Facturación</option>
+          <label>Rol Principal</label>
+          <select id="newColabRole" class="input-field" onchange="handleRolePresetChange('new', this.value)">
+            <option value="Administrador" selected>👑 Administrador (Control General)</option>
+            <option value="Vendedor POS">🛒 Vendedor Mostrador / POS</option>
+            <option value="Gestor de Catálogo">📦 Gestor de Catálogo & Stock</option>
+            <option value="Personalizado">⚙️ Personalizado (Permisos a Medida)</option>
           </select>
         </div>
-        <button type="submit" class="btn btn-green" style="width: 100%; justify-content: center; padding: 12px;">Guardar
-          Colaborador</button>
+
+        <!-- Matriz de Permisos Granulares -->
+        <div class="form-group" style="margin-top: 15px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <label style="font-weight: 700; color: #38bdf8; display: flex; align-items: center; gap: 6px; margin: 0;">
+              <ion-icon name="shield-checkmark-outline"></ion-icon> Permisos & Módulos Habilitados
+            </label>
+            <span style="font-size: 0.78rem; color: #94a3b8;">Anclá qué puede hacer este usuario</span>
+          </div>
+
+          <div style="display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap;">
+            <button type="button" class="btn-copy-chip" style="font-size: 0.74rem;" onclick="setRolePermissions('new', 'admin')">⭐ Todos</button>
+            <button type="button" class="btn-copy-chip" style="font-size: 0.74rem;" onclick="setRolePermissions('new', 'vendedor')">🛒 Solo Ventas</button>
+            <button type="button" class="btn-copy-chip" style="font-size: 0.74rem;" onclick="setRolePermissions('new', 'catalogo')">📦 Solo Catálogo</button>
+            <button type="button" class="btn-copy-chip" style="font-size: 0.74rem;" onclick="setRolePermissions('new', 'none')">❌ Ninguno</button>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: rgba(11, 20, 36, 0.7); padding: 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08);">
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.84rem; cursor: pointer; text-transform: none; margin: 0; color: #f8fafc;">
+              <input type="checkbox" id="newPerm_pos" checked style="width: 17px; height: 17px;"> <span>🛍️ Facturar / Punto POS</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.84rem; cursor: pointer; text-transform: none; margin: 0; color: #f8fafc;">
+              <input type="checkbox" id="newPerm_ventas" checked style="width: 17px; height: 17px;"> <span>📊 Historial de Ventas</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.84rem; cursor: pointer; text-transform: none; margin: 0; color: #f8fafc;">
+              <input type="checkbox" id="newPerm_presupuesto" checked style="width: 17px; height: 17px;"> <span>📝 Presupuestos & Pedidos</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.84rem; cursor: pointer; text-transform: none; margin: 0; color: #f8fafc;">
+              <input type="checkbox" id="newPerm_notas" checked style="width: 17px; height: 17px;"> <span>📄 Notas Crédito / Remitos</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.84rem; cursor: pointer; text-transform: none; margin: 0; color: #f8fafc;">
+              <input type="checkbox" id="newPerm_catalogo" checked style="width: 17px; height: 17px;"> <span>📦 Editar Catálogo & Fórmulas</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.84rem; cursor: pointer; text-transform: none; margin: 0; color: #f8fafc;">
+              <input type="checkbox" id="newPerm_stock" checked style="width: 17px; height: 17px;"> <span>🔍 Consultar Stock</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.84rem; cursor: pointer; text-transform: none; margin: 0; color: #f8fafc;">
+              <input type="checkbox" id="newPerm_clientes" checked style="width: 17px; height: 17px;"> <span>👥 Base de Clientes</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.84rem; cursor: pointer; text-transform: none; margin: 0; color: #f8fafc;">
+              <input type="checkbox" id="newPerm_colaboradores" checked style="width: 17px; height: 17px;"> <span>🛡️ Gestionar Otros Staff</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.84rem; cursor: pointer; text-transform: none; margin: 0; color: #f8fafc;">
+              <input type="checkbox" id="newPerm_importaciones" checked style="width: 17px; height: 17px;"> <span>📥 Importaciones Excel</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.84rem; cursor: pointer; text-transform: none; margin: 0; color: #f8fafc;">
+              <input type="checkbox" id="newPerm_config" checked style="width: 17px; height: 17px;"> <span>⚙️ Configuración & Cuentas</span>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-green" style="width: 100%; justify-content: center; padding: 13px; font-weight: 800; border-radius: 12px; margin-top: 10px;">
+          <ion-icon name="save-outline" style="font-size: 1.2rem;"></ion-icon>
+          Guardar Colaborador en Supabase
+        </button>
       </form>
     </div>
   </div>
 
   <!-- Modal Editar Colaborador -->
   <div class="modal-overlay" id="editColaboradorModal">
-    <div class="modal-box">
+    <div class="modal-box" style="max-width: 680px; max-height: 90vh; overflow-y: auto;">
       <div class="modal-header">
-        <h3><ion-icon name="create-outline"></ion-icon> Modificar Colaborador</h3>
+        <h3 style="color: var(--celeste-brand); display: flex; align-items: center; gap: 8px;">
+          <ion-icon name="create-outline"></ion-icon> Modificar Colaborador & Permisos
+        </h3>
         <span class="modal-close" onclick="closeEditColaboradorModal()">&times;</span>
       </div>
       <form onsubmit="handleUpdateColaborador(event)">
         <input type="hidden" id="editColabId">
         <div class="form-group">
-          <label>Nombre Completo</label>
+          <label>Nombre y Apellido *</label>
           <input type="text" id="editColabName" class="input-field" required>
         </div>
+
         <div class="form-row-2">
           <div class="form-group">
-            <label>Usuario (Ingreso)</label>
+            <label>Nombre de Usuario (Login) *</label>
             <input type="text" id="editColabUsername" class="input-field" required>
           </div>
           <div class="form-group">
-            <label>Contraseña</label>
+            <label>Contraseña de Acceso *</label>
             <input type="password" id="editColabPassword" class="input-field" required>
           </div>
         </div>
+
         <div class="form-group">
-          <label>Rol / Nivel de Acceso</label>
-          <select id="editColabRole" class="input-field">
-            <option value="Super Administrador">⭐ Super Administrador (Acceso Total)</option>
-            <option value="Administrador">Administrador</option>
-            <option value="Encargada de Ventas">Encargado/a de Ventas</option>
-            <option value="Vendedor POS">Vendedor POS</option>
-            <option value="Cajero">Cajero / Facturación</option>
+          <label>Rol Principal</label>
+          <select id="editColabRole" class="input-field" onchange="handleRolePresetChange('edit', this.value)">
+            <option value="Administrador">👑 Administrador (Control General)</option>
+            <option value="Vendedor POS">🛒 Vendedor Mostrador / POS</option>
+            <option value="Gestor de Catálogo">📦 Gestor de Catálogo & Stock</option>
+            <option value="Personalizado">⚙️ Personalizado (Permisos a Medida)</option>
           </select>
         </div>
-        <button type="submit" class="btn btn-green" style="width: 100%; justify-content: center; padding: 12px;">Guardar
-          Cambios del Colaborador</button>
+
+        <!-- Matriz de Permisos Granulares -->
+        <div class="form-group" style="margin-top: 15px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <label style="font-weight: 700; color: #38bdf8; display: flex; align-items: center; gap: 6px; margin: 0;">
+              <ion-icon name="shield-checkmark-outline"></ion-icon> Permisos & Módulos Habilitados
+            </label>
+            <span style="font-size: 0.78rem; color: #94a3b8;">Anclá qué puede hacer este usuario</span>
+          </div>
+
+          <div style="display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap;">
+            <button type="button" class="btn-copy-chip" style="font-size: 0.74rem;" onclick="setRolePermissions('edit', 'admin')">⭐ Todos</button>
+            <button type="button" class="btn-copy-chip" style="font-size: 0.74rem;" onclick="setRolePermissions('edit', 'vendedor')">🛒 Solo Ventas</button>
+            <button type="button" class="btn-copy-chip" style="font-size: 0.74rem;" onclick="setRolePermissions('edit', 'catalogo')">📦 Solo Catálogo</button>
+            <button type="button" class="btn-copy-chip" style="font-size: 0.74rem;" onclick="setRolePermissions('edit', 'none')">❌ Ninguno</button>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: rgba(11, 20, 36, 0.7); padding: 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08);">
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.84rem; cursor: pointer; text-transform: none; margin: 0; color: #f8fafc;">
+              <input type="checkbox" id="editPerm_pos" checked style="width: 17px; height: 17px;"> <span>🛍️ Facturar / Punto POS</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.84rem; cursor: pointer; text-transform: none; margin: 0; color: #f8fafc;">
+              <input type="checkbox" id="editPerm_ventas" checked style="width: 17px; height: 17px;"> <span>📊 Historial de Ventas</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.84rem; cursor: pointer; text-transform: none; margin: 0; color: #f8fafc;">
+              <input type="checkbox" id="editPerm_presupuesto" checked style="width: 17px; height: 17px;"> <span>📝 Presupuestos & Pedidos</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.84rem; cursor: pointer; text-transform: none; margin: 0; color: #f8fafc;">
+              <input type="checkbox" id="editPerm_notas" checked style="width: 17px; height: 17px;"> <span>📄 Notas Crédito / Remitos</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.84rem; cursor: pointer; text-transform: none; margin: 0; color: #f8fafc;">
+              <input type="checkbox" id="editPerm_catalogo" checked style="width: 17px; height: 17px;"> <span>📦 Editar Catálogo & Fórmulas</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.84rem; cursor: pointer; text-transform: none; margin: 0; color: #f8fafc;">
+              <input type="checkbox" id="editPerm_stock" checked style="width: 17px; height: 17px;"> <span>🔍 Consultar Stock</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.84rem; cursor: pointer; text-transform: none; margin: 0; color: #f8fafc;">
+              <input type="checkbox" id="editPerm_clientes" checked style="width: 17px; height: 17px;"> <span>👥 Base de Clientes</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.84rem; cursor: pointer; text-transform: none; margin: 0; color: #f8fafc;">
+              <input type="checkbox" id="editPerm_colaboradores" checked style="width: 17px; height: 17px;"> <span>🛡️ Gestionar Otros Staff</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.84rem; cursor: pointer; text-transform: none; margin: 0; color: #f8fafc;">
+              <input type="checkbox" id="editPerm_importaciones" checked style="width: 17px; height: 17px;"> <span>📥 Importaciones Excel</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.84rem; cursor: pointer; text-transform: none; margin: 0; color: #f8fafc;">
+              <input type="checkbox" id="editPerm_config" checked style="width: 17px; height: 17px;"> <span>⚙️ Configuración & Cuentas</span>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-green" style="width: 100%; justify-content: center; padding: 13px; font-weight: 800; border-radius: 12px; margin-top: 10px;">
+          <ion-icon name="checkmark-done-outline" style="font-size: 1.2rem;"></ion-icon>
+          Guardar Cambios en Supabase
+        </button>
       </form>
     </div>
   </div>
@@ -6538,76 +6716,55 @@
     </div>
   </div>
 
-  <!-- Modal Configuración Firebase Cloud -->
-  <div class="modal-overlay" id="firebaseConfigModal" style="display:none;">
-    <div class="modal-box" style="max-width: 600px;">
+  <!-- Modal Configuración Supabase Cloud PostgreSQL -->
+  <div class="modal-overlay" id="supabaseConfigModal" style="display:none;">
+    <div class="modal-box" style="max-width: 620px;">
       <div class="modal-header">
-        <h3 style="color: #fbbf24; display: flex; align-items: center; gap: 8px;">
-          <ion-icon name="flame"></ion-icon> Sincronización Firebase Cloud Firestore
+        <h3 style="color: #38bdf8; display: flex; align-items: center; gap: 8px;">
+          <ion-icon name="flash-outline"></ion-icon> Base de Datos Supabase Cloud (PostgreSQL)
         </h3>
-        <span class="modal-close" onclick="closeFirebaseConfigModal()">&times;</span>
+        <span class="modal-close" onclick="closeSupabaseConfigModal()">&times;</span>
       </div>
 
       <div
-        style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 12px; padding: 14px; margin-bottom: 18px; font-size: 0.88rem; line-height: 1.5; color: #fde68a;">
-        🔥 <strong>Conectividad Cloud en Tiempo Real:</strong> Podés ingresar los datos de tu proyecto Firebase (o pegar
-        tu objeto <code>firebaseConfig</code>). Tus productos, órdenes y catálogo se guardarán en la nube de Google
-        Firestore y se sincronizarán en tiempo real.
+        style="background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 12px; padding: 14px; margin-bottom: 18px; font-size: 0.88rem; line-height: 1.5; color: #bae6fd;">
+        ⚡ <strong>PostgreSQL en Tiempo Real & Cloud Storage:</strong> Proyecto <code>gomex-nutricion</code> conectado en la región <strong>sa-east-1 (São Paulo)</strong>. Tus productos, catálogo, ventas y colaboradores están sincronizados en la nube con Supabase.
       </div>
 
-      <form onsubmit="handleSaveFirebaseConfig(event)">
-        <div class="form-row-2">
-          <div class="form-group">
-            <label>API Key</label>
-            <input type="text" id="fbApiKeyInput" class="input-field" placeholder="AIzaSy...">
-          </div>
-          <div class="form-group">
-            <label>Project ID</label>
-            <input type="text" id="fbProjectIdInput" class="input-field" placeholder="mi-proyecto-gomex">
-          </div>
-        </div>
-
-        <div class="form-row-2">
-          <div class="form-group">
-            <label>Auth Domain</label>
-            <input type="text" id="fbAuthDomainInput" class="input-field" placeholder="mi-proyecto.firebaseapp.com">
-          </div>
-          <div class="form-group">
-            <label>Storage Bucket</label>
-            <input type="text" id="fbStorageBucketInput" class="input-field" placeholder="mi-proyecto.appspot.com">
-          </div>
-        </div>
-
-        <div class="form-row-2">
-          <div class="form-group">
-            <label>Messaging Sender ID</label>
-            <input type="text" id="fbSenderIdInput" class="input-field" placeholder="1234567890">
-          </div>
-          <div class="form-group">
-            <label>App ID</label>
-            <input type="text" id="fbAppIdInput" class="input-field" placeholder="1:123456:web:abcd">
-          </div>
+      <form onsubmit="handleSaveSupabaseConfig(event)">
+        <div class="form-group">
+          <label>Supabase Project URL</label>
+          <input type="text" id="sbUrlInput" class="input-field" placeholder="https://vdghijvwhrbiorytnpof.supabase.co" required>
         </div>
 
         <div class="form-group">
-          <label>O Pegar Configuración Completa de Firebase (JSON / Objeto)</label>
-          <textarea id="fbJsonConfigInput" class="input-field" rows="3"
-            placeholder='const firebaseConfig = { apiKey: "...", projectId: "..." };'
-            oninput="handleParseFirebaseJson()"></textarea>
+          <label>Supabase Anon / Public Key</label>
+          <input type="text" id="sbAnonKeyInput" class="input-field" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." required>
         </div>
 
-        <div id="firebaseTestResult"
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Project ID / Ref</label>
+            <input type="text" id="sbProjectIdInput" class="input-field" readonly style="opacity: 0.85; background: #0c182a;">
+          </div>
+          <div class="form-group">
+            <label>Región de Servidor</label>
+            <input type="text" id="sbRegionInput" class="input-field" readonly style="opacity: 0.85; background: #0c182a;">
+          </div>
+        </div>
+
+        <div id="supabaseTestResult"
           style="display:none; padding: 12px 14px; border-radius: 10px; font-size: 0.88rem; margin-bottom: 15px;"></div>
 
         <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px;">
           <button type="submit" class="btn btn-green" style="flex: 1; justify-content: center;">
             <ion-icon name="checkmark-done-circle-outline" style="font-size: 1.2rem;"></ion-icon>
-            Guardar y Conectar Firebase
+            Guardar y Reconectar
           </button>
-          <button type="button" class="btn btn-blue" onclick="syncAllToFirestore()"
+          <button type="button" class="btn btn-blue" onclick="syncAllToSupabase()"
             style="background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);">
             <ion-icon name="cloud-upload-outline"></ion-icon>
-            Subir Todo a Firestore
+            Sincronizar Todo con Supabase
           </button>
         </div>
       </form>
@@ -6797,8 +6954,30 @@
     let selectedEcommerceCategory = 'all';
 
     const defaultColaboradores = [
-      { id: 1, name: 'David Ramírez (SuperAdmin)', username: 'superadmin', password: '123', role: 'Super Administrador' },
-      { id: 2, name: 'Administrador GOMEX', username: 'admin', password: '123', role: 'Administrador' }
+      {
+        id: 1,
+        name: 'David Ramírez (SuperAdmin)',
+        username: 'superadmin',
+        password: '123',
+        role: 'Super Administrador',
+        permissions: {
+          pos: true, ventas: true, presupuesto: true, notas: true,
+          catalogo: true, stock: true, clientes: true, colaboradores: true,
+          importaciones: true, config: true
+        }
+      },
+      {
+        id: 2,
+        name: 'Administrador GOMEX',
+        username: 'admin',
+        password: '123',
+        role: 'Administrador',
+        permissions: {
+          pos: true, ventas: true, presupuesto: true, notas: true,
+          catalogo: true, stock: true, clientes: true, colaboradores: true,
+          importaciones: true, config: true
+        }
+      }
     ];
 
     let colaboradores = [...defaultColaboradores];
@@ -6840,64 +7019,55 @@
     };
 
     // ==========================================
-    // INTEGRACIÓN Y SINCRONIZACIÓN FIREBASE CLOUD
+    // INTEGRACIÓN Y SINCRONIZACIÓN SUPABASE CLOUD (POSTGRESQL)
     // ==========================================
-    const defaultFirebaseConfig = {
-      apiKey: "AIzaSyAxvl8U9iGbamLYvsH3wynJXKWY3cIS-F4",
-      authDomain: "gomex-nutricion.firebaseapp.com",
-      projectId: "gomex-nutricion",
-      storageBucket: "gomex-nutricion.firebasestorage.app",
-      messagingSenderId: "892005460095",
-      appId: "1:892005460095:web:f6072a9b47e160c43f774a",
-      measurementId: "G-6HJGYZGWLT"
+    const defaultSupabaseConfig = {
+      url: "https://vdghijvwhrbiorytnpof.supabase.co",
+      anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZkZ2hpanZ3aHJiaW9yeXRucG9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcwNjM4NjMsImV4cCI6MjEwMjYzOTg2M30.3limv7B6kynxtUTVURskHwCvGrxvuW5LMkpqjfbYudw",
+      projectId: "vdghijvwhrbiorytnpof",
+      region: "sa-east-1 (São Paulo)"
     };
 
-    let firebaseConfig = { ...defaultFirebaseConfig };
-    let db = null;
-    let analytics = null;
-    let isFirebaseConnected = false;
+    let supabaseConfig = { ...defaultSupabaseConfig };
+    let supabaseClient = null;
+    let isSupabaseConnected = false;
 
-    function initFirebase() {
+    async function initSupabase() {
       try {
-        const savedFb = localStorage.getItem('gomex_firebase_config');
-        if (savedFb) {
-          firebaseConfig = { ...defaultFirebaseConfig, ...JSON.parse(savedFb) };
+        const savedConfig = localStorage.getItem('gomex_supabase_config');
+        if (savedConfig) {
+          supabaseConfig = { ...defaultSupabaseConfig, ...JSON.parse(savedConfig) };
         } else {
-          firebaseConfig = { ...defaultFirebaseConfig };
+          supabaseConfig = { ...defaultSupabaseConfig };
         }
 
-        if (firebaseConfig && firebaseConfig.apiKey && firebaseConfig.projectId && typeof firebase !== 'undefined') {
-          if (!firebase.apps || firebase.apps.length === 0) {
-            firebase.initializeApp(firebaseConfig);
-          }
-          db = firebase.firestore();
-          if (typeof firebase.analytics === 'function' && firebaseConfig.measurementId) {
-            try { analytics = firebase.analytics(); } catch (e) { }
-          }
-          isFirebaseConnected = true;
-          updateFirebaseStatusBadge(true);
-          listenFirestoreRealtime();
-          console.log("🔥 Firebase Firestore inicializado con éxito para gomex-nutricion.");
+        if (supabaseConfig && supabaseConfig.url && supabaseConfig.anonKey && typeof window.supabase !== 'undefined') {
+          supabaseClient = window.supabase.createClient(supabaseConfig.url, supabaseConfig.anonKey);
+          isSupabaseConnected = true;
+          updateSupabaseStatusBadge(true);
+          console.log("⚡ Supabase Cloud inicializado con éxito para gomex-nutricion (sa-east-1).");
+          await fetchSupabaseData();
+          listenSupabaseRealtime();
         } else {
-          updateFirebaseStatusBadge(false);
+          updateSupabaseStatusBadge(false);
         }
       } catch (err) {
-        console.warn("Firebase no conectado:", err.message);
-        updateFirebaseStatusBadge(false);
+        console.warn("Supabase no conectado (usando modo local):", err.message);
+        updateSupabaseStatusBadge(false);
       }
     }
 
-    function updateFirebaseStatusBadge(connected) {
-      const badge = document.getElementById('firebaseStatusText');
-      const container = document.getElementById('firebaseHeaderStatus');
+    function updateSupabaseStatusBadge(connected) {
+      const badge = document.getElementById('supabaseStatusText');
+      const container = document.getElementById('supabaseHeaderStatus');
       if (badge && container) {
         if (connected) {
-          badge.textContent = 'Firebase: Online 🟢';
+          badge.textContent = 'Supabase: Online 🟢';
           container.style.borderColor = 'rgba(16, 185, 129, 0.5)';
           container.style.background = 'rgba(16, 185, 129, 0.15)';
           container.style.color = '#34d399';
         } else {
-          badge.textContent = 'Firebase: Local';
+          badge.textContent = 'Supabase: Local 🟡';
           container.style.borderColor = 'rgba(245, 158, 11, 0.35)';
           container.style.background = 'rgba(245, 158, 11, 0.15)';
           container.style.color = '#fbbf24';
@@ -6905,106 +7075,141 @@
       }
     }
 
-    function listenFirestoreRealtime() {
-      if (!db || !isFirebaseConnected) return;
+    async function fetchSupabaseData() {
+      if (!supabaseClient || !isSupabaseConnected) return;
       try {
-        db.collection('products').onSnapshot((snapshot) => {
-          if (!snapshot.empty) {
-            const cloudProducts = [];
-            snapshot.forEach(doc => {
-              cloudProducts.push(doc.data());
-            });
-            products = cloudProducts;
-            saveStorageData(false);
-            renderEcommerceProducts();
-            renderPOSProducts();
-            renderStockTable();
-            renderDBProducts();
-            renderCatalog();
-            console.log(`🔥 Sincronizados ${cloudProducts.length} productos desde Firestore.`);
-          }
-        }, (err) => {
-          console.warn("Error en listener Firestore:", err);
-        });
+        const { data: cloudProducts, error: prodErr } = await supabaseClient.from('products').select('*').order('id');
+        if (!prodErr && cloudProducts && cloudProducts.length > 0) {
+          products = cloudProducts.map(p => ({
+            ...p,
+            internalCode: p.internal_code || p.internalCode,
+            taxRate: p.tax_rate !== undefined ? p.tax_rate : (p.taxRate || 21)
+          }));
+          saveStorageData(false);
+          renderEcommerceProducts();
+          renderPOSProducts();
+          renderStockTable();
+          renderDBProducts();
+          renderCatalog();
+          console.log(`⚡ Sincronizados ${cloudProducts.length} productos desde Supabase Cloud.`);
+        }
+
+        const { data: cloudSales, error: salesErr } = await supabaseClient.from('sales').select('*').order('created_at', { ascending: false });
+        if (!salesErr && cloudSales && cloudSales.length > 0) {
+          sales = cloudSales.map(s => ({
+            id: s.id,
+            date: s.date,
+            seller: s.seller,
+            client: s.client,
+            paymentMethod: s.payment_method || s.paymentMethod,
+            lines: s.lines || [],
+            total: Number(s.total) || 0
+          }));
+          saveStorageData(false);
+          renderSalesTable();
+          renderDashboard();
+        }
+
+        const { data: cloudCategories, error: catErr } = await supabaseClient.from('categories').select('*');
+        if (!catErr && cloudCategories && cloudCategories.length > 0) {
+          categories = cloudCategories.map(c => c.name);
+          saveStorageData(false);
+          renderEcommerceCategories();
+        }
       } catch (e) {
-        console.warn("No se pudo iniciar listener Firestore:", e);
+        console.warn("Error al obtener datos de Supabase:", e);
       }
     }
 
-    function openFirebaseConfigModal() {
-      const modal = document.getElementById('firebaseConfigModal');
+    function listenSupabaseRealtime() {
+      if (!supabaseClient || !isSupabaseConnected) return;
+      try {
+        supabaseClient
+          .channel('gomex-realtime-products')
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'products' }, async () => {
+            console.log("⚡ Cambio detectado en productos en tiempo real desde Supabase.");
+            const { data } = await supabaseClient.from('products').select('*').order('id');
+            if (data && data.length) {
+              products = data.map(p => ({
+                ...p,
+                internalCode: p.internal_code || p.internalCode,
+                taxRate: p.tax_rate !== undefined ? p.tax_rate : (p.taxRate || 21)
+              }));
+              saveStorageData(false);
+              renderEcommerceProducts();
+              renderPOSProducts();
+              renderStockTable();
+              renderDBProducts();
+              renderCatalog();
+            }
+          })
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'sales' }, async () => {
+            console.log("⚡ Nueva venta registrada en tiempo real en Supabase.");
+            const { data } = await supabaseClient.from('sales').select('*').order('created_at', { ascending: false });
+            if (data && data.length) {
+              sales = data.map(s => ({
+                id: s.id,
+                date: s.date,
+                seller: s.seller,
+                client: s.client,
+                paymentMethod: s.payment_method || s.paymentMethod,
+                lines: s.lines || [],
+                total: Number(s.total) || 0
+              }));
+              saveStorageData(false);
+              renderSalesTable();
+              renderDashboard();
+            }
+          })
+          .subscribe();
+      } catch (e) {
+        console.warn("No se pudo conectar realtime Supabase:", e);
+      }
+    }
+
+    function openSupabaseConfigModal() {
+      const modal = document.getElementById('supabaseConfigModal');
       if (modal) {
-        document.getElementById('fbApiKeyInput').value = firebaseConfig.apiKey || '';
-        document.getElementById('fbProjectIdInput').value = firebaseConfig.projectId || '';
-        document.getElementById('fbAuthDomainInput').value = firebaseConfig.authDomain || '';
-        document.getElementById('fbStorageBucketInput').value = firebaseConfig.storageBucket || '';
-        document.getElementById('fbSenderIdInput').value = firebaseConfig.messagingSenderId || '';
-        document.getElementById('fbAppIdInput').value = firebaseConfig.appId || '';
+        document.getElementById('sbUrlInput').value = supabaseConfig.url || '';
+        document.getElementById('sbAnonKeyInput').value = supabaseConfig.anonKey || '';
+        document.getElementById('sbProjectIdInput').value = supabaseConfig.projectId || 'vdghijvwhrbiorytnpof';
+        document.getElementById('sbRegionInput').value = supabaseConfig.region || 'sa-east-1 (São Paulo)';
         modal.style.display = 'flex';
       }
     }
 
-    function closeFirebaseConfigModal() {
-      const modal = document.getElementById('firebaseConfigModal');
+    function closeSupabaseConfigModal() {
+      const modal = document.getElementById('supabaseConfigModal');
       if (modal) modal.style.display = 'none';
     }
 
-    function handleParseFirebaseJson() {
-      const jsonText = document.getElementById('fbJsonConfigInput').value.trim();
-      if (!jsonText) return;
-      try {
-        const extract = (key) => {
-          const match = jsonText.match(new RegExp(`${key}["']?\\s*:\\s*["']([^"']+)["']`));
-          return match ? match[1] : '';
-        };
-
-        const apiKey = extract('apiKey');
-        const projectId = extract('projectId');
-        const authDomain = extract('authDomain');
-        const storageBucket = extract('storageBucket');
-        const senderId = extract('messagingSenderId');
-        const appId = extract('appId');
-
-        if (apiKey) document.getElementById('fbApiKeyInput').value = apiKey;
-        if (projectId) document.getElementById('fbProjectIdInput').value = projectId;
-        if (authDomain) document.getElementById('fbAuthDomainInput').value = authDomain;
-        if (storageBucket) document.getElementById('fbStorageBucketInput').value = storageBucket;
-        if (senderId) document.getElementById('fbSenderIdInput').value = senderId;
-        if (appId) document.getElementById('fbAppIdInput').value = appId;
-      } catch (e) {
-        console.warn("Parse error:", e);
-      }
-    }
-
-    function handleSaveFirebaseConfig(event) {
+    function handleSaveSupabaseConfig(event) {
       event.preventDefault();
-      firebaseConfig = {
-        apiKey: document.getElementById('fbApiKeyInput').value.trim(),
-        projectId: document.getElementById('fbProjectIdInput').value.trim(),
-        authDomain: document.getElementById('fbAuthDomainInput').value.trim(),
-        storageBucket: document.getElementById('fbStorageBucketInput').value.trim(),
-        messagingSenderId: document.getElementById('fbSenderIdInput').value.trim(),
-        appId: document.getElementById('fbAppIdInput').value.trim()
+      supabaseConfig = {
+        url: document.getElementById('sbUrlInput').value.trim(),
+        anonKey: document.getElementById('sbAnonKeyInput').value.trim(),
+        projectId: document.getElementById('sbProjectIdInput').value.trim() || 'vdghijvwhrbiorytnpof',
+        region: document.getElementById('sbRegionInput').value.trim() || 'sa-east-1 (São Paulo)'
       };
 
-      localStorage.setItem('gomex_firebase_config', JSON.stringify(firebaseConfig));
-      const resDiv = document.getElementById('firebaseTestResult');
+      localStorage.setItem('gomex_supabase_config', JSON.stringify(supabaseConfig));
+      const resDiv = document.getElementById('supabaseTestResult');
 
-      if (!firebaseConfig.apiKey || !firebaseConfig.projectId) {
+      if (!supabaseConfig.url || !supabaseConfig.anonKey) {
         resDiv.style.display = 'block';
         resDiv.style.background = 'rgba(239, 68, 68, 0.2)';
         resDiv.style.color = '#fca5a5';
-        resDiv.textContent = '❌ Por favor ingresa al menos API Key y Project ID.';
+        resDiv.textContent = '❌ Por favor ingresa URL y Anon Key válidas.';
         return;
       }
 
       try {
-        initFirebase();
+        initSupabase();
         resDiv.style.display = 'block';
         resDiv.style.background = 'rgba(16, 185, 129, 0.2)';
         resDiv.style.color = '#34d399';
-        resDiv.textContent = '✅ ¡Firebase conectado exitosamente! Sincronización en tiempo real activada.';
-        setTimeout(() => closeFirebaseConfigModal(), 1500);
+        resDiv.textContent = '✅ ¡Supabase conectado exitosamente! PostgreSQL y tiempo real activados.';
+        setTimeout(() => closeSupabaseConfigModal(), 1500);
       } catch (err) {
         resDiv.style.display = 'block';
         resDiv.style.background = 'rgba(239, 68, 68, 0.2)';
@@ -7013,22 +7218,38 @@
       }
     }
 
-    async function syncAllToFirestore() {
-      if (!isFirebaseConnected || !db) {
-        alert("Primero conectá tu proyecto de Firebase guardando tus credenciales.");
+    async function syncAllToSupabase() {
+      if (!isSupabaseConnected || !supabaseClient) {
+        alert("Primero conectá tu proyecto de Supabase guardando tus credenciales.");
         return;
       }
       try {
-        const batch = db.batch();
-        products.forEach(p => {
-          const ref = db.collection('products').doc(String(p.id || p.code || p.internalCode));
-          batch.set(ref, p, { merge: true });
-        });
-        await batch.commit();
-        alert(`🔥 ¡Se sincronizaron con éxito ${products.length} productos en Cloud Firestore!`);
-        closeFirebaseConfigModal();
+        const dbProds = products.map(p => ({
+          id: p.id,
+          code: p.code || '',
+          internal_code: p.internalCode || p.internal_code || '',
+          name: p.name,
+          category: p.category || '',
+          cost: Number(p.cost) || 0,
+          tax_rate: Number(p.taxRate !== undefined ? p.taxRate : (p.tax_rate || 21)),
+          margin: Number(p.margin) || 0,
+          price: Number(p.price) || 0,
+          stock: Number(p.stock) || 0,
+          unit: p.unit || '',
+          flavor: p.flavor || '',
+          portion: p.portion || '',
+          description: p.description || '',
+          activos: p.activos || [],
+          image: p.image || '',
+          featured: !!p.featured,
+          badge: p.badge || ''
+        }));
+        const { error } = await supabaseClient.from('products').upsert(dbProds);
+        if (error) throw error;
+        alert(`⚡ ¡Se sincronizaron con éxito ${products.length} productos en Supabase Cloud PostgreSQL!`);
+        closeSupabaseConfigModal();
       } catch (err) {
-        alert("Error al subir a Firestore: " + err.message);
+        alert("Error al subir a Supabase: " + err.message);
       }
     }
 
@@ -7053,17 +7274,12 @@
       offers = [];
       saveStorageData(false);
 
-      if (isFirebaseConnected && db) {
+      if (isSupabaseConnected && supabaseClient) {
         try {
-          const snapshot = await db.collection('products').get();
-          const batch = db.batch();
-          snapshot.forEach(doc => {
-            batch.delete(doc.ref);
-          });
-          await batch.commit();
-          console.log("🔥 Colección de productos eliminada en Firestore.");
+          await supabaseClient.from('products').delete().neq('id', 0);
+          console.log("⚡ Tabla products vaciada en Supabase.");
         } catch (e) {
-          console.warn("Error al vaciar Firestore:", e);
+          console.warn("Error al vaciar Supabase:", e);
         }
       }
 
@@ -7107,10 +7323,16 @@
       try {
         const storedProducts = localStorage.getItem('gomex_products');
         if (storedProducts !== null) {
-          products = JSON.parse(storedProducts);
+          try {
+            const parsed = JSON.parse(storedProducts);
+            products = Array.isArray(parsed) && parsed.length > 0 ? parsed : JSON.parse(JSON.stringify(officialSampleProducts));
+          } catch (e) {
+            products = JSON.parse(JSON.stringify(officialSampleProducts));
+          }
         } else {
-          // Iniciar catálogo limpio por defecto
-          products = [];
+          // Primera visita del usuario: inicializar catálogo oficial GOMEX
+          products = JSON.parse(JSON.stringify(officialSampleProducts));
+          localStorage.setItem('gomex_products', JSON.stringify(products));
         }
 
         const storedCategories = localStorage.getItem('gomex_categories');
@@ -7186,22 +7408,36 @@
         localStorage.setItem('gomex_remitos', JSON.stringify(remitos));
         localStorage.setItem('gomex_bank_config', JSON.stringify(bankConfig));
 
-        if (syncToCloud && isFirebaseConnected && db) {
+        if (syncToCloud && isSupabaseConnected && supabaseClient) {
           if (products.length > 0) {
-            const batch = db.batch();
-            products.forEach(p => {
-              const ref = db.collection('products').doc(String(p.id || p.code || p.internalCode));
-              batch.set(ref, p, { merge: true });
+            const dbProds = products.map(p => ({
+              id: p.id,
+              code: p.code || '',
+              internal_code: p.internalCode || p.internal_code || '',
+              name: p.name,
+              category: p.category || '',
+              cost: Number(p.cost) || 0,
+              tax_rate: Number(p.taxRate !== undefined ? p.taxRate : (p.tax_rate || 21)),
+              margin: Number(p.margin) || 0,
+              price: Number(p.price) || 0,
+              stock: Number(p.stock) || 0,
+              unit: p.unit || '',
+              flavor: p.flavor || '',
+              portion: p.portion || '',
+              description: p.description || '',
+              activos: p.activos || [],
+              image: p.image || '',
+              featured: !!p.featured,
+              badge: p.badge || ''
+            }));
+            supabaseClient.from('products').upsert(dbProds).then(({ error }) => {
+              if (error) console.warn("Supabase upsert products error:", error.message);
             });
-            batch.commit().catch(e => console.warn("Firestore sync products:", e.message));
           }
           if (colaboradores.length > 0) {
-            const colabBatch = db.batch();
-            colaboradores.forEach(c => {
-              const ref = db.collection('collaborators').doc(String(c.id || c.username));
-              colabBatch.set(ref, c, { merge: true });
+            supabaseClient.from('collaborators').upsert(colaboradores).then(({ error }) => {
+              if (error) console.warn("Supabase upsert colabs error:", error.message);
             });
-            colabBatch.commit().catch(e => console.warn("Firestore sync colabs:", e.message));
           }
         }
       } catch (e) {
@@ -8177,8 +8413,15 @@
         `• Teléfono: ${phone}\n` +
         `• Mensaje: ${msg}`;
 
+      const cleanStorePhone = (storeConfig.phone || '5491112345678').replace(/\D/g, '') || '5491112345678';
       closeB2BModal();
-      window.open(`https://wa.me/5491112345678?text=${encodeURIComponent(whatsappText)}`, '_blank');
+      window.open(`https://wa.me/${cleanStorePhone}?text=${encodeURIComponent(whatsappText)}`, '_blank');
+    }
+
+    function openStoreWhatsAppDirect() {
+      const cleanStorePhone = (storeConfig.phone || '5491112345678').replace(/\D/g, '') || '5491112345678';
+      const defaultText = encodeURIComponent('👋 ¡Hola GOMEX Nutrition! Quisiera hacer una consulta sobre sus suplementos en gomitas.');
+      window.open(`https://wa.me/${cleanStorePhone}?text=${defaultText}`, '_blank');
     }
 
 
@@ -8232,6 +8475,39 @@
       reader.readAsDataURL(file);
     }
 
+    function applyUserPermissions(user) {
+      if (!user) return;
+      const isSuper = user.username.toLowerCase() === 'superadmin' || user.role === 'Super Administrador';
+      const perms = user.permissions || {};
+
+      const has = (key) => isSuper || perms[key] === true;
+
+      const checkAndToggle = (selector, allowed) => {
+        document.querySelectorAll(selector).forEach(el => {
+          const li = el.closest('li') || el;
+          li.style.display = allowed ? '' : 'none';
+        });
+      };
+
+      checkAndToggle('#menu-pos, [onclick*="mod-pos"]', has('pos'));
+      checkAndToggle('[onclick*="mod-ventas"]', has('ventas'));
+      checkAndToggle('[onclick*="mod-presupuesto"]', has('presupuesto'));
+      checkAndToggle('[onclick*="mod-pedido"]', has('presupuesto'));
+      checkAndToggle('[onclick*="mod-notas"]', has('notas'));
+      checkAndToggle('[onclick*="mod-remito"]', has('notas'));
+      checkAndToggle('[onclick*="mod-stock"]', has('stock'));
+      checkAndToggle('[onclick*="mod-productos"]', has('catalogo'));
+      checkAndToggle('[onclick*="mod-clientes"]', has('clientes'));
+      checkAndToggle('[onclick*="mod-colaboradores"]', has('colaboradores'));
+      checkAndToggle('[onclick*="mod-importaciones"]', has('importaciones'));
+      checkAndToggle('[onclick*="mod-catalogo"]', has('catalogo'));
+
+      const configLi = document.querySelector('[onclick*="mod-cfg-general"]')?.closest('li');
+      if (configLi) {
+        configLi.style.display = has('config') ? '' : 'none';
+      }
+    }
+
     function handleLogin(event) {
       event.preventDefault();
       const userVal = document.getElementById('username').value.trim();
@@ -8245,9 +8521,31 @@
       // SuperAdmin y Admin Master fallbacks (soporta 123 o 12345)
       if (!matchedColab) {
         if (userVal.toLowerCase() === 'superadmin' && (passVal === '123' || passVal === '12345')) {
-          matchedColab = { id: 1, name: 'David Ramírez (SuperAdmin)', username: 'superadmin', password: passVal, role: 'Super Administrador' };
+          matchedColab = {
+            id: 1,
+            name: 'David Ramírez (SuperAdmin)',
+            username: 'superadmin',
+            password: passVal,
+            role: 'Super Administrador',
+            permissions: {
+              pos: true, ventas: true, presupuesto: true, notas: true,
+              catalogo: true, stock: true, clientes: true, colaboradores: true,
+              importaciones: true, config: true
+            }
+          };
         } else if (userVal.toLowerCase() === 'admin' && (passVal === '123' || passVal === '12345')) {
-          matchedColab = { id: 2, name: 'Administrador GOMEX', username: 'admin', password: passVal, role: 'Administrador' };
+          matchedColab = {
+            id: 2,
+            name: 'Administrador GOMEX',
+            username: 'admin',
+            password: passVal,
+            role: 'Administrador',
+            permissions: {
+              pos: true, ventas: true, presupuesto: true, notas: true,
+              catalogo: true, stock: true, clientes: true, colaboradores: true,
+              importaciones: true, config: true
+            }
+          };
         }
       }
 
@@ -8258,6 +8556,7 @@
         document.getElementById('loginOverlay').classList.add('hidden');
         switchView('pos');
         errorDiv.style.display = 'none';
+        applyUserPermissions(matchedColab);
         initApp();
       } else {
         errorDiv.style.display = 'flex';
@@ -8281,10 +8580,40 @@
       if (window.innerWidth <= 768) {
         closeMobileSidebar();
       }
+
+      if (currentUser && currentUser.username.toLowerCase() !== 'superadmin' && currentUser.role !== 'Super Administrador') {
+        const perms = currentUser.permissions || {};
+        const permMap = {
+          'mod-pos': 'pos',
+          'mod-ventas': 'ventas',
+          'mod-presupuesto': 'presupuesto',
+          'mod-pedido': 'presupuesto',
+          'mod-notas': 'notas',
+          'mod-remito': 'notas',
+          'mod-catalogo': 'catalogo',
+          'mod-stock': 'stock',
+          'mod-productos': 'catalogo',
+          'mod-clientes': 'clientes',
+          'mod-colaboradores': 'colaboradores',
+          'mod-importaciones': 'importaciones',
+          'mod-cfg-general': 'config',
+          'mod-cfg-tesoreria': 'config',
+          'mod-cfg-parametros': 'config',
+          'mod-cfg-productos': 'config',
+          'mod-cfg-ventas': 'config'
+        };
+
+        const requiredPerm = permMap[moduleId];
+        if (requiredPerm && perms[requiredPerm] === false) {
+          alert('⛔ No tenés permisos asignados para acceder a esta sección.');
+          return;
+        }
+      }
+
       const sections = document.querySelectorAll('.module-section');
       sections.forEach(sec => sec.classList.remove('active'));
 
-      const links = document.querySelectorAll('.nav-link');
+      const links = document.querySelectorAll('.nav-link, .submenu a');
       links.forEach(l => l.classList.remove('active'));
 
       const targetModule = document.getElementById(moduleId);
@@ -8295,7 +8624,6 @@
       if (linkElem) {
         linkElem.classList.add('active');
       } else {
-        // Encontrar automáticamente el nav-link en el sidebar que navega a este moduleId
         const matchingLink = Array.from(document.querySelectorAll('.nav-link, .submenu a')).find(el => {
           const clickStr = el.getAttribute('onclick') || '';
           return clickStr.includes(`showModule('${moduleId}'`) || clickStr.includes(`showModule("${moduleId}"`);
@@ -9672,14 +10000,17 @@
     }
 
     async function deleteProduct(id) {
-      if (confirm('¿Está seguro de eliminar este artículo del catálogo?')) {
+      const prod = products.find(p => p.id === id);
+      const prodName = prod ? prod.name : 'este producto';
+      if (confirm(`¿Estás seguro de que deseas eliminar "${prodName}" del catálogo? Se eliminará de la tienda y de Supabase.`)) {
         products = products.filter(p => p.id !== id);
-        saveStorageData();
-        if (isFirebaseConnected && db) {
+        saveStorageData(true);
+        if (isSupabaseConnected && supabaseClient) {
           try {
-            await db.collection('products').doc(String(id)).delete();
+            await supabaseClient.from('products').delete().eq('id', id);
+            console.log(`⚡ Producto ID ${id} eliminado de Supabase.`);
           } catch (e) {
-            console.warn("Error al borrar en Firestore:", e);
+            console.warn("Error al borrar en Supabase:", e);
           }
         }
         renderDBProducts();
@@ -9687,6 +10018,34 @@
         renderStockTable();
         renderCatalog();
         renderEcommerceProducts();
+        renderEcommerceCategories();
+        alert(`🗑️ Producto "${prodName}" eliminado correctamente.`);
+      }
+    }
+
+    function deleteCurrentEditingProduct() {
+      const id = parseInt(document.getElementById('editProdId').value);
+      if (id) {
+        closeEditProductModal();
+        deleteProduct(id);
+      }
+    }
+
+    function setPresetImage(inputId, previewId, path) {
+      const inp = document.getElementById(inputId);
+      const prev = document.getElementById(previewId);
+      if (inp) inp.value = path;
+      if (prev) {
+        prev.src = path;
+        prev.style.display = 'block';
+      }
+    }
+
+    function handleImageUrlInput(input, previewId) {
+      const prev = document.getElementById(previewId);
+      if (prev && input.value.trim()) {
+        prev.src = input.value.trim();
+        prev.style.display = 'block';
       }
     }
 
@@ -9697,15 +10056,23 @@
       renderCategoriesUI();
 
       document.getElementById('editProdId').value = prod.id;
-      document.getElementById('editProdCode').value = prod.code;
-      document.getElementById('editProdInternalCode').value = prod.internalCode;
-      document.getElementById('editProdName').value = prod.name;
-      document.getElementById('editProdCategorySelect').value = prod.category;
-      document.getElementById('editProdUnit').value = prod.unit || 'Unid.';
-      document.getElementById('editProdCost').value = prod.cost;
-      document.getElementById('editProdTaxRate').value = prod.taxRate;
-      document.getElementById('editProdMargin').value = prod.margin;
-      document.getElementById('editProdStock').value = prod.stock;
+      document.getElementById('editProdCode').value = prod.code || '';
+      document.getElementById('editProdInternalCode').value = prod.internalCode || '';
+      document.getElementById('editProdName').value = prod.name || '';
+      document.getElementById('editProdCategorySelect').value = prod.category || '';
+      document.getElementById('editProdFlavor').value = prod.flavor || '';
+      document.getElementById('editProdUnit').value = prod.unit || 'Doypack 60 Gomitas';
+      document.getElementById('editProdBadge').value = prod.badge || '';
+      document.getElementById('editProdPortion').value = prod.portion || '';
+      document.getElementById('editProdDescription').value = prod.description || '';
+      document.getElementById('editProdActivos').value = Array.isArray(prod.activos) ? prod.activos.join(', ') : (prod.activos || '');
+      document.getElementById('editProdCost').value = prod.cost || 0;
+      document.getElementById('editProdTaxRate').value = prod.taxRate !== undefined ? prod.taxRate : 21;
+      document.getElementById('editProdMargin').value = prod.margin || 100;
+      document.getElementById('editProdPrice').value = prod.price || 0;
+      document.getElementById('editProdStock').value = prod.stock || 0;
+      document.getElementById('editProdFeatured').checked = !!prod.featured;
+      document.getElementById('editProdImageUrl').value = prod.image || '';
 
       const previewImg = document.getElementById('editProdPreview');
       if (prod.image) {
@@ -9716,7 +10083,7 @@
         previewImg.src = '';
       }
 
-      calculateEditFinalPrice();
+      document.getElementById('editCalculatedPriceDisplay').textContent = Number(prod.price || 0).toLocaleString('es-AR');
 
       document.getElementById('editProductModal').classList.add('active');
     }
@@ -9735,31 +10102,41 @@
       prod.internalCode = document.getElementById('editProdInternalCode').value.trim();
       prod.name = document.getElementById('editProdName').value.trim();
       prod.category = document.getElementById('editProdCategorySelect').value;
+      prod.flavor = document.getElementById('editProdFlavor').value.trim();
+      prod.unit = document.getElementById('editProdUnit').value.trim() || 'Doypack 60 Gomitas';
+      prod.badge = document.getElementById('editProdBadge').value.trim();
+      prod.portion = document.getElementById('editProdPortion').value.trim();
+      prod.description = document.getElementById('editProdDescription').value.trim();
+      
+      const activosRaw = document.getElementById('editProdActivos').value.trim();
+      prod.activos = activosRaw ? activosRaw.split(',').map(a => a.trim()).filter(Boolean) : [];
+
       prod.cost = parseFloat(document.getElementById('editProdCost').value) || 0;
       prod.taxRate = parseFloat(document.getElementById('editProdTaxRate').value) || 0;
       prod.margin = parseFloat(document.getElementById('editProdMargin').value) || 0;
       prod.price = parseFloat(document.getElementById('editProdPrice').value) || 0;
       prod.stock = parseFloat(document.getElementById('editProdStock').value) || 0;
-      prod.unit = document.getElementById('editProdUnit').value;
+      prod.featured = document.getElementById('editProdFeatured').checked;
 
       const previewImg = document.getElementById('editProdPreview');
+      const urlImg = document.getElementById('editProdImageUrl').value.trim();
       if (previewImg.src && previewImg.src.startsWith('data:image')) {
         prod.image = previewImg.src;
+      } else if (urlImg) {
+        prod.image = urlImg;
       }
 
       closeEditProductModal();
-      saveStorageData();
+      saveStorageData(true);
       renderCategoriesUI();
       renderEcommerceCategories();
-      renderEcommerceProducts();
-      saveStorageData();
       renderEcommerceProducts();
       renderDBProducts();
       renderPOSProducts();
       renderStockTable();
       renderCatalog();
 
-      alert('¡Artículo actualizado correctamente!');
+      alert(`✅ ¡Producto "${prod.name}" actualizado y sincronizado en Supabase!`);
     }
 
     function renderDBClients() {
@@ -9833,41 +10210,94 @@
       }
     }
 
+    function setRolePermissions(prefix, preset) {
+      const keys = ['pos', 'ventas', 'presupuesto', 'notas', 'catalogo', 'stock', 'clientes', 'colaboradores', 'importaciones', 'config'];
+      
+      const config = {
+        admin: { pos: true, ventas: true, presupuesto: true, notas: true, catalogo: true, stock: true, clientes: true, colaboradores: true, importaciones: true, config: true },
+        vendedor: { pos: true, ventas: true, presupuesto: true, notas: false, catalogo: false, stock: true, clientes: true, colaboradores: false, importaciones: false, config: false },
+        catalogo: { pos: false, ventas: false, presupuesto: false, notas: false, catalogo: true, stock: true, clientes: false, colaboradores: false, importaciones: true, config: false },
+        none: { pos: false, ventas: false, presupuesto: false, notas: false, catalogo: false, stock: false, clientes: false, colaboradores: false, importaciones: false, config: false }
+      };
+
+      const selected = config[preset] || config.admin;
+      keys.forEach(k => {
+        const el = document.getElementById(`${prefix}Perm_${k}`);
+        if (el) el.checked = !!selected[k];
+      });
+    }
+
+    function handleRolePresetChange(prefix, role) {
+      if (role === 'Administrador' || role === 'Super Administrador') {
+        setRolePermissions(prefix, 'admin');
+      } else if (role === 'Vendedor POS') {
+        setRolePermissions(prefix, 'vendedor');
+      } else if (role === 'Gestor de Catálogo') {
+        setRolePermissions(prefix, 'catalogo');
+      }
+    }
+
     // GESTIÓN BD COLABORADORES
     function renderDBColaboradores() {
       const body = document.getElementById('dbColaboradoresTableBody');
       if (!body) return;
       body.innerHTML = '';
 
-      if (!colaboradores || colaboradores.length === 0) {
+      // SuperAdmin permanece INVISIBLE en la lista
+      const visibleColabs = colaboradores.filter(c =>
+        c.username.toLowerCase() !== 'superadmin' && c.role !== 'Super Administrador'
+      );
+
+      // Aviso especial para SuperAdmin
+      const superNotice = document.getElementById('superAdminNotice');
+      if (superNotice) {
+        if (currentUser && (currentUser.username.toLowerCase() === 'superadmin' || currentUser.role === 'Super Administrador')) {
+          superNotice.style.display = 'block';
+        } else {
+          superNotice.style.display = 'none';
+        }
+      }
+
+      if (visibleColabs.length === 0) {
         body.innerHTML = `
           <tr>
-            <td colspan="4" style="text-align:center; padding:30px; color:#94a3b8;">
-              <div>No hay colaboradores registrados.</div>
-              <button class="btn btn-green" onclick="openAddColaboradorModal()" style="margin-top:10px;">+ Registrar Primer Colaborador</button>
+            <td colspan="5" style="text-align:center; padding:30px; color:#94a3b8;">
+              <div style="font-size: 1rem; margin-bottom: 8px;">No hay otros colaboradores registrados.</div>
+              <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 15px;">Podés dar de alta administradores, vendedores o gestores con permisos personalizados.</p>
+              <button type="button" class="btn btn-green" onclick="openAddColaboradorModal()" style="margin: 0 auto; padding: 9px 16px;">+ Registrar Primer Colaborador</button>
             </td>
           </tr>
         `;
         return;
       }
 
-      colaboradores.forEach(col => {
-        const isSuper = col.role === 'Super Administrador';
-        const roleStyle = isSuper
-          ? 'background: rgba(245, 158, 11, 0.2); border: 1px solid rgba(245, 158, 11, 0.4); color: #fbbf24; font-weight: 800;'
-          : 'background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3); color: #38bdf8; font-weight: 600;';
+      visibleColabs.forEach(col => {
+        const p = col.permissions || {};
+        const permTags = [];
+        if (p.pos) permTags.push('<span class="status-badge completed" style="font-size: 0.7rem; padding: 2px 6px;">POS</span>');
+        if (p.ventas) permTags.push('<span class="status-badge completed" style="font-size: 0.7rem; padding: 2px 6px;">Ventas</span>');
+        if (p.catalogo) permTags.push('<span class="status-badge completed" style="font-size: 0.7rem; padding: 2px 6px;">Catálogo</span>');
+        if (p.stock) permTags.push('<span class="status-badge completed" style="font-size: 0.7rem; padding: 2px 6px;">Stock</span>');
+        if (p.clientes) permTags.push('<span class="status-badge completed" style="font-size: 0.7rem; padding: 2px 6px;">Clientes</span>');
+        if (p.colaboradores) permTags.push('<span class="status-badge processing" style="font-size: 0.7rem; padding: 2px 6px;">Staff</span>');
+        if (p.config) permTags.push('<span class="status-badge completed" style="font-size: 0.7rem; padding: 2px 6px;">Config</span>');
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td><strong>${col.name}</strong> ${isSuper ? '👑' : ''}</td>
-          <td><code>${col.username}</code></td>
-          <td><span class="pill" style="font-size: 0.75rem; ${roleStyle}">${isSuper ? '⭐ ' : ''}${col.role}</span></td>
+          <td><strong>${col.name}</strong></td>
+          <td><code style="background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 4px; color: #38bdf8;">@${col.username}</code></td>
+          <td><span class="pill" style="font-size: 0.75rem; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3); color: #38bdf8; font-weight: 700;">${col.role || 'Colaborador'}</span></td>
+          <td>
+            <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+              ${permTags.length > 0 ? permTags.join('') : '<span style="color: #64748b; font-size: 0.75rem;">Sin permisos</span>'}
+            </div>
+          </td>
           <td style="white-space: nowrap;">
-            <button class="btn btn-outline" style="padding: 4px 8px; font-size: 0.75rem; border-color: #38bdf8; color: #38bdf8; margin-right: 4px;" onclick="openEditColaboradorModal(${col.id})">
-              <ion-icon name="create-outline"></ion-icon> Editar
+            <button type="button" class="btn btn-outline" style="padding: 5px 10px; font-size: 0.75rem; border-color: #38bdf8; color: #38bdf8; margin-right: 4px;" onclick="openEditColaboradorModal(${col.id})">
+              <ion-icon name="create-outline"></ion-icon> Editar & Permisos
             </button>
-            <button class="btn btn-red" style="padding: 4px 8px; font-size: 0.75rem;" onclick="deleteColaborador(${col.id})" ${isSuper && colaboradores.filter(c => c.role === 'Super Administrador').length <= 1 ? 'disabled title="No se puede eliminar el SuperAdmin principal" style="opacity:0.4; cursor:not-allowed;"' : ''}>
-              Eliminar
+            <button type="button" class="btn btn-red" style="padding: 5px 10px; font-size: 0.75rem;" onclick="deleteColaborador(${col.id})">
+              <ion-icon name="trash-outline"></ion-icon> Eliminar
             </button>
           </td>
         `;
@@ -9879,8 +10309,11 @@
       document.getElementById('newColabName').value = '';
       document.getElementById('newColabUsername').value = '';
       document.getElementById('newColabPassword').value = '';
+      document.getElementById('newColabRole').value = 'Administrador';
+      setRolePermissions('new', 'admin');
       document.getElementById('addColaboradorModal').classList.add('active');
     }
+
     function closeAddColaboradorModal() {
       document.getElementById('addColaboradorModal').classList.remove('active');
     }
@@ -9897,18 +10330,34 @@
         return;
       }
 
-      colaboradores.push({
+      const permissions = {
+        pos: document.getElementById('newPerm_pos')?.checked ?? true,
+        ventas: document.getElementById('newPerm_ventas')?.checked ?? true,
+        presupuesto: document.getElementById('newPerm_presupuesto')?.checked ?? true,
+        notas: document.getElementById('newPerm_notas')?.checked ?? true,
+        catalogo: document.getElementById('newPerm_catalogo')?.checked ?? true,
+        stock: document.getElementById('newPerm_stock')?.checked ?? true,
+        clientes: document.getElementById('newPerm_clientes')?.checked ?? true,
+        colaboradores: document.getElementById('newPerm_colaboradores')?.checked ?? true,
+        importaciones: document.getElementById('newPerm_importaciones')?.checked ?? true,
+        config: document.getElementById('newPerm_config')?.checked ?? true
+      };
+
+      const newColab = {
         id: Date.now(),
         name,
         username,
         password,
-        role
-      });
+        role,
+        permissions
+      };
 
-      saveStorageData();
+      colaboradores.push(newColab);
+
+      saveStorageData(true);
       closeAddColaboradorModal();
       renderDBColaboradores();
-      alert(`¡Colaborador "${name}" registrado correctamente! Ahora puede ingresar con usuario "${username}".`);
+      alert(`✅ ¡Colaborador "${name}" registrado correctamente con sus permisos anclados!`);
     }
 
     function openEditColaboradorModal(id) {
@@ -9919,7 +10368,19 @@
       document.getElementById('editColabName').value = col.name;
       document.getElementById('editColabUsername').value = col.username;
       document.getElementById('editColabPassword').value = col.password;
-      document.getElementById('editColabRole').value = col.role;
+      document.getElementById('editColabRole').value = col.role || 'Administrador';
+
+      const p = col.permissions || {
+        pos: true, ventas: true, presupuesto: true, notas: true,
+        catalogo: true, stock: true, clientes: true, colaboradores: true,
+        importaciones: true, config: true
+      };
+
+      const keys = ['pos', 'ventas', 'presupuesto', 'notas', 'catalogo', 'stock', 'clientes', 'colaboradores', 'importaciones', 'config'];
+      keys.forEach(k => {
+        const el = document.getElementById(`editPerm_${k}`);
+        if (el) el.checked = !!p[k];
+      });
 
       document.getElementById('editColaboradorModal').classList.add('active');
     }
@@ -9945,44 +10406,54 @@
       col.password = document.getElementById('editColabPassword').value.trim();
       col.role = document.getElementById('editColabRole').value;
 
+      col.permissions = {
+        pos: document.getElementById('editPerm_pos')?.checked ?? true,
+        ventas: document.getElementById('editPerm_ventas')?.checked ?? true,
+        presupuesto: document.getElementById('editPerm_presupuesto')?.checked ?? true,
+        notas: document.getElementById('editPerm_notas')?.checked ?? true,
+        catalogo: document.getElementById('editPerm_catalogo')?.checked ?? true,
+        stock: document.getElementById('editPerm_stock')?.checked ?? true,
+        clientes: document.getElementById('editPerm_clientes')?.checked ?? true,
+        colaboradores: document.getElementById('editPerm_colaboradores')?.checked ?? true,
+        importaciones: document.getElementById('editPerm_importaciones')?.checked ?? true,
+        config: document.getElementById('editPerm_config')?.checked ?? true
+      };
+
       if (currentUser && currentUser.id === id) {
         currentUser = col;
         document.getElementById('headerUserName').textContent = col.name;
         document.getElementById('headerUserAvatar').textContent = col.name.charAt(0).toUpperCase();
+        applyUserPermissions(col);
       }
 
-      saveStorageData();
+      saveStorageData(true);
       closeEditColaboradorModal();
       renderDBColaboradores();
-      alert('¡Colaborador actualizado correctamente!');
+      alert(`✅ ¡Colaborador "${col.name}" y sus permisos fueron actualizados correctamente!`);
     }
 
     async function deleteColaborador(id) {
       const col = colaboradores.find(c => c.id === id);
       if (!col) return;
 
-      if (col.role === 'Super Administrador' && colaboradores.filter(c => c.role === 'Super Administrador').length <= 1) {
+      if (col.role === 'Super Administrador' || col.username.toLowerCase() === 'superadmin') {
         alert('No es posible eliminar al Super Administrador principal del sistema.');
         return;
       }
 
-      if (colaboradores.length <= 1) {
-        alert('Debe existir al menos un colaborador registrado.');
-        return;
-      }
-
-      if (confirm(`¿Está seguro de eliminar a ${col.name} (@${col.username})?`)) {
+      if (confirm(`¿Estás seguro de eliminar a ${col.name} (@${col.username})? Se eliminará de la base de datos.`)) {
         colaboradores = colaboradores.filter(c => c.id !== id);
-        saveStorageData();
-        if (isFirebaseConnected && db) {
+        saveStorageData(true);
+        if (isSupabaseConnected && supabaseClient) {
           try {
-            await db.collection('collaborators').doc(String(id)).delete();
+            await supabaseClient.from('collaborators').delete().eq('id', id);
+            console.log(`⚡ Colaborador ID ${id} eliminado de Supabase.`);
           } catch (e) {
-            console.warn("Firestore delete colab:", e);
+            console.warn("Supabase delete colab:", e);
           }
         }
         renderDBColaboradores();
-        alert('Colaborador eliminado.');
+        alert('🗑️ Colaborador eliminado exitosamente.');
       }
     }
 
@@ -10303,69 +10774,111 @@
 
     function renderCatalog() {
       const container = document.getElementById('catalogGrid');
+      if (!container) return;
       container.innerHTML = '';
-      products.forEach(p => {
+
+      const query = (document.getElementById('catalogSearchInput')?.value || '').toLowerCase().trim();
+
+      const filtered = products.filter(p => {
+        return !query ||
+          (p.name && p.name.toLowerCase().includes(query)) ||
+          (p.category && p.category.toLowerCase().includes(query)) ||
+          (p.internalCode && p.internalCode.toLowerCase().includes(query)) ||
+          (p.flavor && p.flavor.toLowerCase().includes(query));
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 50px 20px; background: rgba(15, 29, 50, 0.5); border-radius: 18px; border: 1px dashed rgba(255, 255, 255, 0.15);">
+            <ion-icon name="cube-outline" style="font-size: 3.5rem; color: var(--celeste-brand); margin-bottom: 12px;"></ion-icon>
+            <h3 style="color: #ffffff; font-size: 1.25rem; font-weight: 800; margin-bottom: 8px;">No hay productos que coincidan</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 18px;">Podés crear un nuevo producto o limpiar el filtro de búsqueda.</p>
+            <button type="button" class="btn btn-green" onclick="openAddProductModal()" style="margin: 0 auto; padding: 10px 20px; font-weight: 800;">
+              <ion-icon name="add-circle-outline" style="font-size: 1.2rem;"></ion-icon>
+              <span>+ Crear Nuevo Producto</span>
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(p => {
         const card = document.createElement('div');
         card.className = 'product-item';
-        card.style.padding = '20px';
+        card.style.cssText = 'padding: 22px; display: flex; flex-direction: column; align-items: stretch; text-align: left; position: relative; border-radius: 20px; background: #0f1d32; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 25px rgba(0,0,0,0.3); transition: transform 0.2s ease, border-color 0.2s ease;';
 
-        let visualElem = `<ion-icon name="${p.icon || 'shapes-outline'}" style="font-size: 50px; color: ${p.color || 'var(--verde-italia)'};"></ion-icon>`;
-        if (p.image) {
-          visualElem = `<img src="${p.image}" style="width:65px; height:65px; object-fit:cover; border-radius:8px;" alt="${p.name}">`;
-        }
+        const imgSource = p.image || 'public/bolsaGomitas.jpg';
+        const badgeText = p.badge || (p.featured ? 'DESTACADO ⭐' : '');
 
         card.innerHTML = `
-          ${visualElem}
-          <h3 style="margin-top:10px;">${p.name}</h3>
-          <p style="color: var(--text-muted);">${p.category}</p>
-          <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">Cód Int: ${p.internalCode}</div>
-          <h2 style="color: var(--verde-italia); margin: 10px 0;">$${p.price.toLocaleString()}</h2>
-          <span class="stock-badge">${p.stock} Disponibles</span>
+          ${badgeText ? `<div style="position: absolute; top: 12px; left: 12px; background: rgba(56, 189, 248, 0.2); border: 1px solid rgba(56, 189, 248, 0.4); color: #38bdf8; font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 10px; text-transform: uppercase;">${badgeText}</div>` : ''}
+          
+          <div style="text-align: center; margin: 12px 0 16px 0;">
+            <img src="${imgSource}" onerror="this.src='public/bolsaGomitas.jpg'" style="width: 110px; height: 110px; object-fit: contain; border-radius: 14px; background: #0b1424; padding: 8px; border: 1px solid rgba(255,255,255,0.08);" alt="${p.name}">
+          </div>
+
+          <div style="font-size: 0.78rem; font-weight: 700; color: var(--celeste-brand); text-transform: uppercase; margin-bottom: 4px;">
+            ${p.category || 'Nutrición'}
+          </div>
+
+          <h3 style="font-size: 1.05rem; font-weight: 800; color: #ffffff; line-height: 1.3; margin-bottom: 8px;">
+            ${p.name}
+          </h3>
+
+          <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 12px; display: flex; flex-direction: column; gap: 3px;">
+            <div><strong>Cód Int:</strong> ${p.internalCode || '-'}</div>
+            ${p.flavor ? `<div><strong>Sabor:</strong> ${p.flavor}</div>` : ''}
+            ${p.unit ? `<div><strong>Presentación:</strong> ${p.unit}</div>` : ''}
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-top: auto; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.08); margin-bottom: 16px;">
+            <div style="font-size: 1.45rem; font-weight: 800; color: var(--celeste-brand);">$${Number(p.price || 0).toLocaleString('es-AR')}</div>
+            <span class="stock-badge" style="font-size: 0.75rem; padding: 4px 8px; border-radius: 10px;">${p.stock} Disponibles</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+            <button type="button" class="btn btn-primary" onclick="openEditProductModal(${p.id})" style="padding: 9px; font-size: 0.82rem; justify-content: center; border-radius: 12px; background: var(--celeste-gradient); font-weight: 800;">
+              <ion-icon name="create-outline"></ion-icon>
+              <span>Editar</span>
+            </button>
+            <button type="button" class="btn btn-red" onclick="deleteProduct(${p.id})" style="padding: 9px; font-size: 0.82rem; justify-content: center; border-radius: 12px;">
+              <ion-icon name="trash-outline"></ion-icon>
+              <span>Eliminar</span>
+            </button>
+          </div>
         `;
         container.appendChild(card);
       });
     }
 
-    function renderImportHistory() {
-      const body = document.getElementById('importHistoryTableBody');
-      if (!body) return;
-      body.innerHTML = '';
-
-      if (importHistory.length === 0) {
-        body.innerHTML = '<tr><td colspan="9" style="text-align:center; color: var(--text-muted); padding: 25px;">No se encontraron registros de importación.</td></tr>';
-        return;
-      }
-
-      importHistory.forEach(imp => {
-        const tr = document.createElement('tr');
-
-        let statusBadgeClass = 'completed';
-        if (imp.status === 'En proceso') statusBadgeClass = 'processing';
-        else if (imp.status.includes('error')) statusBadgeClass = 'error';
-
-        tr.innerHTML = `
-          <td>${imp.date}</td>
-          <td><strong>${imp.filename}</strong></td>
-          <td>${imp.totalRows}</td>
-          <td>${imp.processedRows}</td>
-          <td><strong style="color: var(--verde-italia);">${imp.okRows}</strong></td>
-          <td><strong style="color: ${imp.errorRows > 0 ? 'var(--rojo-italia)' : 'var(--text-muted)'};">${imp.errorRows}</strong></td>
-          <td>${imp.type}</td>
-          <td>${imp.user}</td>
-          <td><span class="status-badge ${statusBadgeClass}">${imp.status}</span></td>
-        `;
-        body.appendChild(tr);
-      });
-    }
-
     function openAddProductModal() {
       document.getElementById('addProductModal').classList.add('active');
+      document.getElementById('newProdName').value = '';
+      document.getElementById('newProdFlavor').value = '';
+      document.getElementById('newProdUnit').value = 'Doypack 60 Gomitas';
+      document.getElementById('newProdBadge').value = 'MÁS VENDIDO ⭐';
+      document.getElementById('newProdPortion').value = '2 gomitas diarias';
+      document.getElementById('newProdDescription').value = '';
+      document.getElementById('newProdActivos').value = '';
+      document.getElementById('newProdInternalCode').value = 'GMX-' + (products.length + 1).toString().padStart(2, '0');
+      document.getElementById('newProdCode').value = '7798' + Math.floor(10000000 + Math.random() * 90000000);
+      document.getElementById('newProdCost').value = '12000';
+      document.getElementById('newProdTaxRate').value = '21';
+      document.getElementById('newProdMargin').value = '100';
+      document.getElementById('newProdPrice').value = '28500';
+      document.getElementById('calculatedPriceDisplay').textContent = (28500).toLocaleString('es-AR');
+      document.getElementById('newProdStock').value = '50';
+      document.getElementById('newProdFeatured').checked = true;
+      document.getElementById('newProdImageUrl').value = 'public/bolsaGomitas.jpg';
       document.getElementById('newProdImageInput').value = '';
-      document.getElementById('newProdPreview').style.display = 'none';
-      document.getElementById('newProdPreview').src = '';
+      
+      const preview = document.getElementById('newProdPreview');
+      preview.src = 'public/bolsaGomitas.jpg';
+      preview.style.display = 'block';
+
       renderCategoriesUI();
-      calculateFinalPrice();
     }
+
     function closeAddProductModal() {
       document.getElementById('addProductModal').classList.remove('active');
     }
@@ -10389,20 +10902,38 @@
         }
       }
 
+      const flavor = document.getElementById('newProdFlavor').value.trim();
+      const unit = document.getElementById('newProdUnit').value.trim() || 'Doypack 60 Gomitas';
+      const badge = document.getElementById('newProdBadge').value.trim();
+      const portion = document.getElementById('newProdPortion').value.trim();
+      const description = document.getElementById('newProdDescription').value.trim();
+      const activosRaw = document.getElementById('newProdActivos').value.trim();
+      const activos = activosRaw ? activosRaw.split(',').map(a => a.trim()).filter(Boolean) : [];
+
       const cost = parseFloat(document.getElementById('newProdCost').value) || 0;
       const taxRate = parseFloat(document.getElementById('newProdTaxRate').value) || 0;
       const margin = parseFloat(document.getElementById('newProdMargin').value) || 0;
       const price = parseFloat(document.getElementById('newProdPrice').value) || 0;
       const stock = parseFloat(document.getElementById('newProdStock').value) || 0;
-      const unit = document.getElementById('newProdUnit').value;
+      const featured = document.getElementById('newProdFeatured').checked;
 
       const previewImg = document.getElementById('newProdPreview');
-      const imgData = previewImg.src && previewImg.src.startsWith('data:image') ? previewImg.src : '';
+      const urlImg = document.getElementById('newProdImageUrl').value.trim();
+      let imgData = 'public/bolsaGomitas.jpg';
+      if (previewImg.src && previewImg.src.startsWith('data:image')) {
+        imgData = previewImg.src;
+      } else if (urlImg) {
+        imgData = urlImg;
+      }
 
-      products.push({
-        id: products.length + 1,
-        code: code,
-        internalCode: internalCode,
+      // Generar ID numérico único
+      const maxId = products.reduce((max, p) => Math.max(max, p.id || 0), 0);
+      const newId = maxId + 1;
+
+      const newProduct = {
+        id: newId,
+        code: code || ('779' + Date.now().toString().slice(-8)),
+        internalCode: internalCode || ('GMX-' + newId),
         name: name,
         category: cat,
         cost: cost,
@@ -10410,23 +10941,31 @@
         margin: margin,
         price: price,
         stock: stock,
-        unit: unit || 'Unid.',
+        unit: unit,
+        flavor: flavor,
+        portion: portion,
+        description: description,
+        activos: activos,
+        image: imgData,
+        featured: featured,
+        badge: badge,
         icon: 'shapes-outline',
-        color: 'var(--verde-italia)',
-        image: imgData
-      });
+        color: 'var(--celeste-brand)'
+      };
+
+      products.push(newProduct);
 
       closeAddProductModal();
-      saveStorageData();
+      saveStorageData(true);
       renderCategoriesUI();
       renderEcommerceCategories();
-      renderEcommerceProducts();
-      saveStorageData();
       renderEcommerceProducts();
       renderDBProducts();
       renderPOSProducts();
       renderStockTable();
       renderCatalog();
+
+      alert(`✅ ¡Producto "${name}" creado exitosamente y sincronizado en Supabase!`);
     }
 
     function downloadExcelTemplate() {
@@ -10799,7 +11338,7 @@
     });
 
     loadStorageData();
-    initFirebase();
+    initSupabase();
     initEcommerce();
     initApp();
   </script>
